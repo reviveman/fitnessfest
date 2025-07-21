@@ -5,7 +5,7 @@ export default function WhyAttend() {
     {
       icon: MessageCircle,
       number: "01.",
-      title: "ExPLORE DIVERSE WORKOUTS & EXPERT-LED SESSIONS",
+      title: "EXPLORE DIVERSE WORKOUTS & EXPERT-LED SESSIONS",
       description: "This Festival feature over 30 types of sessions—Zumba, Capoeira, CrossFit, Planking, aqua workouts, Barre Fit, mental‑fitness talks, kids' gymnastics, and more. Whether you prefer cardio, strength, flexibility, or mindfulness, there’s something for everyone",
     },
     {
@@ -44,8 +44,8 @@ export default function WhyAttend() {
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h6 className="text-[#fa0368] text-sm font-semibold mb-2">JOIN FITNESS FEST</h6>
-          <h3 className="text-3xl font-bold text-gray-970 mb-4">WHY ATTEND BENGALURU FITNESS FEST?</h3>
+          <h6 className="text-[#0A1F22] text-lg font-bold mb-2">JOIN FITNESS FEST</h6>
+          <h3 className="text-[#FFC91F] text-3xl font-bold text-gray-970 mb-4">WHY ATTEND BENGALURU FITNESS FEST?</h3>
           <p className="text-gray-700 max-w-3xl mx-auto">
             Step into South India's biggest fitness and wellness celebration! Whether you're a fitness enthusiast, industry professional, or just starting your wellness journey — this is the place to be.
           </p>
@@ -55,7 +55,7 @@ export default function WhyAttend() {
           {features.map((feature, index) => (
             <div key={index} className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
               <div className="flex justify-between items-center py-4">
-                <feature.icon className="w-15 h-15 text-[#fa0368]" />
+                <feature.icon className="w-15 h-15 text-[#FFC91F]" />
                 <span className="text-5xl font-bold  text-gray-300">{feature.number}</span>
               </div>
               <h5 className="text-xl font-semibold text-gray-900 mb-3">{feature.title}</h5>

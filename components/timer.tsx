@@ -45,25 +45,25 @@ export default function Timer() {
       <div className="bg-white rounded-[40px] shadow-2xl px-6 py-10">
         <div className="grid grid-cols-4 gap-4 sm:gap-6 text-center">
           <div>
-            <div className="text-2xl sm:text-5xl font-extrabold text-[#fa0368]">
+            <div className="text-2xl sm:text-5xl font-extrabold text-[#EA4A3E]">
               {String(timeLeft.days).padStart(2, "0")}
             </div>
             <div className="text-xs sm:text-sm text-gray-600 font-semibold mt-1">Days</div>
           </div>
           <div>
-            <div className="text-2xl sm:text-5xl font-extrabold text-[#fa0368]">
+            <div className="text-2xl sm:text-5xl font-extrabold text-[#EA4A3E]">
               {String(timeLeft.hours).padStart(2, "0")}
             </div>
             <div className="text-xs sm:text-sm text-gray-600 font-semibold mt-1">Hours</div>
           </div>
           <div>
-            <div className="text-2xl sm:text-5xl font-extrabold text-[#fa0368]">
+            <div className="text-2xl sm:text-5xl font-extrabold text-[#EA4A3E]">
               {String(timeLeft.minutes).padStart(2, "0")}
             </div>
             <div className="text-xs sm:text-sm text-gray-600 font-semibold mt-1">Minutes</div>
           </div>
           <div>
-            <div className="text-2xl sm:text-5xl font-extrabold text-[#fa0368]">
+            <div className="text-2xl sm:text-5xl font-extrabold text-[#EA4A3E]">
               {String(timeLeft.seconds).padStart(2, "0")}
             </div>
             <div className="text-xs sm:text-sm text-gray-600 font-semibold mt-1">Seconds</div>

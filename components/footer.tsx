@@ -17,16 +17,16 @@ export default function Footer() {
 
           </p>
           <div className="flex gap-3">
-            <a href="#" className="bg-[#fa0368] p-3 rounded-full hover:bg-pink-700">
+            <a href="#" className="bg-[#EA4A3E] p-3 rounded-full hover:bg-pink-700">
               <FaFacebookF />
             </a>
-            <a href="#" className="bg-[#fa0368] p-3 rounded-full hover:bg-pink-700">
+            <a href="#" className="bg-[#EA4A3E] p-3 rounded-full hover:bg-pink-700">
               <FaTwitter />
             </a>
-            <a href="#" className="bg-[#fa0368] p-3 rounded-full hover:bg-pink-700">
+            <a href="#" className="bg-[#EA4A3E] p-3 rounded-full hover:bg-pink-700">
               <FaInstagram />
             </a>
-            <a href="#" className="bg-[#fa0368] p-3 rounded-full hover:bg-pink-700">
+            <a href="#" className="bg-[#EA4A3E] p-3 rounded-full hover:bg-pink-700">
               <FaYoutube />
             </a>
           </div>
@@ -69,7 +69,7 @@ export default function Footer() {
             placeholder="Your Email.."
             className="w-full rounded-full px-4 py-3 mb-3 text-gray-900 bg-white"
           />
-          <button className="w-full bg-[#fa0368] hover:bg-pink-700 rounded-full px-4 py-3 font-semibold text-white">
+          <button className="w-full bg-[#EA4A3E] hover:bg-pink-700 rounded-full px-4 py-3 font-semibold text-white">
             SUBSCRIBE NOW
           </button>
         </div>

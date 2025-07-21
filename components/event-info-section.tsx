@@ -22,7 +22,7 @@ export default function EventInfoSection() {
           {/* Right Side - Content */}
           <div className="space-y-6 sm:mx-15 md:mx-10">
             <div>
-              <p className="text-[#fa0368] font-medium text-sm uppercase tracking-wide mb-2">About BFF 2025</p>
+              <p className="text-[#EA4A3E] font-medium text-sm uppercase tracking-wide mb-2">About BFF 2025</p>
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-800 leading-tight">
                 
 
@@ -39,7 +39,7 @@ export default function EventInfoSection() {
              Bengaluru Fitness Festival 2025 is South India’s premier celebration of fitness, wellness, and healthy living. Bringing together athletes, fitness coaches, health brands, and wellness seekers under one roof — this two-day event is set to inspire transformation, connection, and fun.
             </p>
 
-            <div className="max-w-120 space-y-4 bg-gray-50 p-8 rounded-lg shadow border-b-3 border-[#fa0368]">
+            <div className="max-w-120 space-y-4 bg-gray-50 p-8 rounded-lg shadow border-b-3 border-[#EA4A3E]">
               <div className="flex items-start space-x-3">
                 <div className="bg-pink-100 rounded-full p-1 mt-1">
                   <Check className="w-4 h-4 text-pink-500" />
@@ -79,7 +79,7 @@ export default function EventInfoSection() {
         <div className="sm:py-5 px-4 md:px-16 lg:px-32 grid md:grid-cols-2 gap-8 lg:-translate-y-1/2 items-center max-w-6xl mx-auto px-4">
           <div className="bg-white p-8 rounded-4xl shadow border">
             <div className="flex items-center space-x-6">
-              <div className="bg-[#fa0368] rounded-2xl p-3">
+              <div className="bg-[#EA4A3E] rounded-2xl p-3">
                 <MapPin className="w-10 h-10 text-white" />
               </div>
               <div>

@@ -39,18 +39,18 @@ export default function Timer() {
             <div className="space-y-6">
               <div className="text-center">
                 <h1 className="text-4xl sm:text-3xl lg:text-3xl font-bold leading-tight">
-                  BENGALURU FITNESS FEST 2025
+                  Bengaluru Fitness Fest 2025
                 </h1>
                 <h1 className="text-4xl sm:text-3xl lg:text-6xl font-bold leading-tight text-[#EA4A3E]">
-                  THE ULTIMATE FITNESS & WELLNESS 
+                  The Ultimate Fitness & Wellness 
                 </h1>
                 <h1 className="text-4xl sm:text-3xl lg:text-3xl font-bold leading-tight">
-                  EXPERIENCE
+                  Experience
                 </h1>
                 <div className="w-16 h-1 bg-white mx-auto mt-3"></div>
               </div>
 
-              <p className="text-center sm:text-sm text-gray-300 max-w-md mx-auto">
+              <p className="text-center sm:text-lg text-gray-300 max-w-md mx-auto">
                 Unleash Your Potential!
 Join a vibrant celebration where strength meets spirit, and wellness takes center stage. From fitness challenges to expert talks — discover, move, and thrive with the community.
               </p>
