@@ -103,7 +103,7 @@ export default function Header() {
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center">
-              <img src="/images/fitlogo.png" alt="Fitness Fest Logo" className="h-25 sm:h-15" />
+              <img src="/images/fitlogo.png" alt="Fitness Fest Logo" className="h-55 sm:h-45" />
             </div>
 
             <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8">
