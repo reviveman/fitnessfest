@@ -32,7 +32,7 @@ export default function Header() {
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-8">
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-[#fa0368] rounded-full flex items-center justify-center">
+                <div className="w-10 h-10 bg-[#EA4A3E] rounded-full flex items-center justify-center">
                   <Phone className="w-5 h-5 text-white" />
                 </div>
                 <div>
@@ -41,7 +41,7 @@ export default function Header() {
                 </div>
               </div>
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-[#fa0368] rounded-full flex items-center justify-center">
+                <div className="w-10 h-10 bg-[#EA4A3E] rounded-full flex items-center justify-center">
                   <Mail className="w-5 h-5 text-white" />
                 </div>
                 <div>
@@ -54,7 +54,7 @@ export default function Header() {
               <div className="flex space-x-3">
                 <a
                   href="#"
-                  className="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center text-white hover:bg-pink-500 transition-colors"
+                  className="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center text-white hover:bg-red-500 transition-colors"
                   aria-label="Twitter"
                 >
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -63,7 +63,7 @@ export default function Header() {
                 </a>
                 <a
                   href="#"
-                  className="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center text-white hover:bg-pink-500 transition-colors"
+                  className="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center text-white hover:bg-red-500 transition-colors"
                   aria-label="YouTube"
                 >
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -72,7 +72,7 @@ export default function Header() {
                 </a>
                 <a
                   href="#"
-                  className="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center text-white hover:bg-pink-500 transition-colors"
+                  className="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center text-white hover:bg-red-500 transition-colors"
                   aria-label="Pinterest"
                 >
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -81,7 +81,7 @@ export default function Header() {
                 </a>
                 <a
                   href="#"
-                  className="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center text-white hover:bg-pink-500 transition-colors"
+                  className="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center text-white hover:bg-red-500 transition-colors"
                   aria-label="LinkedIn"
                 >
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -107,31 +107,31 @@ export default function Header() {
             </div>
 
             <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8">
-              <a href="/" className="text-[#fa0368] hover:text-pink-400 font-medium transition-colors text-sm">
+              <a href="/" className="text-[#EA4A3E] hover:text-red-400 font-medium transition-colors text-sm">
                 HOME
               </a>
-              <a href="/about" className="text-white hover:text-pink-500 font-medium transition-colors text-sm">
+              <a href="/about" className="text-white hover:text-red-500 font-medium transition-colors text-sm">
                 ABOUT US
               </a>
               <div className="relative group">
-                <a href="/event" className="text-white hover:text-pink-500 font-medium transition-colors text-sm">
+                <a href="/event" className="text-white hover:text-red-500 font-medium transition-colors text-sm">
                   EVENTS
                 </a>
               </div>
               <div className="relative group">
-                <a href="/awards" className="text-white hover:text-pink-500 font-medium transition-colors text-sm">
+                <a href="/awards" className="text-white hover:text-red-500 font-medium transition-colors text-sm">
                   AWARDS
                 </a>
               </div>
               <div className="relative group">
                 <a
                   href="/competitions"
-                  className="text-white hover:text-pink-500 font-medium transition-colors text-sm"
+                  className="text-white hover:text-red-500 font-medium transition-colors text-sm"
                 >
                   COMPETITIONS
                 </a>
               </div>
-              <a href="/contact" className="text-white hover:text-pink-500 font-medium transition-colors text-sm">
+              <a href="/contact" className="text-white hover:text-red-500 font-medium transition-colors text-sm">
                 CONTACT US
               </a>
             </nav>
@@ -139,12 +139,12 @@ export default function Header() {
             <div className="flex items-center space-x-2 sm:space-x-4">
               <Button
                 onClick={() => router.push("/tickets")}
-                className="bg-[#fa0368] hover:bg-pink-600 text-white px-3 sm:px-6 py-2 rounded-md font-semibold text-xs sm:text-sm"
+                className="bg-[#EA4A3E] hover:bg-red-600 text-white px-3 sm:px-6 py-2 rounded-md font-semibold text-xs sm:text-sm"
               >
                 BUY TICKETS
               </Button>
               <button
-                className="lg:hidden w-6 h-6 text-white hover:text-pink-500 transition-colors"
+                className="lg:hidden w-6 h-6 text-white hover:text-red-500 transition-colors"
                 aria-label="Open menu"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               >
@@ -162,42 +162,42 @@ export default function Header() {
             <nav className="flex flex-col space-y-4">
               <a
                 href="/"
-                className="text-pink-500 hover:text-pink-400 font-medium transition-colors py-2"
+                className="text-red-500 hover:text-red-400 font-medium transition-colors py-2"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 HOME
               </a>
               <a
                 href="/about"
-                className="text-white hover:text-pink-500 font-medium transition-colors py-2"
+                className="text-white hover:text-red-500 font-medium transition-colors py-2"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 ABOUT US
               </a>
               <a
                 href="/event"
-                className="text-white hover:text-pink-500 font-medium transition-colors py-2"
+                className="text-white hover:text-red-500 font-medium transition-colors py-2"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 EVENTS
               </a>
               <a
                 href="/awards"
-                className="text-white hover:text-pink-500 font-medium transition-colors py-2"
+                className="text-white hover:text-red-500 font-medium transition-colors py-2"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 AWARDS
               </a>
               <a
                 href="/competitions"
-                className="text-white hover:text-pink-500 font-medium transition-colors py-2"
+                className="text-white hover:text-red-500 font-medium transition-colors py-2"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 COMPETITIONS
               </a>
               <a
                 href="/contact"
-                className="text-white hover:text-pink-500 font-medium transition-colors py-2"
+                className="text-white hover:text-red-500 font-medium transition-colors py-2"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 CONTACT US
@@ -206,7 +206,7 @@ export default function Header() {
               {/* Mobile Contact Info */}
               <div className="pt-4 border-t border-gray-700 mt-4">
                 <div className="flex items-center space-x-3 mb-3">
-                  <div className="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center">
+                  <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
                     <Phone className="w-4 h-4 text-white" />
                   </div>
                   <div>
@@ -215,7 +215,7 @@ export default function Header() {
                   </div>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center">
+                  <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
                     <Mail className="w-4 h-4 text-white" />
                   </div>
                   <div>

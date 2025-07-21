@@ -41,7 +41,7 @@ export default function Timer() {
                 <h1 className="text-4xl sm:text-3xl lg:text-3xl font-bold leading-tight">
                   BENGALURU FITNESS FEST 2025
                 </h1>
-                <h1 className="text-4xl sm:text-3xl lg:text-6xl font-bold leading-tight text-[#fa0368]">
+                <h1 className="text-4xl sm:text-3xl lg:text-6xl font-bold leading-tight text-[#EA4A3E]">
                   THE ULTIMATE FITNESS & WELLNESS 
                 </h1>
                 <h1 className="text-4xl sm:text-3xl lg:text-3xl font-bold leading-tight">
@@ -56,7 +56,7 @@ Join a vibrant celebration where strength meets spirit, and wellness takes cente
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center">
-                <Button className="bg-[#fa0368] hover:bg-pink-600 text-white px-8 py-6 rounded-full font-medium text-lg">
+                <Button className="bg-[#EA4A3E] hover:bg-red-600 text-white px-8 py-6 rounded-full font-medium text-lg">
                   BOOK NOW
                 </Button>
                 <Button
