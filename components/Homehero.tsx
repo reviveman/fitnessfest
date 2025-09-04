@@ -39,7 +39,7 @@ export default function Timer() {
             <div className="space-y-6">
               <div className="text-center">
                 <h1 className="text-4xl sm:text-3xl lg:text-3xl font-bold leading-tight">
-                  Bengaluru Fitness Fest 2025
+                 
                 </h1>
                 <h1 className="text-4xl sm:text-3xl lg:text-6xl font-bold leading-tight text-[#EA4A3E]">
                   The Ultimate Fitness & Wellness 

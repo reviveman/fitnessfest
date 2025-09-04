@@ -22,7 +22,7 @@ export default function EventInfoSection() {
           {/* Right Side - Content */}
           <div className="space-y-6 sm:mx-15 md:mx-10">
             <div>
-              <p className="text-[#EA4A3E] font-medium text-sm uppercase tracking-wide mb-2">About BFF 2025</p>
+              <p className="text-[#EA4A3E] font-medium text-sm uppercase tracking-wide mb-2"></p>
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-800 leading-tight">
                 
 
@@ -87,7 +87,7 @@ export default function EventInfoSection() {
                 <p className="text-gray-600 text-sm">
                   KTPO,EPIP 2nd phase, Industrial Area, Whitefield, Bengaluru, 
                   <br />
-                 Karnataka 560066
+                 Bengaluru 560006
                 </p>
               </div>
             </div>

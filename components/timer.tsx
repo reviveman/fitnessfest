@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 
 export default function Timer() {
   const [timeLeft, setTimeLeft] = useState({
-    days: 217,
+    days: 106,
     hours: 22,
     minutes: 30,
     seconds: 28,
