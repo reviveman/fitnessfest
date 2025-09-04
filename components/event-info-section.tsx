@@ -85,7 +85,7 @@ export default function EventInfoSection() {
               <div>
                 <h3 className="font-bold text-gray-800 text-lg mb-2">WHERE IS THE EVENT :</h3>
                 <p className="text-gray-600 text-sm">
-                  KTPO,EPIP 2nd phase, Industrial Area, Whitefield, Bengaluru, 
+                  Jayamahal, near Cantonment Railway Station Road, Nandi Durga Road Extension,  
                   <br />
                  Bengaluru 560006
                 </p>
@@ -101,7 +101,7 @@ export default function EventInfoSection() {
               <div>
                 <h3 className="font-bold text-gray-800 text-lg mb-2">WHEN IS THE EVENT :</h3>
                 <p className="text-gray-600 text-sm">
-                  ( Saturday & Sunday )   <br />22 & 23 November 2025
+                  ( Saturday & Sunday )   <br />20 & 21 December 2025
                
                   
                 </p>

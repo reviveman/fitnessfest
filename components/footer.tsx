@@ -17,13 +17,13 @@ export default function Footer() {
 
           </p>
           <div className="flex gap-3">
-            <a href="#" className="bg-[#EA4A3E] p-3 rounded-full hover:bg-pink-700">
+            <a href="https://www.facebook.com/BengaluruFitnessFest/" className="bg-[#EA4A3E] p-3 rounded-full hover:bg-pink-700">
               <FaFacebookF />
             </a>
-            <a href="#" className="bg-[#EA4A3E] p-3 rounded-full hover:bg-pink-700">
+            <a href="https://x.com/BlrFitnessFest" className="bg-[#EA4A3E] p-3 rounded-full hover:bg-pink-700">
               <FaTwitter />
             </a>
-            <a href="#" className="bg-[#EA4A3E] p-3 rounded-full hover:bg-pink-700">
+            <a href="https://www.instagram.com/bengaluru_fitness_fest/" className="bg-[#EA4A3E] p-3 rounded-full hover:bg-pink-700">
               <FaInstagram />
             </a>
             <a href="#" className="bg-[#EA4A3E] p-3 rounded-full hover:bg-pink-700">
