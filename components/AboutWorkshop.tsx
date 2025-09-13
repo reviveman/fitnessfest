@@ -1,23 +1,27 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
-import { FiChevronDown, FiChevronUp } from "react-icons/fi";
+import { FiChevronsDown, FiChevronsUp } from "react-icons/fi";
+import { FaChalkboardTeacher, FaUsers, FaChartLine } from "react-icons/fa";
 
 const data = [
   {
     title: "LEARN FROM THE BEST IN INDUSTRY!",
     content:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.",
+    icon: <FaChalkboardTeacher className="text-pink-600 text-xl" />,
   },
   {
     title: "OUR SPEAKER EXPERIENCE IN THIS EVENT",
     content:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor.",
+    icon: <FaUsers className="text-pink-600 text-xl" />,
   },
   {
-    title: "IMPROVE YOUR BUSINESS KOWLEDGE",
+    title: "IMPROVE YOUR BUSINESS KNOWLEDGE",
     content:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec quam felis, ultricies nec, pellentesque eu.",
+    icon: <FaChartLine className="text-pink-600 text-xl" />,
   },
 ];
 
@@ -34,7 +38,7 @@ const AboutWorkshop = () => {
       <div className="relative w-full h-[500px] flex justify-center items-center">
         <div className="absolute w-72 h-72 bg-pink-200 rounded-full -z-10" />
         <Image
-          src="/workshop-guy.png" // place image in /public folder and rename
+          src="/workshop-guy.png"
           alt="Workshop Speaker"
           width={400}
           height={500}
@@ -44,10 +48,16 @@ const AboutWorkshop = () => {
 
       {/* Right Content */}
       <div>
-        <h5 className="text-pink-600 font-semibold uppercase mb-2">Mission and Aim</h5>
-        <h2 className="text-3xl font-bold text-gray-800 mb-4">About Our Workshop</h2>
+        <h5 className="text-pink-600 font-semibold uppercase mb-2">
+          Mission and Aim
+        </h5>
+        <h2 className="text-3xl font-bold text-gray-800 mb-4">
+          About Our Workshop
+        </h2>
         <p className="text-gray-600 mb-6">
-          Consequat sociosqu sem officiis aute ridiculus repellat in aliquip at, metus sociosqu veritatis cubilia ac soluta? Faucibus ipsam, incidunt cras.
+          Consequat sociosqu sem officiis aute ridiculus repellat in aliquip at,
+          metus sociosqu veritatis cubilia ac soluta? Faucibus ipsam, incidunt
+          cras.
         </p>
 
         {/* Accordion */}
@@ -59,11 +69,14 @@ const AboutWorkshop = () => {
               onClick={() => toggleAccordion(index)}
             >
               <div className="flex justify-between items-center cursor-pointer">
-                <h3 className="font-semibold text-gray-800">{item.title}</h3>
+                <div className="flex items-center gap-3">
+                  {item.icon}
+                  <h3 className="font-semibold text-gray-800">{item.title}</h3>
+                </div>
                 {activeIndex === index ? (
-                  <FiChevronUp className="text-gray-600" />
+                  <FiChevronsUp className="text-gray-600" />
                 ) : (
-                  <FiChevronDown className="text-gray-600" />
+                  <FiChevronsDown className="text-gray-600" />
                 )}
               </div>
               {activeIndex === index && (
