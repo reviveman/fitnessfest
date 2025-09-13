@@ -75,7 +75,7 @@ export default function EventInfoSection() {
       </div>
 
       {/* Event Details Section */}
-      <div className="w-full bg-gray-200 mt-40 lg:px-40 relative">
+      <div className="w-full bg-gray-200 mt-25  lg:px-40 relative">
         <div className="sm:py-5 px-4 md:px-16 lg:px-32 grid md:grid-cols-2 gap-8 lg:-translate-y-1/2 items-center max-w-6xl mx-auto px-4">
           <div className="bg-white p-8 rounded-4xl shadow border">
             <div className="flex items-center space-x-6">

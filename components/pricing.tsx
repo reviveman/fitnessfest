@@ -1,65 +1,73 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 
 export default function Pricing() {
   const pricingPlans = [
     {
       name: "EARLY BIRD",
-      price: "$25",
-      description: "Consectetur wisi voluptatem nostra, magnis occaecat dictum, aenean quo.",
+      price: "₹1,999",
+      description: "Get your pass at the best early-bird price before tickets run out.",
       progress: 65,
       available: "325 / 500",
-      note: "All prices exclude 25% VAT!",
+      note: "All prices exclude 18% GST.",
     },
     {
       name: "GOLD",
-      price: "$75",
-      description: "Consectetur wisi voluptatem nostra, magnis occaecat dictum, aenean quo.",
+      price: "₹5,999",
+      description: "Enjoy premium seating and access to exclusive sessions.",
       progress: 80,
       available: "200 / 250",
-      note: "All prices exclude 25% VAT!",
+      note: "All prices exclude 18% GST.",
       featured: true,
     },
     {
       name: "PLATINUM",
-      price: "$54",
-      description: "Consectetur wisi voluptatem nostra, magnis occaecat dictum, aenean quo.",
+      price: "₹3,999",
+      description: "Best value for attendees who want more than just the basics.",
       progress: 88,
       available: "352 / 400",
-      note: "All prices exclude 25% VAT!",
+      note: "All prices exclude 18% GST.",
     },
   ]
 
   return (
     <section className="py-20 px-4 bg-gray-900 text-white">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="text-center mb-16">
-          <h6 className="text-pink-600 text-sm font-semibold mb-2">PRICING TABLE</h6>
-          <h3 className="text-3xl font-bold mb-4">GET YOUR TICKET !!</h3>
-          <p className="text-gray-300 max-w-2xl mx-auto">
-            Quam amet tristique adipisicing incididunt arcu, excepturi molestie turpis deserunt ducimus malesuada minus
-            mauris veniam.
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-16 px-2">
+          <h6 className="text-pink-500 text-sm font-semibold mb-2">PRICING TABLE</h6>
+          <h3 className="text-3xl md:text-4xl font-bold mb-4">GET YOUR TICKET !!</h3>
+          <p className="text-gray-300 max-w-2xl mx-auto text-sm md:text-base">
+            Choose the plan that fits you best and secure your spot at the festival.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 sm:gap-10 max-w-5xl mx-auto pt-8">
+        {/* Pricing Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {pricingPlans.map((plan, index) => (
-            <div key={index} className={`relative ${plan.featured ? "transform scale-105" : ""}`}>
-              <div
-                className={`bg-white text-gray-900 rounded-lg p-8 text-center relative ${plan.featured ? "border-1 border-b-black" : ""}`}
-              >
-                {plan.featured && (
-                  <div className="absolute w-full top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-pink-600 text-white py-1 text-sm font-semibold rounded-sm shadow-lg z-10">
-                    EXCLUSIVE OFFER!
-                  </div>
-                )}
+            <div
+              key={index}
+              className={`relative flex flex-col rounded-xl shadow-lg transition-transform duration-300 ${
+                plan.featured ? " " : ""
+              } hover:scale-105 bg-white text-gray-900`}
+            >
+              {/* Badge (fixed) */}
+              {plan.featured && (
+                <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-pink-600 text-white px-4 py-1 text-xs font-semibold rounded shadow-md">
+                  EXCLUSIVE OFFER!
+                </div>
+              )}
 
+              <div className="flex flex-col h-full p-8 text-center">
                 <h6 className="text-pink-600 text-sm font-semibold mb-2">{plan.name}</h6>
                 <h2 className="text-4xl font-bold mb-4">{plan.price}</h2>
-                <p className="text-gray-600 mb-6">{plan.description}</p>
-                <p className="text-sm text-gray-500 mb-4">{plan.note}</p>
+                <p className="text-gray-600 mb-6 text-sm md:text-base">{plan.description}</p>
+                <p className="text-xs text-gray-500 mb-6">{plan.note}</p>
 
+                {/* Progress Bar */}
                 <div className="mb-4">
-                  <div className="flex justify-between text-sm mb-2">
+                  <div className="flex justify-between text-sm mb-2 text-gray-700">
                     <span>Seat booked</span>
                     <span>{plan.progress}%</span>
                   </div>
@@ -71,19 +79,22 @@ export default function Pricing() {
                   </div>
                 </div>
 
-                <p className="text-sm text-gray-500 mb-6">( {plan.available} ) Available seat</p>
+                <p className="text-xs text-gray-500 mb-6">( {plan.available} ) Available seats</p>
 
-                <Button className="w-full bg-pink-600 hover:bg-orange-600 text-white py-3 rounded-md">
-                  BUY TICKET
-                </Button>
+                {/* Button at bottom */}
+                <div className="mt-auto">
+                  <Button className="w-full bg-pink-600 hover:bg-orange-600 text-white py-3 rounded-md">
+                    BUY TICKET
+                  </Button>
+                </div>
               </div>
 
-              {/* Bottom Wave Decoration */}
-              <div className="absolute bottom-0 left-5 w-full">
+              {/* Decorative Wave */}
+              <div className="absolute bottom-0 left-0 w-full">
                 <svg className="w-full h-6" viewBox="0 0 100 20" preserveAspectRatio="none">
                   <path
                     d="M0 20 Q5 0 10 20 T20 20 T30 20 T40 20 T50 20 T60 20 T70 20 T80 20 T90 20 T100 20 V20 H0 Z"
-                    fill="#111827" // Tailwind's bg-gray-900
+                    fill="#111827"
                   />
                 </svg>
               </div>

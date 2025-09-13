@@ -21,6 +21,13 @@ export const metadata = {
   description: "Celebrating excellence in fitness and wellness",
 }
 
+// ✅ Add viewport for proper responsive scaling
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+}
+
 export default function RootLayout({
   children,
 }: {

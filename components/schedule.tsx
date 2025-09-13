@@ -1,31 +1,28 @@
 "use client";
 
 import { useState } from "react";
-import { events } from "@/data/events"; // Assuming events.js is in the same directory or adjust path
+import { events } from "@/data/events";
 import { Button } from "@/components/ui/button";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 
 export default function Schedule() {
-  // Change initial selectedDate to match the format in events.js
   const [selectedDate, setSelectedDate] = useState("December 20, 2025");
-
   const filteredEvents = events.filter((e) => e.date === selectedDate);
-
   const router = useRouter();
 
   return (
     <section className="max-w-6xl mx-auto px-4 py-10 bg-gray-50">
       {/* Header */}
-      <div className="grid md:grid-cols-2 gap-12 mb-16">
+      <div className="grid md:grid-cols-2 gap-8 md:gap-12 mb-12">
         <div>
           <h6 className="text-[#EA4A3E] text-sm font-semibold mb-2">
             SCHEDULE DETAILS
           </h6>
-          <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <h3 className="text-2xl md:text-4xl font-bold text-gray-900 mb-4">
             INFORMATION OF EVENT SCHEDULE!
           </h3>
-          <p className="text-gray-600">
+          <p className="text-gray-600 text-sm md:text-base">
             Stay on track with everything happening at the festival! From
             high-energy workout sessions and expert talks to fun challenges and
             wellness workshops — here’s your complete guide to what’s happening,
@@ -33,7 +30,7 @@ export default function Schedule() {
           </p>
         </div>
 
-        {/* Circles as Date Filters */}
+ {/* Circles as Date Filters */}
         <div className="mt-10 flex justify-center items-center">
           <div className="relative flex md:inline-block">
             {/* Left Circle */}
@@ -94,40 +91,90 @@ export default function Schedule() {
       </div>
 
       {/* Schedule Items */}
-      <div className="space-y-8 max-w-6xl mx-auto px-4">
+      <div className="space-y-6">
         {filteredEvents.length > 0 ? (
-          filteredEvents.map((item, index) => (
+          filteredEvents.map((item) => (
             <div
               key={item.id}
-              className="bg-white rounded-2xl shadow-lg overflow-hidden"
+              className="bg-white rounded-xl shadow-md overflow-hidden"
             >
-              <div className="grid grid-cols-1 lg:grid-cols-[30%_50%_20%] gap-0">
-                <div className="bg-[#EA4A3E] text-white p-6 text-center">
-                  <h6 className="text-sm mb-2">{item.timeRange}</h6>
-                  <h6 className="text-lg font-semibold">{item.title}</h6>
-                  <p className="mb-6">Location: {item.location}</p>
+              {/* Mobile layout */}
+              <div className="grid grid-cols-1 lg:hidden">
+                {/* Time & Location */}
+                <div className="bg-[#EA4A3E] text-white p-4 sm:p-6 text-center flex flex-col justify-center">
+                  <h6 className="text-xs sm:text-sm mb-1 sm:mb-2">
+                    {item.timeRange}
+                  </h6>
+                  <h6 className="text-base sm:text-lg font-semibold">
+                    {item.title}
+                  </h6>
+                  <p className="text-xs sm:text-sm mt-2">
+                    Location: {item.location}
+                  </p>
                 </div>
 
-                <div className="p-6">
-                  <h5 className="text-lg md:text-xl font-semibold text-gray-900 mb-4">
-                    {item.description}
+                {/* Description */}
+                <div className="p-4 sm:p-6">
+                  <h5 className="text-base md:text-lg font-semibold text-gray-900 mb-2">
+                    {item.title}
                   </h5>
-                  
+                  <p className="text-gray-600 text-sm md:text-base">
+                    {item.description}
+                  </p>
+                </div>
+
+                {/* Image */}
+                <div className="flex justify-center items-center p-4">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-28 h-28 sm:w-36 sm:h-36 object-cover rounded-full"
+                  />
+                </div>
+
+                {/* Button */}
+                <div className="flex justify-end px-4 sm:px-6 pb-4">
                   <Button
                     variant="outline"
-                    className="border-[#EA4A3E] text-pink-600 hover:bg-orange-500 hover:text-white"
+                    className="border-[#EA4A3E] text-pink-600 hover:bg-orange-500 hover:text-white text-sm sm:text-base"
                     onClick={() => router.push(`/event/${item.id}`)}
                   >
                     LEARN MORE
                   </Button>
                 </div>
+              </div>
 
-                <div className="text-white text-center flex justify-center items-center p-4">
+              {/* Desktop layout */}
+              <div className="hidden lg:grid lg:grid-cols-[20%_55%_25%]">
+                {/* Time & Location */}
+                <div className="bg-[#EA4A3E] text-white p-6 text-center flex flex-col justify-center">
+                  <h6 className="text-sm mb-2">{item.timeRange}</h6>
+                  <h6 className="text-lg font-semibold">{item.title}</h6>
+                  <p className="text-sm mt-2">Location: {item.location}</p>
+                </div>
+
+                {/* Description */}
+                <div className="p-6 flex flex-col justify-center">
+                  <h5 className="text-lg font-semibold text-gray-900 mb-2">
+                    {item.title}
+                  </h5>
+                  <p className="text-gray-600 text-base">{item.description}</p>
+                </div>
+
+                {/* Image + Button */}
+                <div className="p-6 flex flex-col items-center justify-center space-y-4">
                   <img
                     src={item.image}
                     alt={item.title}
-                    className="w-40 h-40 object-cover rounded-full"
+                    className="w-32 h-32 object-cover rounded-full"
                   />
+                  <Button
+                    variant="outline"
+                    className="border-[#EA4A3E] text-pink-600 hover:bg-orange-500 hover:text-white text-base"
+                    onClick={() => router.push(`/event/${item.id}`)}
+                  >
+                    LEARN MORE
+                  </Button>
                 </div>
               </div>
             </div>
@@ -139,8 +186,9 @@ export default function Schedule() {
         )}
       </div>
 
-      <div className="text-center mt-12">
-        <Button className="bg-[#EA4A3E] hover:bg-orange-600 text-white px-6 py-5 md:px-8 md:py-5 rounded-3xl">
+      {/* Bottom CTA */}
+      <div className="flex justify-center mt-10">
+        <Button className="bg-[#EA4A3E] hover:bg-orange-600 text-white px-6 py-3 md:px-8 md:py-4 rounded-2xl text-sm md:text-base">
           VIEW MORE DETAILS
         </Button>
       </div>
