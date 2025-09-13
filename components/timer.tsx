@@ -2,46 +2,55 @@
 import { useState, useEffect } from "react"
 
 export default function Timer() {
+  const eventDate = new Date("2025-12-20T00:00:00") // 🎯 Event Start Date
   const [timeLeft, setTimeLeft] = useState({
-    days: 106,
-    hours: 22,
-    minutes: 30,
-    seconds: 28,
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
   })
 
+  // 🔹 Helper: calculate difference
+  const calculateTimeLeft = () => {
+    const now = new Date()
+    const difference = eventDate.getTime() - now.getTime()
+
+    if (difference <= 0) {
+      return { days: 0, hours: 0, minutes: 0, seconds: 0 }
+    }
+
+    return {
+      days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+      hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+      minutes: Math.floor((difference / (1000 * 60)) % 60),
+      seconds: Math.floor((difference / 1000) % 60),
+    }
+  }
+
   useEffect(() => {
+    setTimeLeft(calculateTimeLeft()) // initial
     const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev.seconds > 0) {
-          return { ...prev, seconds: prev.seconds - 1 }
-        } else if (prev.minutes > 0) {
-          return { ...prev, minutes: prev.minutes - 1, seconds: 59 }
-        } else if (prev.hours > 0) {
-          return { ...prev, hours: prev.hours - 1, minutes: 59, seconds: 59 }
-        } else if (prev.days > 0) {
-          return { ...prev, days: prev.days - 1, hours: 23, minutes: 59, seconds: 59 }
-        }
-        return prev
-      })
+      setTimeLeft(calculateTimeLeft())
     }, 1000)
 
     return () => clearInterval(timer)
   }, [])
 
   return (
-    <div className="
-  absolute 
-  bottom-[-4rem] 
-  left-1/2 
-  -translate-x-1/2 
-  lg:left-auto 
-  lg:right-45 
-  lg:translate-x-0 
-  z-10 
-  w-[90%] 
-  max-w-xl
-">
-
+    <div
+      className="
+        absolute 
+        bottom-[-4rem] 
+        left-1/2 
+        -translate-x-1/2 
+        lg:left-auto 
+        lg:right-45 
+        lg:translate-x-0 
+        z-10 
+        w-[90%] 
+        max-w-xl
+      "
+    >
       <div className="bg-white rounded-[40px] shadow-2xl px-6 py-10">
         <div className="grid grid-cols-4 gap-4 sm:gap-6 text-center">
           <div>

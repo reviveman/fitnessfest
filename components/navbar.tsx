@@ -1,7 +1,7 @@
 "use client"
 
 import { 
-  Menu, Phone, Mail,
+  Menu, X, Phone, Mail,
   Instagram, Youtube, Twitter, Linkedin
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -75,12 +75,12 @@ export default function Header() {
 
       {/* 🔹 Main Header */}
       <div className="bg-black w-full">
-        <div className="max-w-6xl mx-auto px-4 py-3 md:py-5 flex justify-between items-center">
+        <div className="max-w-6xl mx-auto px-4 py-5 md:py-7 flex justify-between items-center">
           {/* Logo */}
           <img
             src="/images/fitlogo.png"
             alt="Fitness Fest Logo"
-            className="h-10 sm:h-12 md:h-14 w-auto"
+            className="h-12 sm:h-14 md:h-16 w-auto"
           />
 
           {/* Desktop Nav */}
@@ -109,7 +109,11 @@ export default function Header() {
               aria-label="Toggle menu"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              <Menu className="w-6 h-6" />
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
             </button>
           </div>
         </div>
