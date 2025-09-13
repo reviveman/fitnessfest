@@ -66,11 +66,11 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">QUICK LINKS</h3>
             <ul className="space-y-2 text-sm text-gray-300">
-              <li><a href="#">About the Festival</a></li>
-              <li><a href="#">Schedule</a></li>
+              <li><a href="/about">About the Festival</a></li>
+              <li><a href="/event">Schedule</a></li>
               <li><a href="#">Wellness Updates</a></li>
               <li><a href="#">Partners</a></li>
-              <li><a href="#">Terms & Policies</a></li>
+              {/* <li><a href="#">Terms & Policies</a></li> */}
             </ul>
           </div>
 
@@ -79,10 +79,10 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-4">OTHER PAGES</h3>
             <ul className="space-y-2 text-sm text-gray-300">
               <li><a href="#">Support</a></li>
-              <li><a href="#">Contact Us</a></li>
-              <li><a href="#">FAQ</a></li>
-              <li><a href="#">Fitness Community</a></li>
-              <li><a href="#">Organiser</a></li>
+              <li><a href="/contact">Contact Us</a></li>
+              <li><a href="/faq">FAQ</a></li>
+              {/* <li><a href="#">Fitness Community</a></li> */}
+              <li><a href="/about/maxx">Organiser</a></li>
             </ul>
           </div>
 
@@ -106,9 +106,9 @@ export default function Footer() {
         {/* 🔹 Bottom Bar */}
         <div className="mt-10 border-t border-gray-700 pt-6 flex flex-col md:flex-row justify-between items-center gap-3 text-sm text-gray-400">
           <div className="flex gap-6">
-            <a href="#" className="hover:text-white">PRIVACY POLICY</a>
-            <a href="#" className="hover:text-white">TERMS & CONDITION</a>
-            <a href="#" className="hover:text-white">SUPPORT</a>
+            <a href="/privacy" className="hover:text-white">Privacy Policy</a>
+            <a href="/terms" className="hover:text-white">Terms & Condition</a>
+            <a href="/disclaimer" className="hover:text-white">Disclaimer</a>
           </div>
           <div>
             © 2025 <span className="font-semibold">Maxx Business Media Pvt. Ltd.</span> All Rights Reserved.

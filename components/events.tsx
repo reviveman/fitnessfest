@@ -19,7 +19,7 @@ export default function Schedule() {
       {/* Header */}
       <div className="grid md:grid-cols-2 gap-12 mb-16">
         <div>
-          <h6 className="text-pink-600 text-sm font-semibold mb-2">
+          <h6 className="text-[#EA4A3E] text-sm font-semibold mb-2">
             SCHEDULE DETAILS
           </h6>
           <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -42,7 +42,7 @@ export default function Schedule() {
               className={clsx(
                 "cursor-pointer w-24 h-24 sm:w-28 sm:h-28 md:w-40 md:h-40 rounded-full flex flex-col items-center justify-center z-10 transition-all duration-300",
                 selectedDate === "November 22, 2025"
-                  ? "bg-pink-500 text-white shadow-lg"
+                  ? "bg-[#EA4A3E] text-white shadow-lg"
                   : "bg-gray-200 text-gray-800"
               )}
             >
@@ -54,7 +54,7 @@ export default function Schedule() {
                   "text-xs sm:text-sm font-semibold",
                   selectedDate === "November 22, 2025"
                     ? "text-white"
-                    : "text-pink-600"
+                    : "text-[#EA4A3E]"
                 )}
               >
                 SATURDAY
@@ -69,7 +69,7 @@ export default function Schedule() {
                  rounded-full flex flex-col items-center justify-center shadow-lg z-20
                  -ml-1 sm:-ml-1 md:ml-0 md:absolute md:left-[80%] md:top-0 transition-all duration-300`,
                 selectedDate === "November 23, 2025"
-                  ? "bg-pink-500 text-white"
+                  ? "bg-[#EA4A3E] text-white"
                   : "bg-gray-200 text-gray-800"
               )}
             >
@@ -81,7 +81,7 @@ export default function Schedule() {
                   "text-xs sm:text-sm font-semibold",
                   selectedDate === "November 23, 2025"
                     ? "text-white"
-                    : "text-pink-600"
+                    : "text-[#EA4A3E]"
                 )}
               >
                 SUNDAY
@@ -99,7 +99,7 @@ export default function Schedule() {
               key={item.id}
               className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col"
             >
-              <div className="bg-pink-600 text-white p-6 text-center flex-grow flex flex-col justify-between">
+              <div className="bg-[#EA4A3E] text-white p-6 text-center flex-grow flex flex-col justify-between">
                 {/* Event Info */}
                 <div>
                   <h6 className="text-sm mb-2">{item.timeRange}</h6>
@@ -109,7 +109,7 @@ export default function Schedule() {
                 {/* Button */}
                 <Button
                   variant="outline"
-                  className="mt-4 px-6 py-2 rounded-full font-semibold bg-white border border-pink-600 text-pink-600 transition-colors duration-300 hover:bg-pink-100"
+                  className="mt-4 px-6 py-2 rounded-full font-semibold bg-white border border-pink-600 text-black transition-colors duration-300 hover:bg-pink-100"
                   onClick={() => router.push(`/event/${item.id}`)}
                 >
                   LEARN MORE
