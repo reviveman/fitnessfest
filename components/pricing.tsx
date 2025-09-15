@@ -36,7 +36,7 @@ export default function Pricing() {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16 px-2">
-          <h6 className="text-pink-500 text-sm font-semibold mb-2">PRICING TABLE</h6>
+          <h6 className="text-[#EA4A3E] text-sm font-semibold mb-2">PRICING TABLE</h6>
           <h3 className="text-3xl md:text-4xl font-bold mb-4">GET YOUR TICKET !!</h3>
           <p className="text-gray-300 max-w-2xl mx-auto text-sm md:text-base">
             Choose the plan that fits you best and secure your spot at the festival.
@@ -54,13 +54,13 @@ export default function Pricing() {
             >
               {/* Badge (fixed) */}
               {plan.featured && (
-                <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-pink-600 text-white px-4 py-1 text-xs font-semibold rounded shadow-md">
+                <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-[#EA4A3E] text-white px-4 py-1 text-xs font-semibold rounded shadow-md">
                   EXCLUSIVE OFFER!
                 </div>
               )}
 
               <div className="flex flex-col h-full p-8 text-center">
-                <h6 className="text-pink-600 text-sm font-semibold mb-2">{plan.name}</h6>
+                <h6 className="text-[#EA4A3E] text-sm font-semibold mb-2">{plan.name}</h6>
                 <h2 className="text-4xl font-bold mb-4">{plan.price}</h2>
                 <p className="text-gray-600 mb-6 text-sm md:text-base">{plan.description}</p>
                 <p className="text-xs text-gray-500 mb-6">{plan.note}</p>
@@ -73,7 +73,7 @@ export default function Pricing() {
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
                     <div
-                      className="bg-pink-600 h-2 rounded-full"
+                      className="bg-[#EA4A3E] h-2 rounded-full"
                       style={{ width: `${plan.progress}%` }}
                     ></div>
                   </div>
@@ -83,7 +83,7 @@ export default function Pricing() {
 
                 {/* Button at bottom */}
                 <div className="mt-auto">
-                  <Button className="w-full bg-pink-600 hover:bg-orange-600 text-white py-3 rounded-md">
+                  <Button className="w-full bg-[#EA4A3E] hover:bg-orange-600 text-white py-3 rounded-md">
                     BUY TICKET
                   </Button>
                 </div>

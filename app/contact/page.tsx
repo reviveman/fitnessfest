@@ -80,7 +80,7 @@ export default function ContactPage() {
           <div className="max-w-6xl mx-auto">
             {/* Contact Info Header */}
             <div className="text-center mb-12">
-              <p className="text-pink-600 font-semibold mb-2">GET IN TOUCH</p>
+              <p className="text-[#EA4A3E] font-semibold mb-2">GET IN TOUCH</p>
               <h2 className="text-3xl font-bold text-slate-800 mb-4">
                 CONTACT US FOR
                 <br />
@@ -95,8 +95,8 @@ export default function ContactPage() {
             {/* Contact Cards */}
             <div className="grid md:grid-cols-3 gap-8 mb-16">
               <div className="text-center">
-                <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Mail className="w-8 h-8 text-pink-600" />
+                <div className="w-16 h-16 bg-[#EA4A3E]/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Mail className="w-8 h-8 text-[#EA4A3E]" />
                 </div>
                 <h3 className="text-xl font-bold text-slate-800 mb-2">CONFERENCE HALL</h3>
                 <p className="text-gray-600 text-sm">
@@ -107,8 +107,8 @@ export default function ContactPage() {
               </div>
 
               <div className="text-center">
-                <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Phone className="w-8 h-8 text-pink-600" />
+                <div className="w-16 h-16 bg-[#EA4A3E]/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Phone className="w-8 h-8 text-[#EA4A3E]" />
                 </div>
                 <h3 className="text-xl font-bold text-slate-800 mb-2">TICKET BOOKING</h3>
                 <p className="text-gray-600 text-sm">
@@ -119,8 +119,8 @@ export default function ContactPage() {
               </div>
 
               <div className="text-center">
-                <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <MapPin className="w-8 h-8 text-pink-600" />
+                <div className="w-16 h-16 bg-[#EA4A3E]/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <MapPin className="w-8 h-8 text-[#EA4A3E]" />
                 </div>
                 <h3 className="text-xl font-bold text-slate-800 mb-2">EVENT SCHEDULES</h3>
                 <p className="text-gray-600 text-sm">
@@ -137,7 +137,7 @@ export default function ContactPage() {
                 <TabsList className="grid grid-cols-3 mb-6 bg-gray-100">
                   <TabsTrigger
                     value="general"
-                    className="flex items-center gap-2 data-[state=active]:bg-pink-600 data-[state=active]:text-white"
+                    className="flex items-center gap-2 data-[state=active]:bg-[#EA4A3E] data-[state=active]:text-white"
                   >
                     <Mail className="w-4 h-4" />
                     <span className="hidden sm:inline">General</span>
@@ -145,7 +145,7 @@ export default function ContactPage() {
                   </TabsTrigger>
                   <TabsTrigger
                     value="competitor"
-                    className="flex items-center gap-2 data-[state=active]:bg-pink-600 data-[state=active]:text-white"
+                    className="flex items-center gap-2 data-[state=active]:bg-[#EA4A3E] data-[state=active]:text-white"
                   >
                     <Dumbbell className="w-4 h-4" />
                     <span className="hidden sm:inline">Exhibitors</span>
@@ -153,7 +153,7 @@ export default function ContactPage() {
                   </TabsTrigger>
                   <TabsTrigger
                     value="sponsor"
-                    className="flex items-center gap-2 data-[state=active]:bg-pink-600 data-[state=active]:text-white"
+                    className="flex items-center gap-2 data-[state=active]:bg-[#EA4A3E] data-[state=active]:text-white"
                   >
                     <Award className="w-4 h-4" />
                     <span className="hidden sm:inline">Sponsor</span>
@@ -344,7 +344,7 @@ export default function ContactPage() {
                   <div className="text-center">
                     <Button
                       type="submit"
-                      className="bg-pink-600 hover:bg-pink-700 text-white px-8 py-3 rounded-full font-semibold"
+                      className="bg-[#EA4A3E] hover:bg-[#EA4A3E]/90 text-white px-8 py-3 rounded-full font-semibold"
                       disabled={isSubmitting}
                     >
                       {isSubmitting ? (

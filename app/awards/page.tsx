@@ -86,21 +86,38 @@ export default function AwardsPage() {
 
   return (
     <main className="bg-gradient-to-b from-gray-50 to-white">
-      {/* Hero Section */}
-      <section
-        className="min-h-[80vh] bg-cover bg-center flex items-center relative"
-        style={{ backgroundImage: "url('/images/eventum-img1.jpg')" }}
-      >
-        <div className="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
-        <div className="container mx-auto px-4 relative z-10 text-center">
-          <h1 className="text-4xl md:text-6xl font-extrabold mb-6 text-white drop-shadow-lg">
-            🏆 Bengaluru Fitness & Wellness Awards 2025
-          </h1>
-          <p className="text-lg md:text-xl text-gray-200 max-w-2xl mx-auto leading-relaxed">
-            Celebrate excellence, inspire progress, and honor leaders shaping the future of fitness & wellness.
-          </p>
-        </div>
-      </section>
+{/* Hero Section */}
+<section
+  className="min-h-[85vh] bg-cover bg-center flex items-center relative"
+  style={{ backgroundImage: "url('/images/eventum-img1.jpg')" }}
+>
+  {/* Gradient + Overlay */}
+  <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/80"></div>
+
+  <div className="container mx-auto px-4 relative z-10 text-center pt-20 md:pt-32">
+    {/* Heading */}
+    <h1 className="text-4xl md:text-6xl font-extrabold mb-6 text-white drop-shadow-lg leading-tight">
+      🏆 Bengaluru Fitness <br className="hidden sm:block" /> & Wellness Awards 2025
+    </h1>
+
+    {/* Subtext */}
+    <p className="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed mb-8">
+      Celebrate excellence, inspire progress, and honor leaders shaping the future of fitness & wellness.
+    </p>
+
+    {/* CTA Buttons */}
+    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+      <button className="px-8 py-3 rounded-full bg-[#EA4A3E] hover:bg-red-600 text-white font-semibold transition shadow-lg">
+        Nominate Now
+      </button>
+      <button className="px-8 py-3 rounded-full border-2 border-white text-white hover:bg-white hover:text-black font-semibold transition shadow-lg">
+        View Awards
+      </button>
+    </div>
+  </div>
+</section>
+
+
 
       <div className="container max-w-6xl mx-auto px-4 py-16">
         {/* Tab Navigation */}
@@ -108,9 +125,9 @@ export default function AwardsPage() {
           <Button
             onClick={() => setActiveTab("participate")}
             variant="ghost"
-            className={`flex-1 rounded-xl py-4 font-bold text-lg transition-all duration-300 ${
+            className={` cursor-pointer flex-1 rounded-xl py-4 font-bold text-lg transition-all duration-300 ${
               activeTab === "participate"
-                ? "bg-gradient-to-r from-[#fa0368] to-[#ff5a8a] text-white shadow-lg scale-105"
+                ? "bg-[#EA4A3E] text-white shadow-lg scale-105"
                 : "text-gray-600 hover:text-[#fa0368] hover:bg-gray-50"
             }`}
           >
@@ -120,9 +137,9 @@ export default function AwardsPage() {
           <Button
             onClick={() => setActiveTab("vote")}
             variant="ghost"
-            className={`flex-1 rounded-xl py-4 font-bold text-lg transition-all duration-300 ${
+            className={` cursor-pointer flex-1 rounded-xl py-4 font-bold text-lg transition-all duration-300 ${
               activeTab === "vote"
-                ? "bg-gradient-to-r from-[#fa0368] to-[#ff5a8a] text-white shadow-lg scale-105"
+                ? "bg-[#EA4A3E] text-white shadow-lg scale-105"
                 : "text-gray-600 hover:text-[#fa0368] hover:bg-gray-50"
             }`}
           >
@@ -146,8 +163,8 @@ export default function AwardsPage() {
             {/* Awards Categories */}
             <div className="space-y-12">
               <div className="text-center">
-                <h3 className="text-3xl font-bold text-[#fa0368] mb-3">Award Categories</h3>
-                <div className="w-20 h-1 bg-[#fa0368] mx-auto rounded-full"></div>
+                <h3 className="text-3xl font-bold text-[#EA4A3E] mb-3">Award Categories</h3>
+                <div className="w-20 h-1 bg-[#EA4A3E] mx-auto rounded-full"></div>
               </div>
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -158,10 +175,10 @@ export default function AwardsPage() {
                       key={category.id}
                       className="relative overflow-hidden rounded-2xl p-8 bg-white/80 backdrop-blur-lg shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border"
                     >
-                      <div className="absolute top-0 right-0 w-24 h-24 bg-[#fa0368]/5 rounded-bl-full"></div>
+                      <div className="absolute top-0 right-0 w-24 h-24 bg-[#EA4A3E]/5 rounded-bl-full"></div>
                       <div className="flex items-center gap-4 mb-6">
-                        <div className="p-3 bg-[#fa0368]/10 rounded-xl">
-                          <IconComponent className="h-8 w-8 text-[#fa0368]" />
+                        <div className="p-3 bg-[#EA4A3E]/10 rounded-xl">
+                          <IconComponent className="h-8 w-8 text-[#EA4A3E]" />
                         </div>
                         <div>
                           <h4 className="text-xl font-bold text-gray-800">{category.title}</h4>
@@ -171,12 +188,12 @@ export default function AwardsPage() {
                       <p className="text-gray-600 mb-6 leading-relaxed">{category.shortDescription}</p>
                       <div className="flex justify-between items-center">
                         <span className="text-sm text-gray-500 font-semibold">Nominees:</span>
-                        <span className="bg-[#fa0368] text-white px-3 py-1 rounded-full font-bold text-sm">
+                        <span className="bg-[#EA4A3E] text-white px-3 py-1 rounded-full font-bold text-sm">
                           {category.nominees.length}
                         </span>
                       </div>
                       <Link href={`/awards/${category.slug}`} className="block mt-6">
-                        <Button className="w-full bg-[#fa0368] text-white hover:bg-[#dc004e] transition-all rounded-xl">
+                        <Button className="w-full bg-[#EA4A3E] text-white hover:bg-[#dc004e] transition-all rounded-xl">
                           Learn More
                         </Button>
                       </Link>
@@ -197,7 +214,7 @@ export default function AwardsPage() {
               </h2>
               <p className="mt-6 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
                 Support your favorite nominees and help us recognize excellence. Voting closes on{" "}
-                <span className="font-bold text-[#fa0368]">May 31, 2025</span>.
+                <span className="font-bold text-[#EA4A3E]">May 31, 2025</span>.
               </p>
             </div>
 

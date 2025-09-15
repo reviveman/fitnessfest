@@ -7,6 +7,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -77,11 +78,13 @@ export default function Header() {
       <div className="bg-black w-full">
         <div className="max-w-6xl mx-auto px-4 py-5 md:py-7 flex justify-between items-center">
           {/* Logo */}
-          <img
-            src="/images/fitlogo.png"
-            alt="Fitness Fest Logo"
-            className="h-12 sm:h-14 md:h-16 w-auto"
-          />
+          <Link href="/" passHref>
+            <img
+              src="/images/fitlogo.png"
+              alt="Fitness Fest Logo"
+              className="h-12 sm:h-14 md:h-16 w-auto cursor-pointer"
+            />
+          </Link>
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8">
@@ -89,18 +92,20 @@ export default function Header() {
               <a
                 key={href}
                 href={href}
-                className="text-white hover:text-red-500 font-medium text-sm transition-colors"
+                className="relative group text-white font-medium text-sm transition-colors"
               >
                 {label}
+               <span className="absolute bottom-0 left-0 h-1 w-full origin-right scale-x-0 rounded-md bg-[#EA4A3E] transition-transform duration-500 group-hover:scale-x-100"></span>
+
               </a>
-            ))}
+            ))}  
           </nav>
 
           {/* CTA + Mobile Toggle */}
-          <div className="flex items-center space-x-2 sm:space-x-4">
+          <div className="flex items-center space-x-2 sm:space-x-4 cursor-pointer">
             <Button
               onClick={() => router.push("/tickets")}
-              className="bg-[#EA4A3E] hover:bg-red-600 text-white px-3 sm:px-5 py-2 rounded-md font-semibold text-xs sm:text-sm"
+              className="cursor-pointer bg-[#EA4A3E] hover:bg-red-600 text-white px-3 sm:px-5 py-2 rounded-md font-semibold text-xs sm:text-sm"
             >
               BUY TICKETS
             </Button>
