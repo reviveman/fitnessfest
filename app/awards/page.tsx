@@ -161,47 +161,66 @@ export default function AwardsPage() {
             </div>
 
             {/* Awards Categories */}
-            <div className="space-y-12">
-              <div className="text-center">
-                <h3 className="text-3xl font-bold text-[#EA4A3E] mb-3">Award Categories</h3>
-                <div className="w-20 h-1 bg-[#EA4A3E] mx-auto rounded-full"></div>
-              </div>
+ <div className="space-y-12">
+  {/* Section Title */}
+  <div className="text-center">
+    <h3 className="text-3xl font-bold text-[#EA4A3E] mb-3">Award Categories</h3>
+    <div className="w-20 h-1 bg-gradient-to-r from-[#EA4A3E] to-[#ff7b54] mx-auto rounded-full"></div>
+  </div>
 
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {awardCategories.map((category) => {
-                  const IconComponent = category.icon
-                  return (
-                    <div
-                      key={category.id}
-                      className="relative overflow-hidden rounded-2xl p-8 bg-white/80 backdrop-blur-lg shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border"
-                    >
-                      <div className="absolute top-0 right-0 w-24 h-24 bg-[#EA4A3E]/5 rounded-bl-full"></div>
-                      <div className="flex items-center gap-4 mb-6">
-                        <div className="p-3 bg-[#EA4A3E]/10 rounded-xl">
-                          <IconComponent className="h-8 w-8 text-[#EA4A3E]" />
-                        </div>
-                        <div>
-                          <h4 className="text-xl font-bold text-gray-800">{category.title}</h4>
-                          <span className="text-sm text-gray-500">{category.category}</span>
-                        </div>
-                      </div>
-                      <p className="text-gray-600 mb-6 leading-relaxed">{category.shortDescription}</p>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-gray-500 font-semibold">Nominees:</span>
-                        <span className="bg-[#EA4A3E] text-white px-3 py-1 rounded-full font-bold text-sm">
-                          {category.nominees.length}
-                        </span>
-                      </div>
-                      <Link href={`/awards/${category.slug}`} className="block mt-6">
-                        <Button className="w-full bg-[#EA4A3E] text-white hover:bg-[#dc004e] transition-all rounded-xl">
-                          Learn More
-                        </Button>
-                      </Link>
-                    </div>
-                  )
-                })}
+  {/* Cards Grid */}
+  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+    {awardCategories.map((category) => {
+      const IconComponent = category.icon
+      return (
+        <div
+          key={category.id}
+          className="group relative bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2"
+        >
+          {/* Gradient Accent Bar */}
+          <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#EA4A3E] to-[#ff7b54]"></div>
+
+          {/* Card Content */}
+          <div className="p-8 flex flex-col h-full">
+            {/* Icon + Title */}
+            <div className="flex items-center gap-4 mb-6">
+              <div className="p-3 bg-[#EA4A3E]/10 rounded-xl group-hover:bg-[#EA4A3E]/20 transition">
+                <IconComponent className="h-8 w-8 text-[#EA4A3E]" />
+              </div>
+              <div>
+                <h4 className="text-xl font-bold text-gray-900 group-hover:text-[#EA4A3E] transition">
+                  {category.title}
+                </h4>
+                <span className="text-sm text-gray-500">{category.category}</span>
               </div>
             </div>
+
+            {/* Description */}
+            <p className="text-gray-600 mb-6 flex-grow leading-relaxed line-clamp-3">
+              {category.shortDescription}
+            </p>
+
+            {/* Footer */}
+            <div className="flex items-center justify-between mt-auto">
+              <span className="text-sm font-semibold text-gray-500">Nominees:</span>
+              <span className="bg-[#EA4A3E] text-white px-3 py-1 rounded-full font-bold text-sm shadow-sm">
+                {category.nominees.length}
+              </span>
+            </div>
+
+            {/* CTA Button */}
+            <Link href={`/awards/${category.slug}`} className="block mt-6">
+              <Button className="w-full bg-gradient-to-r from-[#EA4A3E] to-[#ff7b54] text-white font-semibold rounded-xl hover:shadow-lg transition-all">
+                Learn More
+              </Button>
+            </Link>
+          </div>
+        </div>
+      )
+    })}
+  </div>
+</div>
+
           </div>
         )}
 

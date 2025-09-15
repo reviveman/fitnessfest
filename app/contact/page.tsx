@@ -61,7 +61,7 @@ export default function ContactPage() {
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       {/* Hero Section */}
-     <section className="min-h-[80vh] bg-cover bg-center py-20 flex items-center relative" style={{ backgroundImage: "url('/images/eventum-img1.jpg')" }}>
+     <section className="min-h-[70vh] bg-cover bg-center py-20 flex items-center relative" style={{ backgroundImage: "url('/images/eventum-img1.jpg')" }}>
   <div
   className="absolute inset-0 bg-black opacity-80"></div>
 
@@ -100,10 +100,13 @@ export default function ContactPage() {
                 </div>
                 <h3 className="text-xl font-bold text-slate-800 mb-2">CONFERENCE HALL</h3>
                 <p className="text-gray-600 text-sm">
-                  Riverside Building, County Hall,
-                  <br />
-                  London Eye, London, UK
-                </p>
+  Jayamahal, near Cantonment Railway Station Road,
+  <br />
+  Nandi Durga Road Extension,
+  <br />
+  Bengaluru 560006
+</p>
+
               </div>
 
               <div className="text-center">
@@ -114,7 +117,7 @@ export default function ContactPage() {
                 <p className="text-gray-600 text-sm">
                   Phone No: 020 7946 0970
                   <br />
-                  Email: booking@eventum.com
+                  Email: info@fitnessfest.in
                 </p>
               </div>
 
@@ -124,9 +127,9 @@ export default function ContactPage() {
                 </div>
                 <h3 className="text-xl font-bold text-slate-800 mb-2">EVENT SCHEDULES</h3>
                 <p className="text-gray-600 text-sm">
-                  Date: Sept 22 - 24 Sept 2023
+                  Date: Dec 20 - 21 Dec 2025
                   <br />
-                  Time: 09:00am to 18:00pm
+                  Time: 09:00am to 06:00pm
                 </p>
               </div>
             </div>
@@ -382,6 +385,7 @@ export default function ContactPage() {
                 </form>
               </Tabs>
             </div>
+            
           </div>
         </div>
       </section>
