@@ -4,13 +4,13 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Check, Calendar, Clock, MapPin, Star } from "lucide-react"
 
-// Ticket data with pink color scheme
+// Ticket data with brand color
 const tickets = [
   {
     id: "basic",
     name: "Basic Pass",
     price: 43,
-    color: "pink-300",
+    color: "brand",
     features: [
       "Back Row Seat",
       "Free Lunch & Snacks",
@@ -24,7 +24,7 @@ const tickets = [
     id: "premium",
     name: "Premium Pass",
     price: 143,
-    color: "pink-500",
+    color: "brand",
     features: [
       "Middle Row Seat",
       "Free Lunch & Snacks",
@@ -41,7 +41,7 @@ const tickets = [
     id: "platinum",
     name: "Platinum Pass",
     price: 243,
-    color: "pink-600",
+    color: "brand",
     features: [
       "Front Row Seat",
       "Free Lunch & Snacks",
@@ -69,39 +69,21 @@ function TicketCard({
   onSelect: () => void
 }) {
   const getColorClasses = (color: string) => {
-    switch (color) {
-      case "pink-400":
-        return {
-          header: "bg-pink-300",
-          border: selected ? "ring-2 ring-pink-300 shadow-lg shadow-pink-200" : "",
-          button: selected
-            ? "bg-pink-300 hover:bg-pink-400 text-white"
-            : "border-pink-300 text-pink-600 hover:bg-pink-50",
-        }
-      case "pink-400":
-        return {
-          header: "bg-pink-500",
-          border: selected ? "ring-2 ring-pink-500 shadow-lg shadow-pink-300" : "",
-          button: selected
-            ? "bg-pink-500 hover:bg-pink-600 text-white"
-            : "border-pink-500 text-pink-600 hover:bg-pink-50",
-        }
-      case "pink-400":
-        return {
-          header: "bg-pink-600",
-          border: selected ? "ring-2 ring-pink-600 shadow-lg shadow-pink-400" : "",
-          button: selected
-            ? "bg-pink-600 hover:bg-pink-700 text-white"
-            : "border-pink-600 text-pink-600 hover:bg-pink-50",
-        }
-      default:
-        return {
-          header: "bg-pink-500",
-          border: selected ? "ring-2 ring-pink-500" : "",
-          button: selected
-            ? "bg-pink-500 hover:bg-pink-600 text-white"
-            : "border-pink-500 text-pink-600 hover:bg-pink-50",
-        }
+    if (color === "brand") {
+      return {
+        header: "bg-[#EA4A3E]",
+        border: selected
+          ? "ring-2 ring-[#EA4A3E] shadow-lg shadow-red-200"
+          : "",
+        button: selected
+          ? "bg-[#EA4A3E] hover:bg-red-600 text-white"
+          : "border-[#EA4A3E] text-[#EA4A3E] hover:bg-red-50",
+      }
+    }
+    return {
+      header: "bg-gray-500",
+      border: "",
+      button: "border-gray-500 text-gray-600 hover:bg-gray-50",
     }
   }
 
@@ -109,10 +91,16 @@ function TicketCard({
 
   return (
     <div
-      className={`bg-white rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl ${colorClasses.border} ${ticket.recommended ? "transform scale-105 border-2 border-pink-400" : "hover:-translate-y-2"}`}
+      className={`bg-white rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl ${
+        colorClasses.border
+      } ${
+        ticket.recommended
+          ? "transform scale-105 border-2 border-[#EA4A3E]"
+          : "hover:-translate-y-2"
+      }`}
     >
       {ticket.recommended && (
-        <div className="bg-gradient-to-r from-pink-500 to-pink-600 text-white text-center py-2 text-sm font-medium flex items-center justify-center gap-1">
+        <div className="bg-gradient-to-r from-[#EA4A3E] to-red-700 text-white text-center py-2 text-sm font-medium flex items-center justify-center gap-1">
           <Star className="w-4 h-4 fill-current" />
           Most Popular
         </div>
@@ -146,10 +134,12 @@ function TicketCard({
         <Button
           onClick={onSelect}
           className={`w-full py-3 px-4 text-center rounded-lg font-semibold transition-all duration-200 border-2 ${
-            selected ? colorClasses.button : `${colorClasses.button} bg-white hover:shadow-md`
+            selected
+              ? colorClasses.button
+              : `${colorClasses.button} bg-white hover:shadow-md`
           }`}
         >
-          {selected ? "Select Ticket" : "Select Ticket"}
+          Select Ticket
         </Button>
       </div>
     </div>
@@ -161,65 +151,79 @@ export default function TicketsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="min-h-[60vh] bg-cover bg-center py-20 flex items-center relative" style={{ backgroundImage: "url('/images/eventum-img1.jpg')" }}>
-  <div
-  className="absolute inset-0 bg-black opacity-80"
-></div>
+        <section
+          className="min-h-[60vh] bg-cover bg-center py-20 flex items-center relative"
+          style={{ backgroundImage: "url('/images/eventum-img1.jpg')" }}
+        >
+          <div className="absolute inset-0 bg-black opacity-80"></div>
 
-  <div className="container mx-auto px-4 relative z-10">
-    <div className="max-w-3xl mx-auto text-center">
-   <h1 className="text-4xl md:text-5xl font-extrabold mb-6 text-transparent bg-clip-text bg-white">
-Get Your Tickets
-</h1>
-    </div>
-  </div>
-</section>
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="max-w-3xl mx-auto text-center">
+              <h1 className="text-4xl md:text-5xl font-extrabold mb-6 text-white">
+                Get Your Tickets
+              </h1>
+            </div>
+          </div>
+        </section>
 
         {/* Event Details */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
-              <div className="bg-gradient-to-br from-pink-50 to-white p-8 rounded-2xl shadow-lg border border-pink-100">
+              <div className="bg-gradient-to-br from-red-50 to-white p-8 rounded-2xl shadow-lg border border-red-100">
                 <div className="grid md:grid-cols-2 gap-8">
                   <div>
-                    <h2 className="text-3xl font-bold mb-6 text-gray-800">Event Details</h2>
+                    <h2 className="text-3xl font-bold mb-6 text-gray-800">
+                      Event Details
+                    </h2>
                     <ul className="space-y-4">
                       <li className="flex items-start">
-                        <div className="w-10 h-10 bg-pink-200 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
-                          <Calendar className="w-5 h-5 text-pink-600" />
+                        <div className="w-10 h-10 bg-red-200 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                          <Calendar className="w-5 h-5 text-[#EA4A3E]" />
                         </div>
                         <div>
-                          <span className="font-semibold block text-gray-800">Date</span>
-                          <span className="text-gray-600">July 17-19, 2024</span>
+                          <span className="font-semibold block text-gray-800">
+                            Date
+                          </span>
+                          <span className="text-gray-600">December 22-23, 2025</span>
                         </div>
                       </li>
                       <li className="flex items-start">
-                        <div className="w-10 h-10 bg-pink-100 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
-                          <Clock className="w-5 h-5 text-pink-600" />
+                        <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                          <Clock className="w-5 h-5 text-[#EA4A3E]" />
                         </div>
                         <div>
-                          <span className="font-semibold block text-gray-800">Time</span>
+                          <span className="font-semibold block text-gray-800">
+                            Time
+                          </span>
                           <span className="text-gray-600">9:00 AM - 6:00 PM</span>
                         </div>
                       </li>
                       <li className="flex items-start">
-                        <div className="w-10 h-10 bg-pink-100 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
-                          <MapPin className="w-5 h-5 text-pink-600" />
+                        <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                          <MapPin className="w-5 h-5 text-[#EA4A3E]" />
                         </div>
-                        <div>
-                          <span className="font-semibold block text-gray-800">Location</span>
-                          <span className="text-gray-600">Tech Convention Center</span>
-                          <span className="text-gray-600 block">Boston, Canada</span>
-                        </div>
+                       <div>
+  <span className="font-semibold block text-gray-800">
+    Location
+  </span>
+  <span className="text-gray-600">
+    Jayamahal, near Cantonment Railway Station Road,
+  </span>
+  <span className="text-gray-600 block">
+    Nandi Durga Road Extension, Bengaluru 560006
+  </span>
+</div>
+
                       </li>
                     </ul>
                   </div>
                   <div>
-                    <h2 className="text-3xl font-bold mb-6 text-gray-800">What to Expect</h2>
+                    <h2 className="text-3xl font-bold mb-6 text-gray-800">
+                      What to Expect
+                    </h2>
                     <ul className="space-y-3">
                       <li className="flex items-center">
                         <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-3">
@@ -243,7 +247,9 @@ Get Your Tickets
                         <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-3">
                           <Check className="w-4 h-4 text-green-600" />
                         </div>
-                        <span className="text-gray-700">Industry-Leading Speakers</span>
+                        <span className="text-gray-700">
+                          Industry-Leading Speakers
+                        </span>
                       </li>
                       <li className="flex items-center">
                         <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-3">
@@ -260,16 +266,16 @@ Get Your Tickets
         </section>
 
         {/* Tickets Section */}
-        <section className="py-20 bg-gradient-to-br from-pink-50 via-white to-pink-50">
+        <section className="py-20 bg-gradient-to-br from-red-50 via-white to-red-50">
           <div className="container mx-auto px-4">
             <div className="max-w-7xl mx-auto">
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-pink-600 to-pink-800 bg-clip-text text-transparent">
+                <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-[#EA4A3E] to-red-700 bg-clip-text text-transparent">
                   Choose Your Pass
                 </h2>
                 <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                  Select the perfect ticket for your DevCon 2024 experience. All passes include access to our main
-                  conference sessions.
+                  Select the perfect ticket for your DevCon 2024 experience. All
+                  passes include access to our main conference sessions.
                 </p>
               </div>
 
@@ -283,29 +289,29 @@ Get Your Tickets
                   />
                 ))}
               </div>
-
-             
             </div>
           </div>
         </section>
 
         {/* CTA Section */}
-        <section className="py-20 bg-gradient-to-r from-pink-600 to-pink-800 text-white">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="text-4xl font-bold mb-6">Ready to Join DevCon 2024?</h2>
-            <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-              Don't miss out on the biggest tech conference of the year. Limited seats available!
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button className="bg-white text-pink-600 hover:bg-gray-100 px-8 py-3 font-semibold rounded-full">
-                View Schedule
-              </Button>
-              <Button className="border-2 border-white bg-transprant text-white hover:bg-white hover:text-pink-600 px-8 py-3 font-semibold rounded-full">
-                Contact Us
-              </Button>
-            </div>
-          </div>
-        </section>
+        <section className="py-6 bg-gradient-to-r from-[#EA4A3E] to-red-700 text-white">
+  <div className="container mx-auto px-4 text-center">
+    <h2 className="text-3xl font-bold mb-4">Ready to Join DevCon 2024?</h2>
+    <p className="text-lg opacity-90 mb-6 max-w-2xl mx-auto">
+      Don't miss out on the biggest tech conference of the year. Limited
+      seats available!
+    </p>
+    <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+      <Button className="bg-white text-[#EA4A3E] hover:bg-gray-100 px-6 py-2 font-semibold rounded-full">
+        View Schedule
+      </Button>
+      <Button className="border-2 border-white bg-transparent text-white hover:bg-white hover:text-[#EA4A3E] px-6 py-2 font-semibold rounded-full">
+        Contact Us
+      </Button>
+    </div>
+  </div>
+</section>
+
       </main>
     </div>
   )

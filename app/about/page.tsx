@@ -29,7 +29,7 @@ export default function AboutPage() {
 <AboutEvent />
 
 <CardSection />
-<AboutWorkshop />
+{/* <AboutWorkshop /> */}
 
     </main>
   )

@@ -19,7 +19,7 @@ export default function CompetitionsPage() {
       <section className="py-20">
         <div className="container px-4">
           <div className="text-center mb-16">
-            <h2 className="inline-block bg-[#fa0368] px-12 py-3 text-black text-4xl font-extrabold uppercase transform -skew-x-6 relative z-10 shadow-[5px_5px_0_#FA03688A]">
+            <h2 className="inline-block bg-[#EA4A3E] px-12 py-3 text-black text-4xl font-extrabold uppercase transform -skew-x-6 relative z-10 shadow-[5px_5px_0_#FFC91F]">
               Competitions Schedule
             </h2>
             <p className="mt-6 text-gray-600 max-w-2xl mx-auto">
@@ -29,7 +29,7 @@ export default function CompetitionsPage() {
 
           <div className="relative max-w-6xl mx-auto px-4">
             {/* Timeline center line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-[#FA03688A]"></div>
+            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-[#EA4A3E]"></div>
 
             {/* Timeline items */}
             {[
@@ -73,7 +73,7 @@ export default function CompetitionsPage() {
 
                 {/* Content */}
                 <div className="bg-white p-6  rounded-lg shadow-md max-w-lg mx-auto">
-                  <div className="inline-block bg-[#fa0368] text-white px-4 py-1 rounded-full text-sm font-semibold mb-3">
+                  <div className="inline-block bg-[#EA4A3E] text-white px-4 py-1 rounded-full text-sm font-semibold mb-3">
                     {item.date}
                   </div>
                   <h3 className="text-xl font-bold text-gray-900 mb-2">{item.title}</h3>
@@ -106,7 +106,7 @@ export default function CompetitionsPage() {
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="inline-block bg-[#fa0368] px-12 py-3 text-black text-4xl font-extrabold uppercase transform -skew-x-6 relative z-10 shadow-[5px_5px_0_#FA03688A]">
+            <h2 className="inline-block bg-[#EA4A3E] px-12 py-3 text-black text-4xl font-extrabold uppercase transform -skew-x-6 relative z-10 shadow-[5px_5px_0_#55BCC1]">
               Competition Rules
             </h2>
             <p className="mt-6 text-gray-600 max-w-2xl mx-auto">
@@ -143,7 +143,7 @@ export default function CompetitionsPage() {
                 },
               ].map((rule, index) => (
                 <li key={index} className="relative pl-12">
-                  <div className="absolute left-0 top-0 w-8 h-8 bg-[#FA03688A] text-black rounded-full flex items-center justify-center font-bold text-white">
+                  <div className="absolute left-0 top-0 w-8 h-8 bg-[#EA4A3E] text-black rounded-full flex items-center justify-center font-bold text-white">
                     {index + 1}
                   </div>
                   <h4 className="text-xl font-bold text-gray-900 mb-2">{rule.title}</h4>
