@@ -30,64 +30,63 @@ export default function Schedule() {
           </p>
         </div>
 
- {/* Circles as Date Filters */}
-        <div className="mt-10 flex justify-center items-center">
-          <div className="relative flex md:inline-block">
-            {/* Left Circle */}
-            <div
-              // Change onClick date format to match events.js
-              onClick={() => setSelectedDate("November 22, 2025")}
-              className={clsx(
-                "cursor-pointer w-24 h-24 sm:w-28 sm:h-28 md:w-40 md:h-40 rounded-full flex flex-col items-center justify-center z-10 transition-all duration-300",
-                selectedDate === "November 22, 2025"
-                  ? "bg-[#EA4A3E] text-white shadow-lg"
-                  : "bg-gray-200 text-gray-800"
-              )}
-            >
-              <span className="text-sm sm:text-base md:text-lg font-bold">
-                20 DEC
-              </span>
-              <span
-                className={clsx(
-                  "text-xs sm:text-sm font-semibold",
-                  selectedDate === "November 22, 2025"
-                    ? "text-white"
-                    : "text-[#EA4A3E]"
-                )}
-              >
-                SATURDAY
-              </span>
-            </div>
+{/* Circles as Date Filters */}
+<div className="mt-10 flex justify-center items-center">
+  <div className="relative flex md:inline-block">
+    {/* Left Circle */}
+    <div
+      onClick={() => setSelectedDate("December 20, 2025")}
+      className={clsx(
+        "cursor-pointer w-24 h-24 sm:w-28 sm:h-28 md:w-40 md:h-40 rounded-full flex flex-col items-center justify-center z-10 transition-all duration-300 group",
+        selectedDate === "December 20, 2025"
+          ? "bg-[#EA4A3E] text-white shadow-xl scale-105"
+          : "bg-gray-200 text-gray-800 hover:bg-[#FFC91F] hover:text-white hover:shadow-lg hover:scale-105"
+      )}
+    >
+      <span className="text-sm sm:text-base md:text-lg font-bold">
+        20 DEC
+      </span>
+      <span
+        className={clsx(
+          "text-xs sm:text-sm font-semibold transition-colors duration-300",
+          selectedDate === "December 20, 2025"
+            ? "text-white"
+            : "text-[#EA4A3E] group-hover:text-white"
+        )}
+      >
+        SATURDAY
+      </span>
+    </div>
 
-            {/* Right Circle */}
-            <div
-              // Change onClick date format to match events.js
-              onClick={() => setSelectedDate("December 20, 2025")}
-              className={clsx(
-                `cursor-pointer w-24 h-24 sm:w-28 sm:h-28 md:w-44 md:h-44
-                 rounded-full flex flex-col items-center justify-center shadow-lg z-20
-                 -ml-1 sm:-ml-1 md:ml-0 md:absolute md:left-[80%] md:top-0 transition-all duration-300`,
-                selectedDate === "December 20, 2025"
-                  ? " bg-[#EA4A3E] text-white"
-                  : "bg-gray-200 text-gray-800"
-              )}
-            >
-              <span className="text-sm sm:text-base md:text-lg font-bold">
-                21 DEC
-              </span>
-              <span
-                className={clsx(
-                  "text-xs sm:text-sm font-semibold",
-                  selectedDate === "December 20, 2025"
-                    ? "text-white"
-                    : "text-[#EA4A3E]"
-                )}
-              >
-                SUNDAY
-              </span>
-            </div>
-          </div>
-        </div>
+    {/* Right Circle */}
+    <div
+      onClick={() => setSelectedDate("December 21, 2025")}
+      className={clsx(
+        `cursor-pointer w-24 h-24 sm:w-28 sm:h-28 md:w-44 md:h-44
+         rounded-full flex flex-col items-center justify-center shadow-lg z-20
+         -ml-1 sm:-ml-1 md:ml-0 md:absolute md:left-[80%] md:top-0 transition-all duration-300 group`,
+        selectedDate === "December 21, 2025"
+          ? "bg-[#EA4A3E] text-white shadow-xl scale-105"
+          : "bg-gray-200 text-gray-800 hover:bg-yellow-500 hover:text-white hover:shadow-lg hover:scale-105"
+      )}
+    >
+      <span className="text-sm sm:text-base md:text-lg font-bold">
+        21 DEC
+      </span>
+      <span
+        className={clsx(
+          "text-xs sm:text-sm font-semibold transition-colors duration-300",
+          selectedDate === "December 21, 2025"
+            ? "text-white"
+            : "text-[#EA4A3E] group-hover:text-white"
+        )}
+      >
+        SUNDAY
+      </span>
+    </div>
+  </div>
+</div>
+
       </div>
 
       {/* Schedule Items */}

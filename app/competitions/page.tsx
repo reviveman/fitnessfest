@@ -1,194 +1,159 @@
+"use client"
 import RegistrationForm from "@/components/registration-form"
+import { motion } from "framer-motion"
+import { Users, Trophy, Globe, Dumbbell } from "lucide-react"
 
 export default function CompetitionsPage() {
   return (
     <main className="flex-1">
-       <section className="min-h-[80vh] bg-cover bg-center py-20 flex items-center relative" style={{ backgroundImage: "url('/images/eventum-img1.jpg')" }}>
-  <div
-  className="absolute inset-0 bg-black opacity-80"></div>
+      {/* Hero Section */}
+      <section
+        className="min-h-[80vh] bg-cover bg-center relative flex items-center"
+        style={{ backgroundImage: "url('/images/eventum-img1.jpg')" }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80"></div>
+        <div className="container mx-auto px-4 relative z-10 text-center">
+          <motion.h1
+            initial={{ y: 40, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            className="text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#EA4A3E] to-[#FFC91F]"
+          >
+            Competitions
+          </motion.h1>
+          <p className="mt-6 text-gray-200 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+            Experience the thrill of world-class fitness competitions at the Bengaluru Fitness Festival 2025.
+          </p>
+        </div>
+      </section>
 
-  <div className="container mx-auto px-4 relative z-10">
-    <div className="max-w-3xl mx-auto text-center">
-   <h1 className="text-4xl md:text-5xl font-extrabold mb-6 text-transparent bg-clip-text bg-white">
- COMPETITIONS
-</h1>
-    </div>
-  </div>
-</section>
-
-      <section className="py-20">
+      {/* Competitions Schedule */}
+      <section className="py-24 bg-gray-50 relative">
         <div className="container px-4">
-          <div className="text-center mb-16">
-            <h2 className="inline-block bg-[#EA4A3E] px-12 py-3 text-black text-4xl font-extrabold uppercase transform -skew-x-6 relative z-10 shadow-[5px_5px_0_#FFC91F]">
-              Competitions Schedule
-            </h2>
-            <p className="mt-6 text-gray-600 max-w-2xl mx-auto">
-              Mark your calendar for these key dates and don't miss any of the action.
+          <div className="text-center mb-20">
+            <h2 className="text-4xl font-black uppercase text-gray-900 mb-4">Competitions Schedule</h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Mark your calendar for these key dates and don&apos;t miss any of the action.
             </p>
           </div>
 
-          <div className="relative max-w-6xl mx-auto px-4">
-            {/* Timeline center line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-[#EA4A3E]"></div>
+          <div className="relative max-w-5xl mx-auto">
+            {/* Vertical line */}
+            <div className="absolute top-0 bottom-0 left-1/2 w-1 bg-gradient-to-b from-[#EA4A3E] to-[#FFC91F] transform -translate-x-1/2"></div>
 
-            {/* Timeline items */}
             {[
               {
-                date: "June 15, 2025",
+                date: "December 20, 2025",
                 title: "Ultimate Yoga Flow Contest",
-                text: "Celebrate the essence of inner strength, poise, and breath at the Ultimate Yoga Flow Contest – where elegance meets endurance on the mat. Hosted as a signature event at the Bengaluru Fitness Festival 2025, this contest honors the beauty of yogic expression through a blend of traditional and creative flows.",
+                text: "Celebrate the essence of inner strength, poise, and breath through yogic expression at the signature Yoga Flow Contest.",
               },
               {
-                date: "June 16-17, 2025",
+                date: "December 20-21, 2025",
                 title: "Dance Fit Battle – “Last One Dancing”",
-                text: "Unleash your rhythm, energy, and passion for dance at the Dance Fit Battle – a high-energy event combining Zumba and freestyle dancing! Whether you're a Zumba enthusiast, a freestyle dancer, or both, this competition offers an exciting challenge where the last one dancing wins. Hosted as part of the Bengaluru Fitness Festival 2025, this contest promises an electrifying atmosphere with incredible performances, positive vibes, and great prizes.",
+                text: "Unleash your rhythm and energy in a high-energy Zumba and freestyle showdown with incredible vibes and prizes.",
               },
               {
-                date: "June 18, 2025",
+                date: "December 21, 2025",
                 title: "Push-Up & Plank King/Queen Challenge",
-                text: "Think you're strong? Prove it! Step up to the mat at the Push-Up & Plank King/Queen Challenge, one of the most exciting on-the-spot contests at the Bengaluru Fitness Festival 2025. No pre-registration, no complex formats — just pure strength, grit, and glory",
+                text: "No pre-registration, no complex formats — just pure strength, grit, and glory on the mat.",
               },
-              // {
-              //   date: "June 19, 2025",
-              //   title: "Extreme Obstacle Course",
-              //   text: "Navigate through a series of challenging obstacles designed to test agility, strength, and problem-solving.",
-              // },
-              // {
-              //   date: "June 20, 2025",
-              //   title: "Yoga & Flexibility Masters",
-              //   text: "A showcase of incredible flexibility, balance, and control in our yoga competition.",
-              // },
-              // {
-              //   date: "June 21, 2025",
-              //   title: "Team Challenge & Closing Ceremony",
-              //   text: "The festival concludes with the exciting Team Fitness Challenge followed by the awards ceremony.",
-              // },
             ].map((item, index) => (
               <div
                 key={index}
-                className={`relative mb-12 ${index % 2 === 0 ? "pr-[calc(50%+2rem)]" : "pl-[calc(50%+2rem)]"} md:mb-16`}
+                className={`relative flex flex-col md:flex-row items-center mb-16 ${
+                  index % 2 === 0 ? "md:flex-row-reverse" : ""
+                }`}
               >
-                {/* Timeline dot */}
-                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-5 h-5 rounded-full bg-[#f3c532] border-4 border-[#FA03688A] z-10"></div>
+                {/* Dot */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 z-10 w-6 h-6 bg-white border-4 border-[#EA4A3E] rounded-full"></div>
 
-                {/* Content */}
-                <div className="bg-white p-6  rounded-lg shadow-md max-w-lg mx-auto">
-                  <div className="inline-block bg-[#EA4A3E] text-white px-4 py-1 rounded-full text-sm font-semibold mb-3">
+                {/* Card */}
+                <motion.div
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                  className="bg-white p-8 rounded-2xl shadow-lg max-w-md"
+                >
+                  <span className="inline-block bg-gradient-to-r from-[#EA4A3E] to-[#FFC91F] text-white px-4 py-1 rounded-full text-sm font-semibold mb-3">
                     {item.date}
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{item.title}</h3>
-                  <p className="text-gray-600">{item.text}</p>
-                </div>
+                  </span>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-3">{item.title}</h3>
+                  <p className="text-gray-600 leading-relaxed">{item.text}</p>
+                </motion.div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-{/* Registration Form Section */}
-      {/* <section className="py-20 bg-gradient-to-r from-[#fa0368] to-[#FA03688A]">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="inline-block bg-[#fa0368] px-12 py-3 text-white text-4xl font-extrabold uppercase transform -skew-x-6 relative z-10 shadow-[5px_5px_0_#FA03688A]">
-              Register Now
-            </h2>
-            <p className="mt-6 text-white text-xl max-w-2xl mx-auto">
-              Secure your spot in the Fitness Fest competitions. Early bird registration closes on March 31, 2025.
+      {/* Competition Rules */}
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl font-black uppercase text-gray-900 mb-4">Competition Rules</h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Familiarize yourself with our guidelines to ensure fair play and safety for all participants.
             </p>
           </div>
 
-          <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden">
-            <RegistrationForm />
-          </div>
-        </div>
-      </section> */}
-
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="inline-block bg-[#EA4A3E] px-12 py-3 text-black text-4xl font-extrabold uppercase transform -skew-x-6 relative z-10 shadow-[5px_5px_0_#55BCC1]">
-              Competition Rules
-            </h2>
-            <p className="mt-6 text-gray-600 max-w-2xl mx-auto">
-              Familiarize yourself with our competition guidelines to ensure fair play and safety for all participants.
-            </p>
-          </div>
-
-          <div className="bg-white rounded-xl p-8 shadow-lg max-w-4xl mx-auto">
-            <ul className="space-y-8 list-none">
-              {[
-                {
-                  title: "Registration Requirements",
-                  text: "All participants must complete registration at least 14 days before the event. Valid ID and proof of fitness level may be required for certain competitions.",
-                },
-                {
-                  title: "Age Categories",
-                  text: "Competitions are divided into age categories: 18-29, 30-39, 40-49, and 50+. Participants must compete in their respective age group.",
-                },
-                {
-                  title: "Equipment & Attire",
-                  text: "Participants must wear appropriate athletic attire. Personal equipment must meet safety standards and be approved by judges before competition.",
-                },
-                {
-                  title: "Judging & Scoring",
-                  text: "All competitions are judged by certified professionals. Scoring systems vary by event and will be explained in detail at the pre-competition briefing.",
-                },
-                {
-                  title: "Health & Safety",
-                  text: "Participants must sign a waiver and are encouraged to undergo a medical check-up before competing. Medical staff will be present at all events.",
-                },
-                {
-                  title: "Code of Conduct",
-                  text: "Unsportsmanlike behavior will not be tolerated. Respect for fellow competitors, judges, and staff is mandatory. Violations may result in disqualification.",
-                },
-              ].map((rule, index) => (
-                <li key={index} className="relative pl-12">
-                  <div className="absolute left-0 top-0 w-8 h-8 bg-[#EA4A3E] text-black rounded-full flex items-center justify-center font-bold text-white">
-                    {index + 1}
-                  </div>
-                  <h4 className="text-xl font-bold text-gray-900 mb-2">{rule.title}</h4>
-                  <p className="text-gray-600">{rule.text}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
+          <div className="max-w-4xl mx-auto divide-y divide-gray-200 border rounded-2xl shadow-xl overflow-hidden">
             {[
               {
-                icon: "users",
-                number: "1,500+",
-                text: "Competitors",
+                title: "Registration Requirements",
+                text: "All participants must register 14 days before the event. Valid ID and proof of fitness may be required.",
               },
               {
-                icon: "trophy",
-                number: "$70,000",
-                text: "Total Prizes",
+                title: "Age Categories",
+                text: "Age groups: 18-29, 30-39, 40-49, and 50+. Participants must compete in their category.",
               },
               {
-                icon: "globe",
-                number: "35",
-                text: "Countries",
+                title: "Equipment & Attire",
+                text: "Wear athletic attire. Personal equipment must meet safety standards and be approved by judges.",
               },
               {
-                icon: "dumbbell",
-                number: "6",
-                text: "Competitions",
+                title: "Judging & Scoring",
+                text: "Certified professionals will judge. Scoring systems vary by event and will be explained before competitions.",
               },
-            ].map((stat, index) => (
-              <div
-                key={index}
-                className="bg-white p-8 rounded-xl text-center shadow-md transition-transform hover:-translate-y-1"
+              {
+                title: "Health & Safety",
+                text: "Waivers must be signed. Medical staff will be present. Participants are encouraged to get a medical check-up.",
+              },
+              {
+                title: "Code of Conduct",
+                text: "Respect fellow competitors, judges, and staff. Unsportsmanlike behavior may lead to disqualification.",
+              },
+            ].map((rule, index) => (
+              <details key={index} className="group open:bg-gray-50 px-6 py-5 cursor-pointer">
+                <summary className="flex justify-between items-center font-semibold text-gray-900">
+                  {rule.title}
+                  <span className="ml-4 text-[#EA4A3E] group-open:rotate-180 transition-transform">⌄</span>
+                </summary>
+                <p className="mt-2 text-gray-600">{rule.text}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-24 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 text-center">
+            {[
+              { icon: <Users className="w-10 h-10 text-[#EA4A3E]" />, number: "1,500+", text: "Competitors" },
+              { icon: <Trophy className="w-10 h-10 text-[#FFC91F]" />, number: "$70,000", text: "Total Prizes" },
+              { icon: <Globe className="w-10 h-10 text-[#70adb0]" />, number: "35", text: "Countries" },
+              { icon: <Dumbbell className="w-10 h-10 text-[#55BCC1]" />, number: "6", text: "Competitions" },
+            ].map((stat, i) => (
+              <motion.div
+                key={i}
+                whileHover={{ y: -8 }}
+                className="bg-white p-10 rounded-2xl shadow-lg"
               >
-                <div className="text-4xl text-[#70adb0] mb-4">
-                  {stat.icon === "users" && <i className="fas fa-users"></i>}
-                  {stat.icon === "trophy" && <i className="fas fa-trophy"></i>}
-                  {stat.icon === "globe" && <i className="fas fa-globe"></i>}
-                  {stat.icon === "dumbbell" && <i className="fas fa-dumbbell"></i>}
-                </div>
-                <div className="text-4xl font-extrabold text-gray-900 mb-2">{stat.number}</div>
-                <div className="text-sm font-semibold text-gray-500 uppercase">{stat.text}</div>
-              </div>
+                <div className="mb-4 flex justify-center">{stat.icon}</div>
+                <h3 className="text-4xl font-extrabold text-gray-900">{stat.number}</h3>
+                <p className="text-gray-600 font-medium mt-2">{stat.text}</p>
+              </motion.div>
             ))}
           </div>
         </div>

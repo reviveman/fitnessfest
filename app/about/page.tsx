@@ -7,7 +7,7 @@ export default function AboutPage() {
   return (
     <main className="">
       {/* Hero Section */}
-      <section className="min-h-[80vh] bg-cover bg-center py-20 flex items-center relative" style={{ backgroundImage: "url('/images/eventum-img1.jpg')" }}>
+      <section className="min-h-[75vh] bg-cover bg-center py-20 flex items-center relative" style={{ backgroundImage: "url('/images/eventum-img1.jpg')" }}>
   <div
   className="absolute inset-0 bg-black opacity-80"></div>
 

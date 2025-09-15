@@ -1,17 +1,26 @@
 "use client"
 
-import { 
+import {
   Menu, X, Phone, Mail,
   Instagram, Youtube, Twitter, Linkedin
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
   const router = useRouter()
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50)
+    }
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   const navLinks = [
     { href: "/", label: "HOME" },
@@ -30,8 +39,11 @@ export default function Header() {
   ]
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-black">
-      
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 bg-black transition-all duration-300 ${
+        isScrolled ? "py-2 shadow-md" : "py-4"
+      }`}
+    >
       {/* 🔹 Top Bar (desktop only) */}
       <div className="hidden md:block text-white py-2 max-w-6xl mx-auto px-4">
         <div className="flex justify-between items-center">
@@ -76,13 +88,19 @@ export default function Header() {
 
       {/* 🔹 Main Header */}
       <div className="bg-black w-full">
-        <div className="max-w-6xl mx-auto px-4 py-5 md:py-7 flex justify-between items-center">
+        <div
+          className={`max-w-6xl mx-auto px-4 flex justify-between items-center transition-all duration-300 ${
+            isScrolled ? "py-3" : "py-6"
+          }`}
+        >
           {/* Logo */}
           <Link href="/" passHref>
             <img
               src="/images/fitlogo.png"
               alt="Fitness Fest Logo"
-              className="h-12 sm:h-14 md:h-16 w-auto cursor-pointer"
+              className={`w-auto cursor-pointer transition-all duration-300 ${
+                isScrolled ? "h-12 sm:h-14 md:h-14" : "h-16 sm:h-20 md:h-24"
+              }`}
             />
           </Link>
 
@@ -95,10 +113,9 @@ export default function Header() {
                 className="relative group text-white font-medium text-sm transition-colors"
               >
                 {label}
-               <span className="absolute bottom-0 left-0 h-1 w-full origin-right scale-x-0 rounded-md bg-[#EA4A3E] transition-transform duration-500 group-hover:scale-x-100"></span>
-
+                <span className="absolute bottom-0 left-0 h-1 w-full origin-right scale-x-0 rounded-md bg-[#EA4A3E] transition-transform duration-500 group-hover:scale-x-100"></span>
               </a>
-            ))}  
+            ))}
           </nav>
 
           {/* CTA + Mobile Toggle */}
