@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server"
 import prisma from "@/lib/prisma"
+import { sendThankYouEmail } from "@/lib/nodemailer"
 
 export async function POST(request: Request) {
   try {
-    // Parse the request body
     const data = await request.json()
 
-    // Validate required fields
+    // ✅ Validate required fields
     if (!data.name || !data.email || !data.subject || !data.message) {
       return NextResponse.json(
         { error: "Missing required fields: name, email, subject, and message are required" },
@@ -14,7 +14,7 @@ export async function POST(request: Request) {
       )
     }
 
-    // Process form submission (same logic as in the server action)
+    // ✅ Save to DB
     const contact = await prisma.contactSubmission.create({
       data: {
         type: data.type || "general",
@@ -32,9 +32,13 @@ export async function POST(request: Request) {
       },
     })
 
+    // ✅ Send Thank-You Email
+    await sendThankYouEmail(data.email, data.name)
+    console.log(data)
+
     return NextResponse.json({ success: true, id: contact.id })
   } catch (error) {
-    console.error("Error processing contact form:", error)
+    console.error("❌ Error processing contact form:", error)
     return NextResponse.json({ error: "Failed to process contact form" }, { status: 500 })
   }
 }
