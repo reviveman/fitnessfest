@@ -1,6 +1,7 @@
 "use server"
 
 import prisma from "@/lib/prisma"
+import { sendThankYouEmail } from "@/lib/nodemailer"  // <-- import nodemailer helper
 
 export async function submitContactForm(formData: FormData) {
   try {
@@ -12,9 +13,7 @@ export async function submitContactForm(formData: FormData) {
     const message = formData.get("message") as string
     const type = formData.get("type") as string
 
-    // Validate required fields
     if (!name || !email || !subject || !message) {
-      console.error("Missing required fields in contact form submission")
       return {
         success: false,
         error: "Missing required fields. Please fill out all required fields.",
@@ -31,7 +30,6 @@ export async function submitContactForm(formData: FormData) {
       type,
     }
 
-    // Add type-specific fields
     if (type === "competitor") {
       submissionData.fitnessLevel = (formData.get("fitnessLevel") as string) || null
       submissionData.competitionInterest = (formData.get("competitionInterest") as string) || null
@@ -42,18 +40,27 @@ export async function submitContactForm(formData: FormData) {
       submissionData.sponsorshipLevel = (formData.get("sponsorshipLevel") as string) || null
     }
 
-    // Log the data being saved
-    console.log("Saving contact submission:", submissionData)
+    // Save to DB
+    const result = await prisma.contactSubmission.create({ data: submissionData })
+    console.log("✅ Contact submission saved:", result.id)
 
-    // Save to database
-    const result = await prisma.contactSubmission.create({
-      data: submissionData,
-    })
+    // Send thank-you email
+    try {
+      await sendThankYouEmail(email, name)
+      console.log(`📧 Email sent successfully to ${email}`)
+    } catch (emailErr) {
+      console.error("❌ Failed to send email:", emailErr)
+      // Still return success (DB worked), but notify about email failure
+      return {
+        success: true,
+        id: result.id,
+        emailError: "Saved to DB but failed to send email.",
+      }
+    }
 
-    console.log("Contact submission saved successfully with ID:", result.id)
     return { success: true, id: result.id }
   } catch (error) {
-    console.error("Error submitting contact form:", error)
+    console.error("❌ Error submitting contact form:", error)
     return {
       success: false,
       error: "Failed to send message. Please try again later.",
