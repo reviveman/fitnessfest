@@ -94,7 +94,7 @@ export default function AwardsPage() {
   {/* Gradient + Overlay */}
   <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/80"></div>
 
-  <div className="container mx-auto px-4 relative z-10 text-center pt-20 md:pt-32">
+  <div className="container mx-auto px-4 relative z-10 text-center pt-25 md:pt-32">
     {/* Heading */}
     <h1 className="text-4xl md:text-6xl font-extrabold mb-6 text-white drop-shadow-lg leading-tight">
       🏆 Bengaluru Fitness <br className="hidden sm:block" /> & Wellness Awards 2025
@@ -159,143 +159,148 @@ export default function AwardsPage() {
                 Be part of celebrating excellence in the fitness community. Submit your Nomination and shine on stage.
               </p>
             </div>
-
-            {/* Awards Categories */}
- <div className="space-y-12">
+{/* Awards Categories */}
+<div className="space-y-12">
   {/* Section Title */}
   <div className="text-center">
     <h3 className="text-3xl font-bold text-[#EA4A3E] mb-3">Award Categories</h3>
     <div className="w-20 h-1 bg-gradient-to-r from-[#EA4A3E] to-[#ff7b54] mx-auto rounded-full"></div>
   </div>
 
-  {/* Cards Grid */}
-  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-    {awardCategories.map((category) => {
-      const IconComponent = category.icon
-      return (
-        <div
-          key={category.id}
-          className="group relative bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2"
-        >
-          {/* Gradient Accent Bar */}
-          <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#EA4A3E] to-[#ff7b54]"></div>
+{/* Cards Grid */}
+<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+  {awardCategories.map((category) => (
+    <div
+      key={category.id}
+      className="group bg-white rounded-3xl shadow-md border border-gray-100 overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2"
+    >
+      {/* Large Full-Width Image */}
+      <div className="relative h-48 w-full overflow-hidden">
+        <img
+          src={category.image}
+          alt={category.title}
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+        />
+        {/* Overlay Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent"></div>
+        {/* Title Overlay */}
+        <div className="absolute bottom-4 left-4 text-white">
+          <h4 className="text-2xl font-bold">{category.title}</h4>
+          <span className="text-sm opacity-90">{category.category}</span>
+        </div>
+      </div>
 
-          {/* Card Content */}
-          <div className="p-8 flex flex-col h-full">
-            {/* Icon + Title */}
-            <div className="flex items-center gap-4 mb-6">
-              <div className="p-3 bg-[#EA4A3E]/10 rounded-xl group-hover:bg-[#EA4A3E]/20 transition">
-                <IconComponent className="h-8 w-8 text-[#EA4A3E]" />
-              </div>
-              <div>
-                <h4 className="text-xl font-bold text-gray-900 group-hover:text-[#EA4A3E] transition">
-                  {category.title}
-                </h4>
-                <span className="text-sm text-gray-500">{category.category}</span>
-              </div>
-            </div>
+      {/* Content */}
+      <div className="p-6 flex flex-col h-full">
+        {/* Description */}
+        <p className="text-gray-600 mb-6 flex-grow leading-relaxed line-clamp-3">
+          {category.shortDescription}
+        </p>
 
-            {/* Description */}
-            <p className="text-gray-600 mb-6 flex-grow leading-relaxed line-clamp-3">
-              {category.shortDescription}
-            </p>
+        {/* Footer */}
+        <div className="flex items-center justify-between text-sm font-medium text-gray-500">
+          <span>Nominees</span>
+          <span className="bg-[#EA4A3E] text-white px-3 py-1 rounded-full text-xs font-bold shadow-sm">
+            {category.nominees.length}
+          </span>
+        </div>
 
-            {/* Footer */}
-            <div className="flex items-center justify-between mt-auto">
-              <span className="text-sm font-semibold text-gray-500">Nominees:</span>
-              <span className="bg-[#EA4A3E] text-white px-3 py-1 rounded-full font-bold text-sm shadow-sm">
-                {category.nominees.length}
-              </span>
-            </div>
+        {/* CTA Button */}
+        <Link href={`/awards/${category.slug}`} className="block mt-6">
+          <Button className="w-full bg-gradient-to-r from-[#EA4A3E] to-[#ff7b54] text-white font-semibold rounded-xl hover:shadow-xl hover:scale-[1.02] transition-all">
+            Learn More
+          </Button>
+        </Link>
+      </div>
+    </div>
+  ))}
+</div>
 
-            {/* CTA Button */}
-            <Link href={`/awards/${category.slug}`} className="block mt-6">
-              <Button className="w-full bg-gradient-to-r from-[#EA4A3E] to-[#ff7b54] text-white font-semibold rounded-xl hover:shadow-lg transition-all">
-                Learn More
-              </Button>
+
+</div>
+
+
+          </div>
+        )}
+
+{/* Vote Tab */}
+{activeTab === "vote" && (
+  <div className="space-y-20">
+    <div className="text-center">
+      <h2 className="text-5xl md:text-6xl font-black uppercase text-gray-900 mb-6">
+        Vote for Excellence
+      </h2>
+      <p className="mt-6 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+        Support your favorite nominees and help us recognize excellence. Voting closes on{" "}
+        <span className="font-bold text-[#EA4A3E]">Dec 10, 2025</span>.
+      </p>
+    </div>
+
+    {showVoteSuccess && (
+      <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 text-green-800 px-6 py-4 rounded-2xl max-w-4xl mx-auto shadow-md">
+        <div className="flex items-center gap-3">
+          <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+            <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fillRule="evenodd"
+                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </div>
+          <p className="font-semibold">Thank you! Your vote has been recorded.</p>
+        </div>
+      </div>
+    )}
+
+<div className="space-y-20">
+  {awardCategories.map((category) => (
+    <div key={category.id} className="space-y-10">
+      {/* Category Header Card */}
+      <div className="relative bg-white rounded-3xl shadow-md border border-gray-100 overflow-hidden transition-all hover:shadow-xl hover:-translate-y-1">
+        {/* Banner Image */}
+        <div className="relative h-55 w-full overflow-hidden">
+          <img
+            src={category.image}
+            alt={category.title}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent"></div>
+
+          {/* Title Overlay */}
+          <div className="absolute bottom-4 left-6 text-white">
+            <h3 className="text-2xl md:text-3xl font-bold">{category.title}</h3>
+            <Link
+              href={`/awards/${category.slug}`}
+              className="text-sm font-medium text-white/90 hover:text-white underline"
+            >
+              View Details →
             </Link>
           </div>
         </div>
-      )
-    })}
-  </div>
+      </div>
+
+      {/* Nominees Grid */}
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {category.nominees.map((nominee) => (
+          <VotingCard
+            key={nominee.id}
+            nominee={nominee}
+            categoryId={category.id}
+            color={category.color}
+            onVote={handleVote}
+            hasVoted={hasVoted[category.id] || false}
+            isSubmitting={isSubmitting}
+          />
+        ))}
+      </div>
+    </div>
+  ))}
 </div>
 
-          </div>
-        )}
+  </div>
+)}
 
-        {/* Vote Tab */}
-        {activeTab === "vote" && (
-          <div className="space-y-20">
-            <div className="text-center">
-              <h2 className="text-5xl md:text-6xl font-black uppercase text-gray-900 mb-6">
-                Vote for Excellence
-              </h2>
-              <p className="mt-6 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                Support your favorite nominees and help us recognize excellence. Voting closes on{" "}
-                <span className="font-bold text-[#EA4A3E]">May 31, 2025</span>.
-              </p>
-            </div>
-
-            {showVoteSuccess && (
-              <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 text-green-800 px-6 py-4 rounded-2xl max-w-4xl mx-auto shadow-md">
-                <div className="flex items-center gap-3">
-                  <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                    <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </div>
-                  <p className="font-semibold">Thank you! Your vote has been recorded.</p>
-                </div>
-              </div>
-            )}
-
-            <div className="space-y-20">
-              {awardCategories.map((category) => {
-                const IconComponent = category.icon
-                return (
-                  <div key={category.id} className="space-y-8">
-                    <div className="text-center">
-                      <div className="flex justify-center items-center gap-4 mb-4">
-                        <div className="p-4 bg-gradient-to-br from-[#fa0368] to-[#ff5a8a] rounded-2xl shadow-lg">
-                          <IconComponent className="h-10 w-10 text-white" />
-                        </div>
-                        <div>
-                          <h3 className="text-3xl font-bold text-gray-800">{category.title}</h3>
-                          <Link
-                            href={`/awards/${category.slug}`}
-                            className="text-[#fa0368] hover:text-[#dc004e] text-sm transition"
-                          >
-                            View Details →
-                          </Link>
-                        </div>
-                      </div>
-                      <div className="w-20 h-1 bg-[#fa0368] mx-auto rounded-full"></div>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                      {category.nominees.map((nominee) => (
-                        <VotingCard
-                          key={nominee.id}
-                          nominee={nominee}
-                          categoryId={category.id}
-                          color={category.color}
-                          onVote={handleVote}
-                          hasVoted={hasVoted[category.id] || false}
-                          isSubmitting={isSubmitting}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-        )}
       </div>
     </main>
   )

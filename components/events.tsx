@@ -120,7 +120,7 @@ export default function Schedule() {
 
           <div className="mt-auto">
             <Button
-              className="w-full bg-gradient-to-r from-[#EA4A3E] to-[#ff7b54] text-white font-semibold rounded-full px-6 py-2 transition-all duration-300 hover:shadow-lg hover:from-[#d63b30] hover:to-[#ff6339]"
+              className="w-full cursor-pointer bg-gradient-to-r from-[#EA4A3E] to-[#ff7b54] text-white font-semibold rounded-full px-6 py-2 transition-all duration-300 hover:shadow-lg hover:from-[#d63b30] hover:to-[#ff6339]"
               onClick={() => router.push(`/event/${item.id}`)}
             >
               Learn More
