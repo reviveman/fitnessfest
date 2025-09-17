@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export default function Timer() {
   return (
@@ -59,12 +60,17 @@ Join a vibrant celebration where strength meets spirit, and wellness takes cente
                 <Button className="bg-[#EA4A3E] hover:bg-red-600 text-white px-8 py-6 rounded-full font-medium text-lg">
                   BOOK NOW
                 </Button>
-                <Button
+
+                <Link href={"/event"}>
+                        <Button
                   variant="outline"
-                  className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-slate-800 px-8 py-6 rounded-full font-medium text-lg"
+                  className="cursor-pointer bg-transparent border-2 border-white text-white hover:bg-white hover:text-slate-800 px-8 py-6 rounded-full font-medium text-lg"
                 >
                   VIEW SCHEDULE
                 </Button>
+                
+                </Link>
+        
               </div>
             </div>
           </div>
