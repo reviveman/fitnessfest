@@ -75,7 +75,7 @@ const ThankYouPage = ({ type }: { type: string }) => {
   return (
     <div className="mt-8 flex min-h-[60vh] flex-col items-center justify-start bg-white px-4 py-12 text-center">
       {/* Header Card */}
-      <div className="mt-8 w-full max-w-2xl rounded-t-lg bg-[#172554] py-4 text-2xl font-bold text-white">
+      <div className="mt-8 w-full max-w-2xl rounded-t-lg bg-[#EA4A3E] py-4 text-2xl font-bold text-white">
         {heading}
       </div>
 

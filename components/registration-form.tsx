@@ -80,7 +80,7 @@ export default function RegistrationForm() {
           description: `Thank you for registering for the ${competitions.find((c) => c.id === data.competition)?.name}. We'll be in touch soon with more details.`,
         })
         form.reset()
-        console.log("Registration submitted successfully with ID:", result.id)
+        // console.log("Registration submitted successfully with ID:", result.id)
       } else {
         throw new Error(result.error || "Failed to submit registration")
       }

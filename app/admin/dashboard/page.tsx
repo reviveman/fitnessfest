@@ -57,19 +57,19 @@ export default async function DashboardPage() {
     try {
       contactCount = await prisma.contactSubmission.count()
     } catch (error) {
-      console.log("ContactSubmission model not available yet")
+      // console.log("ContactSubmission model not available yet")
     }
 
     try {
       registrationCount = await prisma.competitionRegistration.count()
     } catch (error) {
-      console.log("CompetitionRegistration model not available yet")
+      // console.log("CompetitionRegistration model not available yet")
     }
 
     try {
       voteCount = await prisma.awardVote.count()
     } catch (error) {
-      console.log("AwardVote model not available yet")
+      // console.log("AwardVote model not available yet")
     }
 
     // Get recent nominations
@@ -105,7 +105,7 @@ export default async function DashboardPage() {
         },
       })
     } catch (error) {
-      console.log("ContactSubmission model not available yet")
+      // console.log("ContactSubmission model not available yet")
     }
 
     // Get recent registrations (if available)
@@ -127,7 +127,7 @@ export default async function DashboardPage() {
         },
       })
     } catch (error) {
-      console.log("CompetitionRegistration model not available yet")
+      // console.log("CompetitionRegistration model not available yet")
     }
 
     // Get recent votes (if available)
@@ -148,7 +148,7 @@ export default async function DashboardPage() {
         },
       })
     } catch (error) {
-      console.log("AwardVote model not available yet")
+      // console.log("AwardVote model not available yet")
     }
 
     return (

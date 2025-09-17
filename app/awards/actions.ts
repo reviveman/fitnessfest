@@ -14,8 +14,8 @@ export async function submitVote(
   categoryTitle: string,
 ): Promise<{ success: boolean; error?: string; id?: string }> {
   try {
-    console.log("=== VOTE SUBMISSION ACTION ===")
-    console.log("Submitting vote via API...")
+    // console.log("=== VOTE SUBMISSION ACTION ===")
+    // console.log("Submitting vote via API...")
 
     // Validate required fields
     if (!voterInfo.name || !voterInfo.email || !voterInfo.phone || !voterInfo.nomineeId || !voterInfo.categoryId) {

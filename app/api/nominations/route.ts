@@ -30,16 +30,16 @@ function generateUniqueFilename(originalName: string): string {
 }
 
 export async function POST(request: NextRequest) {
-  console.log("=== NOMINATION SUBMISSION STARTED ===")
-  console.log("Request URL:", request.url)
-  console.log("Request method:", request.method)
+  // console.log("=== NOMINATION SUBMISSION STARTED ===")
+  // console.log("Request URL:", request.url)
+  // console.log("Request method:", request.method)
 
   try {
     // Check if BLOB token exists
-    console.log("BLOB_READ_WRITE_TOKEN exists:", !!process.env.BLOB_READ_WRITE_TOKEN)
+    // console.log("BLOB_READ_WRITE_TOKEN exists:", !!process.env.BLOB_READ_WRITE_TOKEN)
 
     const formData = await request.formData()
-    console.log("Form data received, entries count:", Array.from(formData.entries()).length)
+    // console.log("Form data received, entries count:", Array.from(formData.entries()).length)
 
     // Extract basic form data
     const data: Record<string, any> = {}
@@ -47,11 +47,11 @@ export async function POST(request: NextRequest) {
 
     for (const [key, value] of formData.entries()) {
       if (value instanceof File) {
-        console.log(`File found: ${key} = ${value.name} (${value.size} bytes)`)
+        // console.log(`File found: ${key} = ${value.name} (${value.size} bytes)`)
         if (!files[key]) files[key] = []
         files[key].push(value)
       } else {
-        console.log(`Data field: ${key} = ${value}`)
+        // console.log(`Data field: ${key} = ${value}`)
         // Handle boolean conversion for checkboxes
         if (key === "agreeToTerms") {
           data[key] = value === "true" || value === "on"
@@ -61,29 +61,29 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    console.log("Extracted data keys:", Object.keys(data))
-    console.log("Extracted file keys:", Object.keys(files))
+    // console.log("Extracted data keys:", Object.keys(data))
+    // console.log("Extracted file keys:", Object.keys(files))
 
     // Validate required fields
-    console.log("Validating data...")
+    // console.log("Validating data...")
     const validatedData = nominationSchema.parse(data)
-    console.log("Validation successful")
+    // console.log("Validation successful")
 
     // Create nomination ID for file organization
     const nominationTimestamp = Date.now()
     const nominationFolder = `nomination-${nominationTimestamp}`
-    console.log("Nomination folder:", nominationFolder)
+    // console.log("Nomination folder:", nominationFolder)
 
     // Upload files to Vercel Blob
     const uploadedFiles: Record<string, string[]> = {}
 
     for (const [fieldName, fileList] of Object.entries(files)) {
-      console.log(`Processing ${fileList.length} files for field: ${fieldName}`)
+      // console.log(`Processing ${fileList.length} files for field: ${fieldName}`)
       uploadedFiles[fieldName] = []
 
       for (const file of fileList) {
         try {
-          console.log(`Uploading file: ${file.name} (${file.size} bytes)`)
+          // console.log(`Uploading file: ${file.name} (${file.size} bytes)`)
 
           // Check if file is too large (5MB limit)
           if (file.size > 5 * 1024 * 1024) {
@@ -94,14 +94,14 @@ export async function POST(request: NextRequest) {
           const filename = generateUniqueFilename(file.name)
           const filepath = `${nominationFolder}/${filename}`
 
-          console.log(`Uploading to Vercel Blob: ${filepath}`)
+          // console.log(`Uploading to Vercel Blob: ${filepath}`)
 
           const blob = await put(filepath, file, {
             access: "public",
             token: process.env.BLOB_READ_WRITE_TOKEN,
           })
 
-          console.log(`File uploaded successfully: ${blob.url}`)
+          // console.log(`File uploaded successfully: ${blob.url}`)
           uploadedFiles[fieldName].push(blob.url)
         } catch (error) {
           console.error(`Error uploading file ${file.name}:`, error)
@@ -112,8 +112,8 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    console.log("All files uploaded successfully")
-    console.log("Saving to database...")
+    // console.log("All files uploaded successfully")
+    // console.log("Saving to database...")
 
     // Save to database
     const nomination = await prisma.nomination.create({
@@ -169,8 +169,8 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    console.log("Nomination saved successfully:", nomination.id)
-    console.log("=== NOMINATION SUBMISSION COMPLETED ===")
+    // console.log("Nomination saved successfully:", nomination.id)
+    // console.log("=== NOMINATION SUBMISSION COMPLETED ===")
 
     return NextResponse.json({
       success: true,

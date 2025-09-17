@@ -3,10 +3,10 @@ import { prisma } from "@/lib/prisma"
 
 export async function POST(request: NextRequest) {
   try {
-    console.log("=== PUBLIC VOTE SUBMISSION API ===")
+    // console.log("=== PUBLIC VOTE SUBMISSION API ===")
 
     const body = await request.json()
-    console.log("Received vote data:", body)
+    // console.log("Received vote data:", body)
 
     const { voterInfo, nomineeName, categoryName } = body
 
@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if this voter has already voted for this category
-    console.log("Checking for existing vote...")
+    // console.log("Checking for existing vote...")
     const existingVote = await prisma.awardVote.findFirst({
       where: {
         voterEmail: voterInfo.email.toLowerCase().trim(),
@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
     })
 
     if (existingVote) {
-      console.log("Voter has already voted for this category")
+      // console.log("Voter has already voted for this category")
       return NextResponse.json(
         {
           success: false,
@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    console.log("Creating vote record...")
+    // console.log("Creating vote record...")
 
     // Save vote to database
     const result = await prisma.awardVote.create({

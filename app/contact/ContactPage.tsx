@@ -2,7 +2,7 @@
 
 import type React from "react";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,14 +20,16 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs";
-import { Mail, Phone, MapPin, Send, Award, Dumbbell } from "lucide-react";
+import { Mail, Phone, Award, Dumbbell } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { submitContactForm } from "./actions";
+import ThankYouPage from "@/components/thankYou/ThankYouPage";
 
 export default function ContactPage() {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   // default to visitor if no ?type provided
   const typeFromUrl = searchParams.get("type")?.toLowerCase() || "visitor";
@@ -38,40 +40,56 @@ export default function ContactPage() {
     setActiveTab(typeFromUrl);
   }, [typeFromUrl]);
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    setIsSubmitting(true);
+const handleSubmit = async (event: React.FormEvent) => {
+  event.preventDefault();
+  setIsSubmitting(true);
 
-    try {
-      const formData = new FormData(event.target as HTMLFormElement);
-      formData.append("type", activeTab);
+  try {
+    const formData = new FormData(event.target as HTMLFormElement);
+    formData.append("type", activeTab);
 
-      const result = await submitContactForm(formData);
+    // 🚀 Redirect first (instant feedback to user)
+    router.push(`/contact?type=${activeTab}`);
 
-      if (result.success) {
-        toast({
-          title: "Message sent!",
-          description: "We'll get back to you as soon as possible.",
-          variant: "default",
-        });
-
-        (event.target as HTMLFormElement).reset();
-        console.log("Contact form submitted successfully with ID:", result.id);
-      } else {
-        throw new Error(result.error || "Something went wrong");
-      }
-    } catch (error: any) {
-      console.error("Contact form submission error:", error);
-      toast({
-        title: "Error",
-        description:
-          error.message || "Failed to send your message. Please try again.",
-        variant: "destructive",
+    // Run submission logic in background
+    submitContactForm(formData)
+      .then((result) => {
+        if (!result.success) {
+          console.error("Background submission failed:", result.error);
+        }
+      })
+      .catch((err) => {
+        console.error("Submission error:", err);
       });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  } catch (error: any) {
+    console.error("Contact form submission error:", error);
+    toast({
+      title: "Error",
+      description:
+        error.message || "Failed to send your message. Please try again.",
+      variant: "destructive",
+    });
+    setIsSubmitting(false);
+  }
+};
+
+
+  // ✅ If redirected with ?type=visitor/exhibitor/sponsor → show Thank You page
+  if (searchParams.has("type")) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <ThankYouPage type={typeFromUrl} />
+        {/* <div className="mt-6 text-center">
+          <Button
+            onClick={() => router.push("/contact")}
+            className="bg-[#EA4A3E] hover:bg-[#EA4A3E]/90 text-white px-6 py-2 rounded-full"
+          >
+            Submit Another Response
+          </Button>
+        </div> */}
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -89,27 +107,26 @@ export default function ContactPage() {
       {/* Contact */}
       <section className="py-16">
         <div className="container max-w-5xl mx-auto px-4">
-          {/* Contact Form */}
           <div className="bg-white rounded-lg shadow-lg p-8">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
               <TabsList className="grid grid-cols-3 mb-6 bg-gray-100">
                 <TabsTrigger
                   value="visitor"
-                  className="flex items-center gap-2 data-[state=active]:bg-[#EA4A3E] data-[state=active]:text-white"
+                  className=" cursor-pointer flex items-center gap-2 data-[state=active]:bg-[#EA4A3E] data-[state=active]:text-white"
                 >
                   <Mail className="w-4 h-4" />
                   Visitor
                 </TabsTrigger>
                 <TabsTrigger
                   value="exhibitor"
-                  className="flex items-center gap-2 data-[state=active]:bg-[#EA4A3E] data-[state=active]:text-white"
+                  className=" cursor-pointer flex items-center gap-2 data-[state=active]:bg-[#EA4A3E] data-[state=active]:text-white"
                 >
                   <Dumbbell className="w-4 h-4" />
                   Exhibitor
                 </TabsTrigger>
                 <TabsTrigger
                   value="sponsor"
-                  className="flex items-center gap-2 data-[state=active]:bg-[#EA4A3E] data-[state=active]:text-white"
+                  className=" cursor-pointer flex items-center gap-2 data-[state=active]:bg-[#EA4A3E] data-[state=active]:text-white"
                 >
                   <Award className="w-4 h-4" />
                   Sponsor
@@ -120,8 +137,7 @@ export default function ContactPage() {
                 {/* Visitor Tab */}
                 <TabsContent value="visitor">
                   <p className="text-sm text-gray-600 mb-4">
-                    Have a question about our event? Our team is ready to help
-                    you with any general inquiries.
+                    Have a question about our event? Our team is ready to help you with any general inquiries.
                   </p>
                 </TabsContent>
 
@@ -141,13 +157,9 @@ export default function ContactPage() {
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="beginner">Beginner</SelectItem>
-                        <SelectItem value="intermediate">
-                          Intermediate
-                        </SelectItem>
+                        <SelectItem value="intermediate">Intermediate</SelectItem>
                         <SelectItem value="advanced">Advanced</SelectItem>
-                        <SelectItem value="elite">
-                          Elite/Professional
-                        </SelectItem>
+                        <SelectItem value="elite">Elite/Professional</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -160,12 +172,8 @@ export default function ContactPage() {
                         <SelectValue placeholder="Select competition" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="powerlifting">
-                          Powerlifting Challenge
-                        </SelectItem>
-                        <SelectItem value="crossfit">
-                          CrossFit Championship
-                        </SelectItem>
+                        <SelectItem value="powerlifting">Powerlifting Challenge</SelectItem>
+                        <SelectItem value="crossfit">CrossFit Championship</SelectItem>
                         <SelectItem value="marathon">Fitness Marathon</SelectItem>
                         <SelectItem value="obstacle">Obstacle Course</SelectItem>
                         <SelectItem value="yoga">Yoga & Flexibility</SelectItem>
@@ -201,10 +209,7 @@ export default function ContactPage() {
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Company Website
                     </label>
-                    <Input
-                      name="website"
-                      placeholder="https://yourcompany.com"
-                    />
+                    <Input name="website" placeholder="https://yourcompany.com" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -275,10 +280,10 @@ export default function ContactPage() {
                 <div className="text-center">
                   <Button
                     type="submit"
-                    className="bg-[#EA4A3E] hover:bg-[#EA4A3E]/90 text-white px-8 py-3 rounded-full font-semibold"
+                    className="bg-[#EA4A3E] hover:bg-[#EA4A3E]/90 text-white px-8 py-3 rounded-full font-semibold cursor-pointer"
                     disabled={isSubmitting}
                   >
-                    {isSubmitting ? "Sending..." : "Submit Message"}
+                    {isSubmitting ? "Sending..." : "Submit"}
                   </Button>
                 </div>
               </form>

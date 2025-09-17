@@ -19,7 +19,14 @@ const montserrat = Montserrat({
 export const metadata = {
   title: "Fitness Fest - Event & Conference",
   description: "Celebrating excellence in fitness and wellness",
-}
+  icons: {
+    icon: "/favicon.ico",               // default browser tab icon
+    shortcut: "/favicon-32x32.png",     // fallback
+    apple: "/apple-touch-icon.png",     // iOS home screen icon
+  },
+  manifest: "/site.webmanifest",        // enables PWA support with Android icons
+};
+
 
 // ✅ Add viewport for proper responsive scaling
 export const viewport = {
