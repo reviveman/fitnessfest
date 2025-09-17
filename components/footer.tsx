@@ -1,6 +1,34 @@
+"use client"
+
+import { useState } from "react"
 import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa"
 
 export default function Footer() {
+  const [email, setEmail] = useState("")
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setStatus("loading")
+
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      })
+
+      if (res.ok) {
+        setStatus("success")
+        setEmail("")
+      } else {
+        setStatus("error")
+      }
+    } catch {
+      setStatus("error")
+    }
+  }
+
   return (
     <footer
       className="relative bg-cover bg-center bg-no-repeat text-white py-16"
@@ -70,7 +98,6 @@ export default function Footer() {
               <li><a href="/event">Schedule</a></li>
               <li><a href="#">Wellness Updates</a></li>
               <li><a href="#">Partners</a></li>
-              {/* <li><a href="#">Terms & Policies</a></li> */}
             </ul>
           </div>
 
@@ -81,7 +108,6 @@ export default function Footer() {
               <li><a href="#">Support</a></li>
               <li><a href="/contact">Contact Us</a></li>
               <li><a href="/faq">FAQ</a></li>
-              {/* <li><a href="#">Fitness Community</a></li> */}
               <li><a href="/about/maxx">Organiser</a></li>
             </ul>
           </div>
@@ -92,14 +118,30 @@ export default function Footer() {
             <p className="text-sm text-gray-300 mb-4">
               Subscribe to receive the latest updates, event news, and exclusive fitness tips straight to your inbox.
             </p>
-            <input
-              type="email"
-              placeholder="Your Email.."
-              className="w-full rounded-full px-4 py-3 mb-3 text-gray-900 bg-white focus:outline-none"
-            />
-            <button className="w-full bg-[#EA4A3E] hover:bg-pink-700 rounded-full px-4 py-3 font-semibold text-white transition-colors">
-              SUBSCRIBE NOW
-            </button>
+            <form onSubmit={handleSubmit} className="flex flex-col">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Your Email.."
+                required
+                className="w-full rounded-full px-4 py-3 mb-3 text-gray-900 bg-white focus:outline-none"
+              />
+              <button
+                type="submit"
+                className="w-full bg-[#EA4A3E] hover:bg-pink-700 rounded-full px-4 py-3 font-semibold text-white transition-colors"
+                disabled={status === "loading"}
+              >
+                {status === "loading" ? "Subscribing..." : "SUBSCRIBE NOW"}
+              </button>
+            </form>
+
+            {status === "success" && (
+              <p className="text-green-400 mt-3"> Thank you for subscribing!</p>
+            )}
+            {status === "error" && (
+              <p className="text-red-400 mt-3">❌ Something went wrong. Try again.</p>
+            )}
           </div>
         </div>
 
