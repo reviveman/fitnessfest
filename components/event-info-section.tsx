@@ -75,69 +75,79 @@ export default function EventInfoSection() {
       </div>
 
       {/* Event Details Section */}
-      <div className="w-full bg-gray-200 mt-25  lg:px-40 relative">
-        <div className="sm:py-5 px-4 md:px-16 lg:px-32 grid md:grid-cols-2 gap-8 lg:-translate-y-1/2 items-center max-w-6xl mx-auto px-4">
-          <div className="bg-white p-8 rounded-4xl shadow border">
-            <div className="flex items-center space-x-6">
-              <div className="bg-[#EA4A3E] rounded-2xl p-3">
-                <MapPin className="w-10 h-10 text-white" />
-              </div>
-              <div>
-                <h3 className="font-bold text-gray-800 text-lg mb-2">WHERE IS THE EVENT :</h3>
-                <p className="text-gray-600 text-sm">
-                  Jayamahal, near Cantonment Railway Station Road, Nandi Durga Road Extension,  
-                  <br />
-                 Bengaluru 560006
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white p-8 rounded-4xl shadow border">
-            <div className="flex items-center space-x-4">
-              <div className="bg-black rounded-2xl p-3">
-                <Calendar className="w-10 h-10 text-white" />
-              </div>
-              <div>
-                <h3 className="font-bold text-gray-800 text-lg mb-2">WHEN IS THE EVENT :</h3>
-                <p className="text-gray-600 text-sm">
-                  ( Saturday & Sunday )   <br />20 & 21 December 2025
-               
-                  
-                </p>
-              </div>
-            </div>
-          </div>
+<div className="w-full bg-gray-200 mt-25  lg:px-40 relative">
+  <div className="sm:py-5 px-4 md:px-16 lg:px-32 grid md:grid-cols-2 gap-8 lg:-translate-y-1/2 items-center max-w-6xl mx-auto px-4">
+    
+    {/* Location Card */}
+    <div className="bg-white p-8 rounded-4xl shadow border">
+      <div className="flex items-center space-x-6">
+        <div className="bg-[#EA4A3E] rounded-2xl p-3">
+          <MapPin className="w-10 h-10 text-white" />
         </div>
-
-        {/* Statistics */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pb-20 pt-4 max-w-6xl mx-auto px-4">
-          <div className="text-center border-r border-black pr-4">
-            <div className="text-4xl lg:text-7xl font-bold text-[#223645] mb-2">
-              220<span className="text-[#223645]">+</span>
-            </div>
-            <p className="text-gray-600 text-lg uppercase tracking-wide">FITNESS INFLUENCERS</p>
-          </div>
-          <div className="text-center border-r border-black pr-4">
-            <div className="text-4xl lg:text-7xl font-bold text-[#223645] mb-2">
-              35<span className="text-[#223645]">+</span>
-            </div>
-            <p className="text-[#223645] text-lg uppercase tracking-wide">EXPERT COACHES</p>
-          </div>
-          <div className="text-center border-r border-black pr-4">
-            <div className="text-4xl lg:text-7xl font-bold text-[#223645] mb-2">
-              42<span className="text-[#223645]">+</span>
-            </div>
-            <p className="text-[#223645] text-lg uppercase tracking-wide">ACTION PACKED SESSIONS</p>
-          </div>
-          <div className="text-center">
-            <div className="text-4xl lg:text-7xl font-bold text-gray-800 mb-2">
-              25<span className="text-[#223645]">+</span>
-            </div>
-            <p className="text-[#223645] text-lg uppercase tracking-wide">WELLNESS PARTNERS</p>
-          </div>
+        <div>
+          <h3 className="font-bold text-gray-800 text-lg mb-2">WHERE IS THE EVENT :</h3>
+          <p className="text-gray-600 text-sm font-semibold">
+            Jayamahal, near Cantonment Railway Station Road, Nandi Durga Road Extension,  
+            <br />
+            Bengaluru 560006
+          </p>
         </div>
       </div>
+    </div>
+
+    {/* Date Card */}
+    <div className="bg-white p-8 rounded-4xl shadow border">
+      <div className="flex items-center space-x-4">
+        <div className="bg-black rounded-2xl p-3">
+          <Calendar className="w-10 h-10 text-white" />
+        </div>
+        <div>
+          <h3 className="font-bold text-gray-800 text-lg mb-2">WHEN IS THE EVENT :</h3>
+          <p className="text-gray-600 text-sm font-semibold">
+            ( Saturday & Sunday ) <br />20 & 21 December 2025
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* Statistics */}
+  <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pb-20 pt-4 max-w-6xl mx-auto px-4">
+    <div className="text-center border-r border-black pr-4">
+      <div className="text-4xl lg:text-7xl font-bold text-[#223645] mb-2">
+        220<span className="text-[#223645]">+</span>
+      </div>
+      <p className="text-gray-600 text-lg uppercase tracking-wide font-semibold">
+        FITNESS INFLUENCERS
+      </p>
+    </div>
+    <div className="text-center border-r border-black pr-4">
+      <div className="text-4xl lg:text-7xl font-bold text-[#223645] mb-2">
+        35<span className="text-[#223645]">+</span>
+      </div>
+      <p className="text-[#223645] text-lg uppercase tracking-wide font-semibold">
+        EXPERT COACHES
+      </p>
+    </div>
+    <div className="text-center border-r border-black pr-4">
+      <div className="text-4xl lg:text-7xl font-bold text-[#223645] mb-2">
+        42<span className="text-[#223645]">+</span>
+      </div>
+      <p className="text-[#223645] text-lg uppercase tracking-wide font-semibold">
+        ACTION PACKED SESSIONS
+      </p>
+    </div>
+    <div className="text-center">
+      <div className="text-4xl lg:text-7xl font-bold text-gray-800 mb-2">
+        25<span className="text-[#223645]">+</span>
+      </div>
+      <p className="text-[#223645] text-lg uppercase tracking-wide font-semibold">
+        WELLNESS PARTNERS
+      </p>
+    </div>
+  </div>
+</div>
+
     </section>
   )
 }

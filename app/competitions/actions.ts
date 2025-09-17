@@ -50,7 +50,7 @@ export async function submitRegistration(formData: FormData) {
       },
     })
 
-    console.log("Competition registration saved successfully with ID:", result.id)
+    // console.log("Competition registration saved successfully with ID:", result.id)
     return { success: true, id: result.id }
   } catch (error) {
     console.error("Error submitting registration:", error)

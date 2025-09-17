@@ -1,8 +1,8 @@
 const EVENT_NAME = process.env.EVENT_NAME || "Bengaluru Fitness Festival";
 const EVENT_DATE = process.env.EVENT_DATE || "December 20-21, 2025";
 const EVENT_WEBSITE =
-  process.env.EVENT_WEBSITE || "https://bengalurufitnessfestival.com/";
-const EVENT_EMAIL = process.env.EVENT_EMAIL || "info@bengalurufitnessfestival.com";
+  process.env.EVENT_WEBSITE || "https://www.fitnessfest.in/";
+const EVENT_EMAIL = process.env.EVENT_EMAIL || "info@fitnessfest.in";
 
 export const ThankYouEmailHandler = ({ name }: { name: string }) => {
   return `
@@ -21,7 +21,7 @@ export const ThankYouEmailHandler = ({ name }: { name: string }) => {
           <tr>
             <td align="center" style="padding: 0;">
               <img
-                src="https://res.cloudinary.com/drymzsktn/image/upload/v1756126543/Banner_1_id1c1i.png"
+                src="https://res.cloudinary.com/dlkuk7rok/image/upload/v1758083354/fitness_banner_gax5tv.jpg"
                 alt="Banner"
                 style="display: block; width: 100%; height: auto; border: 0;"
               />
@@ -38,7 +38,7 @@ export const ThankYouEmailHandler = ({ name }: { name: string }) => {
                   </p>
 
                   <p style="margin-bottom: 20px;">
-                    Thank you for your interest in <strong style="color: #00214d;">${EVENT_NAME}</strong> taking place on <strong style="color: #fdb714;">${EVENT_DATE}</strong>.
+                    Thank you for your interest in <strong style="color: #55BCC1;">${EVENT_NAME}</strong> taking place on <strong style="color: #fdb714;">${EVENT_DATE}</strong>.
                   </p>
 
                   <p style="margin-bottom: 25px;">
@@ -56,7 +56,7 @@ export const ThankYouEmailHandler = ({ name }: { name: string }) => {
                     <table cellpadding="0" cellspacing="0" style="margin: 0 auto;">
                       <tr>
                         <td style="padding: 0 8px;">
-                          <a href="https://www.facebook.com/bengalurufitnessfestival" target="_blank" style="display: inline-block; width: 50px; height: 50px; background: #e6e9ef; border-radius: 50%; text-align: center; line-height: 50px; text-decoration: none;">
+                          <a href="https://www.facebook.com/BengaluruFitnessFest/" target="_blank" style="display: inline-block; width: 50px; height: 50px; background: #e6e9ef; border-radius: 50%; text-align: center; line-height: 50px; text-decoration: none;">
                             <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" width="24" height="24" style="vertical-align: middle;" />
                           </a>
                         </td>                        
@@ -66,12 +66,12 @@ export const ThankYouEmailHandler = ({ name }: { name: string }) => {
                           </a>
                         </td>
                         <td style="padding: 0 8px;">
-                          <a href="https://www.linkedin.com/company/bengaluru-fitness-festival" target="_blank" style="display: inline-block; width: 50px; height: 50px; background: #e6e9ef; border-radius: 50%; text-align: center; line-height: 50px; text-decoration: none;">
+                          <a href="https://www.linkedin.com/company/bengaluru-fitness-fest" target="_blank" style="display: inline-block; width: 50px; height: 50px; background: #e6e9ef; border-radius: 50%; text-align: center; line-height: 50px; text-decoration: none;">
                             <img src="https://cdn-icons-png.flaticon.com/512/733/733561.png" alt="LinkedIn" width="24" height="24" style="vertical-align: middle;" />
                           </a>
                         </td>
                         <td style="padding: 0 8px;">
-                          <a href="https://www.instagram.com/bengalurufitnessfestival/" target="_blank" style="display: inline-block; width: 50px; height: 50px; background: #e6e9ef; border-radius: 50%; text-align: center; line-height: 50px; text-decoration: none;">
+                          <a href="https://www.instagram.com/bengaluru_fitness_fest/" target="_blank" style="display: inline-block; width: 50px; height: 50px; background: #e6e9ef; border-radius: 50%; text-align: center; line-height: 50px; text-decoration: none;">
                             <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" width="24" height="24" style="vertical-align: middle;" />
                           </a>
                         </td>
@@ -87,7 +87,7 @@ export const ThankYouEmailHandler = ({ name }: { name: string }) => {
             <td style="background: #f5f5f5; padding: 30px; border-top: 1px solid #ddd;">
               <div style="text-align: center;">
                 <p style="margin: 0 0 10px 0; font-weight: 600; color: #1e1e1e; font-size: 18px;">Best Regards,</p>
-                <p style="margin: 0 0 5px 0; font-weight: 700; color: #00214d; font-size: 20px;">${EVENT_NAME}</p>
+                <p style="margin: 0 0 5px 0; font-weight: 700; color: #EA4A3E; font-size: 20px;">${EVENT_NAME}</p>
                 <p style="margin: 0 0 20px 0;">
                   <a href="${EVENT_WEBSITE}" style="color: #fdb714; text-decoration: none; font-weight: 500;">${EVENT_WEBSITE}</a>
                 </p>
@@ -95,7 +95,7 @@ export const ThankYouEmailHandler = ({ name }: { name: string }) => {
                 <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #ddd; display: inline-block;">
                   <p style="margin: 0; color: #666; font-size: 14px;">
                     For any queries, reach us at:
-                    <a href="mailto:${EVENT_EMAIL}" style="color: #00214d; text-decoration: none; font-weight: 600;">${EVENT_EMAIL}</a>
+                    <a href="mailto:${EVENT_EMAIL}" style="color: #EA4A3E; text-decoration: none; font-weight: 600;">${EVENT_EMAIL}</a>
                   </p>
                 </div>
               </div>
@@ -103,7 +103,8 @@ export const ThankYouEmailHandler = ({ name }: { name: string }) => {
           </tr>
 
           <tr>
-            <td style="background: #00214d; padding: 20px; text-align: center;">
+       <td style="background: #EA4A3E; padding: 20px; text-align: center;">
+
               <p style="margin: 0; color: #ffffff; font-size: 12px;">
                 ©️ 2025 ${EVENT_NAME}. All rights reserved.
               </p>

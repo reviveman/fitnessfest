@@ -46,7 +46,7 @@ export default function NominationForm() {
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
+    // console.log(values)
     setIsSubmitted(true)
   }
 

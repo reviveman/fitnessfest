@@ -107,14 +107,14 @@ export default function Header() {
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8">
             {navLinks.map(({ href, label }) => (
-              <a
+              <Link
                 key={href}
                 href={href}
                 className="relative group text-white font-medium text-sm transition-colors"
               >
                 {label}
                 <span className="absolute bottom-0 left-0 h-1 w-full origin-right scale-x-0 rounded-md bg-[#EA4A3E] transition-transform duration-500 group-hover:scale-x-100"></span>
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -146,14 +146,14 @@ export default function Header() {
         <div className="lg:hidden bg-black border-t border-gray-700">
           <nav className="flex flex-col space-y-3 px-4 py-4">
             {navLinks.map(({ href, label }) => (
-              <a
+              <Link
                 key={href}
                 href={href}
                 className="text-white hover:text-red-500 font-medium transition-colors py-2"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {label}
-              </a>
+              </Link>
             ))}
 
             {/* Mobile Contact Info */}

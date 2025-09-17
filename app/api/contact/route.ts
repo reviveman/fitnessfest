@@ -34,7 +34,7 @@ export async function POST(request: Request) {
 
     // ✅ Send Thank-You Email
     await sendThankYouEmail(data.email, data.name)
-    console.log(data)
+    // console.log(data)
 
     return NextResponse.json({ success: true, id: contact.id })
   } catch (error) {

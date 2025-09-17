@@ -42,12 +42,12 @@ export async function submitContactForm(formData: FormData) {
 
     // Save to DB
     const result = await prisma.contactSubmission.create({ data: submissionData })
-    console.log("✅ Contact submission saved:", result.id)
+    // console.log("✅ Contact submission saved:", result.id)
 
     // Send thank-you email
     try {
       await sendThankYouEmail(email, name)
-      console.log(`📧 Email sent successfully to ${email}`)
+      // console.log(`📧 Email sent successfully to ${email}`)
     } catch (emailErr) {
       console.error("❌ Failed to send email:", emailErr)
       // Still return success (DB worked), but notify about email failure

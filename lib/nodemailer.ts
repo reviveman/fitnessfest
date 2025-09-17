@@ -15,13 +15,13 @@ transporter.verify((error, success) => {
   if (error) {
     console.error("❌ SMTP Verification Failed:", error)
   } else {
-    console.log("✅ SMTP Server Ready")
+    // console.log("✅ SMTP Server Ready")
   }
 })
 
 export async function sendThankYouEmail(to: string, name: string) {
   try {
-    console.log("📨 Sending email to:", to)
+    // console.log("📨 Sending email to:", to)
 
     const htmlContent = ThankYouEmailHandler({ name })
 
@@ -32,10 +32,10 @@ export async function sendThankYouEmail(to: string, name: string) {
       html: htmlContent,
     })
 
-    console.log("✅ Email sent successfully:", info.messageId)
+    // console.log("✅ Email sent successfully:", info.messageId)
     return info
   } catch (err) {
-    console.error("❌ Error while sending email:", err)
+    // console.error("❌ Error while sending email:", err)
     throw err
   }
 }
