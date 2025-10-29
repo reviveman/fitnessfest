@@ -187,7 +187,7 @@ export default function TicketsPage() {
                           <span className="font-semibold block text-gray-800">
                             Date
                           </span>
-                          <span className="text-gray-600">December 22-23, 2025</span>
+                          <span className="text-gray-600">February 21-22, 2026</span>
                         </div>
                       </li>
                       <li className="flex items-start">

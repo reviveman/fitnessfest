@@ -1,16 +1,9 @@
 "use client"
 
-// import { useState } from "react"
-// import Link from "next/link"
-// import { CalendarClock, MapPin } from "lucide-react"
-// import { events } from "@/data/events"
 import Schedule from "@/components/events"
 
 export default function EventPage() {
-//   const eventDates = ["12 October 2025", "13 October 2025"]
-//   const [selectedDate, setSelectedDate] = useState(eventDates[0])
 
-//   const dateEvents = events.filter((event) => event.date === selectedDate)
 
   return (
     <>

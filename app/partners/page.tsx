@@ -32,7 +32,7 @@ export default function OurPartners() {
           </div>
           <p className="mt-4 text-gray-700 max-w-2xl mx-auto">
             Our presenting partner leads the way in shaping Bengaluru Fitness
-            Festival 2025. Their support helps us bring innovation, scale, and
+            Festival 2026. Their support helps us bring innovation, scale, and
             energy to the event.
           </p>
         </section>
@@ -124,7 +124,7 @@ export default function OurPartners() {
         {/* Thank You */}
         <footer className="text-center mt-12">
           <p className="text-gray-600 text-sm">
-            Thank You to Our 2025 Partners
+            Thank You to Our 2026 Partners
           </p>
           <p className="mt-1 text-gray-700">
             We extend our gratitude to all sponsors, exhibitors, and

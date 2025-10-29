@@ -19,7 +19,7 @@ export default function Speakers() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12 lg:mb-16">
-          <h6 className="text-[#fa0368] text-sm font-semibold mb-2 uppercase tracking-wide">BENGALURU FITNESS FEST 2025</h6>
+          <h6 className="text-[#fa0368] text-sm font-semibold mb-2 uppercase tracking-wide">BENGALURU FITNESS FEST 2026</h6>
           <h3 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">OUR EVENT SPEAKERS</h3>
           <p className="text-gray-600 max-w-5xl mx-auto text-base lg:text-lg">
             Meet the inspiring voices behind the movement. From fitness icons and wellness coaches to medical experts and motivational speakers, our line-up brings together thought leaders who are passionate about health, performance, and personal growth.

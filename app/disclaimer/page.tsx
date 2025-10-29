@@ -32,7 +32,7 @@ export default function DisclaimerPage() {
         <header className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
             <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">Disclaimer</h1>
-            <p className="mt-1 text-sm text-gray-600">Bengaluru Fitness Festival — Effective Date: 13-09-2025</p>
+            <p className="mt-1 text-sm text-gray-600">Bengaluru Fitness Festival — Effective Date: 21-02-2026</p>
           </div>
 
           <div className="flex items-center gap-2">

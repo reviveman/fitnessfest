@@ -76,7 +76,7 @@ const TicketsSection = () => {
     <section className="bg-white text-gray-800 py-20 px-4">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-4xl font-bold text-center text-[#f3c532] mb-12">
-          🎟️ Bengaluru Fitness Fest 2025 – Ticket Categories & Perks
+          🎟️ Bengaluru Fitness Fest 2026 – Ticket Categories & Perks
         </h2>
         <div className="grid md:grid-cols-2 gap-8">
           {ticketData.map((ticket, idx) => (
