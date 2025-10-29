@@ -36,7 +36,7 @@ export default function EventInfoSection() {
             </div>
 
             <p className="text-gray-600 leading-relaxed">
-             Bengaluru Fitness Festival 2025 is South India’s premier celebration of fitness, wellness, and healthy living. Bringing together athletes, fitness coaches, health brands, and wellness seekers under one roof — this two-day event is set to inspire transformation, connection, and fun.
+             Bengaluru Fitness Festival 2026 is South India’s premier celebration of fitness, wellness, and healthy living. Bringing together athletes, fitness coaches, health brands, and wellness seekers under one roof — this two-day event is set to inspire transformation, connection, and fun.
             </p>
 
             <div className="max-w-120 space-y-4 bg-gray-50 p-8 rounded-lg shadow border-b-3 border-[#EA4A3E]">
@@ -87,9 +87,10 @@ export default function EventInfoSection() {
         <div>
           <h3 className="font-bold text-gray-800 text-lg mb-2">WHERE IS THE EVENT :</h3>
           <p className="text-gray-600 text-sm font-semibold">
-            Jayamahal, near Cantonment Railway Station Road, Nandi Durga Road Extension,  
+            KARNATAKA TRADE PROMOTION ORGANISATION
+XPJC+V2G, Export Promotion Industrial Park Plot NO.121, Road no Ⅴ, EPIP 2nd phase, Industrial Area, Whitefield
             <br />
-            Bengaluru 560006
+           Bengaluru, Karnataka 560066 
           </p>
         </div>
       </div>
@@ -104,7 +105,7 @@ export default function EventInfoSection() {
         <div>
           <h3 className="font-bold text-gray-800 text-lg mb-2">WHEN IS THE EVENT :</h3>
           <p className="text-gray-600 text-sm font-semibold">
-            ( Saturday & Sunday ) <br />20 & 21 December 2025
+            ( Saturday & Sunday ) <br />21 & 22 February 2026
           </p>
         </div>
       </div>

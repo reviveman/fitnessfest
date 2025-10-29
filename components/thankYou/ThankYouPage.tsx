@@ -51,22 +51,22 @@ const ThankYouPage = ({ type }: { type: string }) => {
   > = {
     visitor: {
       title: "Thank You For Registering as a Visitor!",
-      bold: "You are now part of the Bengaluru Fitness Festival 2025 community",
+      bold: "You are now part of the Bengaluru Fitness Festival 2026 community",
       description:
         "We look forward to welcoming you to explore fitness, health, and wellness experiences.",
-      date: "20 – 21 December 2025 · Jayamahal, Bengaluru",
+      date: "21 - 22 February 2026· KARNATAKA TRADE PROMOTION ORGANISATION Centre, Bengaluru",
     },
     exhibitor: {
       title: "Thank You For Registering as an Exhibitor!",
-      bold: "You are now part of the Bengaluru Fitness Festival 2025 community",
+      bold: "You are now part of the Bengaluru Fitness Festival 2026 community",
       description: "Our team will contact you soon with exhibition details.",
-      date: "20 – 21 December 2025 · Jayamahal, Bengaluru",
+      date: "21 - 22 February 2026· KARNATAKA TRADE PROMOTION ORGANISATION Centre, Bengaluru",
     },
     sponsor: {
       title: "Thank You For Registering as a Sponsor!",
-      bold: "You are now part of the Bengaluru Fitness Festival 2025 community",
+      bold: "You are now part of the Bengaluru Fitness Festival 2026 community",
       description: "Our team will contact you soon with sponsorship details.",
-      date: "20 – 21 December 2025 · Jayamahal, Bengaluru",
+      date: "21 - 22 February 2026· KARNATAKA TRADE PROMOTION ORGANISATION Centre, Bengaluru",
     },
   };
 

@@ -11,7 +11,7 @@ export async function POST(req: Request) {
 
     // Event details (you can pull these from env vars if needed)
     const EVENT_NAME = "Bengaluru Fitness Fest"
-    const EVENT_DATE = "December 20–21, 2025"
+    const EVENT_DATE = "February 21–22, 2026"
     const EVENT_WEBSITE = "https://bengalurufitnessfest.com"
     const EVENT_EMAIL = "info@bengalurufitnessfest.com"
 
@@ -119,7 +119,7 @@ export async function POST(req: Request) {
           <!-- Bottom Bar -->
           <tr>
             <td style="background:#EA4A3E;padding:20px;text-align:center;">
-              <p style="margin:0;color:#ffffff;font-size:12px;">©️ 2025 ${EVENT_NAME}. All rights reserved.</p>
+              <p style="margin:0;color:#ffffff;font-size:12px;">©️ 2026 ${EVENT_NAME}. All rights reserved.</p>
             </td>
           </tr>
 

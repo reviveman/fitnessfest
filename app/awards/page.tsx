@@ -97,7 +97,7 @@ export default function AwardsPage() {
   <div className="container mx-auto px-4 relative z-10 text-center pt-25 md:pt-32">
     {/* Heading */}
     <h1 className="text-4xl md:text-6xl font-extrabold mb-6 text-white drop-shadow-lg leading-tight">
-      🏆 Bengaluru Fitness <br className="hidden sm:block" /> & Wellness Awards 2025
+      🏆 Bengaluru Fitness <br className="hidden sm:block" /> & Wellness Awards 2026
     </h1>
 
     {/* Subtext */}
@@ -232,7 +232,7 @@ export default function AwardsPage() {
       </h2>
       <p className="mt-6 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
         Support your favorite nominees and help us recognize excellence. Voting closes on{" "}
-        <span className="font-bold text-[#EA4A3E]">Dec 10, 2025</span>.
+        <span className="font-bold text-[#EA4A3E]">Feb 21, 2026</span>.
       </p>
     </div>
 

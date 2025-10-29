@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 
 export default function Schedule() {
   // Change initial selectedDate to match the format in events.js
-  const [selectedDate, setSelectedDate] = useState("December 20, 2025");
+  const [selectedDate, setSelectedDate] = useState("February 21, 2026");
 
   const filteredEvents = events.filter((e) => e.date === selectedDate);
 
@@ -39,10 +39,10 @@ export default function Schedule() {
   <div className="relative flex md:inline-block">
     {/* Left Circle */}
     <div
-      onClick={() => setSelectedDate("December 20, 2025")}
+      onClick={() => setSelectedDate("February 21, 2026")}
       className={clsx(
         "cursor-pointer w-24 h-24 sm:w-28 sm:h-28 md:w-40 md:h-40 rounded-full flex flex-col items-center justify-center z-10 transition-all duration-300",
-        selectedDate === "December 20, 2025"
+        selectedDate === "February 21, 2026"
           ? "bg-[#EA4A3E] text-white shadow-lg"
           : "bg-gray-200 text-gray-800 hover:bg-[#55BCC1] hover:text-white"
       )}
@@ -53,7 +53,7 @@ export default function Schedule() {
       <span
         className={clsx(
           "text-xs sm:text-sm font-semibold",
-          selectedDate === "December 20, 2025" ? "text-white" : "text-[#EA4A3E]"
+          selectedDate === "February 21, 2026" ? "text-white" : "text-[#EA4A3E]"
         )}
       >
         SATURDAY
@@ -62,12 +62,12 @@ export default function Schedule() {
 
     {/* Right Circle */}
     <div
-      onClick={() => setSelectedDate("December 23, 2025")}
+      onClick={() => setSelectedDate("February 22, 2026")}
       className={clsx(
         `cursor-pointer w-24 h-24 sm:w-28 sm:h-28 md:w-44 md:h-44
          rounded-full flex flex-col items-center justify-center shadow-lg z-20
          -ml-1 sm:-ml-1 md:ml-0 md:absolute md:left-[80%] md:top-0 transition-all duration-300`,
-        selectedDate === "December 23, 2025"
+        selectedDate === "February 22, 2026"
           ? "bg-[#EA4A3E] text-white"
           : "bg-gray-200 text-gray-800 hover:bg-[#55BCC1] hover:text-white"
       )}
@@ -78,7 +78,7 @@ export default function Schedule() {
       <span
         className={clsx(
           "text-xs sm:text-sm font-semibold",
-          selectedDate === "December 23, 2025" ? "text-white" : "text-[#EA4A3E]"
+          selectedDate === "February 22, 2026" ? "text-white" : "text-[#EA4A3E]"
         )}
       >
         SUNDAY

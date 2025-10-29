@@ -1,5 +1,5 @@
 const EVENT_NAME = process.env.EVENT_NAME || "Bengaluru Fitness Festival";
-const EVENT_DATE = process.env.EVENT_DATE || "December 20-21, 2025";
+const EVENT_DATE = process.env.EVENT_DATE || "February 21-22, 2026";
 const EVENT_WEBSITE =
   process.env.EVENT_WEBSITE || "https://www.fitnessfest.in/";
 const EVENT_EMAIL = process.env.EVENT_EMAIL || "info@fitnessfest.in";
@@ -106,7 +106,7 @@ export const ThankYouEmailHandler = ({ name }: { name: string }) => {
        <td style="background: #EA4A3E; padding: 20px; text-align: center;">
 
               <p style="margin: 0; color: #ffffff; font-size: 12px;">
-                ©️ 2025 ${EVENT_NAME}. All rights reserved.
+                ©️ 2026 ${EVENT_NAME}. All rights reserved.
               </p>
             </td>
           </tr>

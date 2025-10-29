@@ -36,7 +36,7 @@ export default function TermsAndConditionsPage() {
               Terms & Conditions
             </h1>
             <p className="mt-1 text-sm text-gray-600">
-              Bengaluru Fitness Festival — Effective Date: 13-09-2025
+              Bengaluru Fitness Festival — Effective Date: 21-02-2026
             </p>
           </div>
 

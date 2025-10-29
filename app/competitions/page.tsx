@@ -22,7 +22,7 @@ export default function CompetitionsPage() {
             Competitions
           </motion.h1>
           <p className="mt-6 text-gray-200 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-            Experience the thrill of world-class fitness competitions at the Bengaluru Fitness Festival 2025.
+            Experience the thrill of world-class fitness competitions at the Bengaluru Fitness Festival 2026.
           </p>
         </div>
       </section>
@@ -43,17 +43,17 @@ export default function CompetitionsPage() {
 
             {[
               {
-                date: "December 20, 2025",
+                date: "February 21, 2026",
                 title: "Ultimate Yoga Flow Contest",
                 text: "Celebrate the essence of inner strength, poise, and breath through yogic expression at the signature Yoga Flow Contest.",
               },
               {
-                date: "December 20-21, 2025",
+                date: "February 21-21, 2026",
                 title: "Dance Fit Battle – “Last One Dancing”",
                 text: "Unleash your rhythm and energy in a high-energy Zumba and freestyle showdown with incredible vibes and prizes.",
               },
               {
-                date: "December 21, 2025",
+                date: "February 22, 2026",
                 title: "Push-Up & Plank King/Queen Challenge",
                 text: "No pre-registration, no complex formats — just pure strength, grit, and glory on the mat.",
               },

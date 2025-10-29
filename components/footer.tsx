@@ -129,7 +129,7 @@ export default function Footer() {
               />
               <button
                 type="submit"
-                className="w-full bg-[#EA4A3E] hover:bg-pink-700 rounded-full px-4 py-3 font-semibold text-white transition-colors"
+                className="w-full bg-[#EA4A3E] hover:bg-pink-700 rounded-full  cursor-pointer px-4 py-3 font-semibold text-white transition-colors"
                 disabled={status === "loading"}
               >
                 {status === "loading" ? "Subscribing..." : "SUBSCRIBE NOW"}
@@ -153,7 +153,7 @@ export default function Footer() {
             <a href="/disclaimer" className="hover:text-white">Disclaimer</a>
           </div>
           <div>
-            © 2025 <span className="font-semibold">Maxx Business Media Pvt. Ltd.</span> All Rights Reserved.
+            © 2026 <span className="font-semibold">Maxx Business Media Pvt. Ltd.</span> All Rights Reserved.
           </div>
         </div>
       </div>

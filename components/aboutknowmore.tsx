@@ -39,14 +39,14 @@ export default function KnowMoreSection() {
               <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
                 Discover the Energy of
               </span>{" "}
-              Bengaluru Fitness Festival 2025
+              Bengaluru Fitness Festival 2026
             </h2>
 
             <p className="text-gray-700 text-base sm:text-lg leading-relaxed text-justify">
               Get ready to experience Bengaluru’s most dynamic celebration of
               health, fitness, and holistic well-being. The Bengaluru Fitness
-              Festival 2025, happening on{" "}
-              <strong>22–23 November</strong> at{" "}
+              Festival 2026, happening on{" "}
+              <strong>21–22 November</strong> at{" "}
               <strong>KTPO Convention Centre</strong>, brings together fitness
               enthusiasts, industry experts, and wellness brands for an
               electrifying two-day event.

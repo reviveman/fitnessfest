@@ -7,7 +7,8 @@ import clsx from "clsx";
 import { useRouter } from "next/navigation";
 
 export default function Schedule() {
-  const [selectedDate, setSelectedDate] = useState("December 20, 2025");
+  // Set initial state to match your events data
+  const [selectedDate, setSelectedDate] = useState("February 21, 2026");
   const filteredEvents = events.filter((e) => e.date === selectedDate);
   const router = useRouter();
 
@@ -25,162 +26,112 @@ export default function Schedule() {
           <p className="text-gray-600 text-sm md:text-base">
             Stay on track with everything happening at the festival! From
             high-energy workout sessions and expert talks to fun challenges and
-            wellness workshops — here’s your complete guide to what’s happening,
+            wellness workshops — here's your complete guide to what's happening,
             when, and where.
           </p>
         </div>
 
-{/* Circles as Date Filters */}
-<div className="mt-10 flex justify-center items-center">
-  <div className="relative flex md:inline-block">
-    {/* Left Circle */}
-    <div
-      onClick={() => setSelectedDate("December 20, 2025")}
-      className={clsx(
-        "cursor-pointer w-24 h-24 sm:w-28 sm:h-28 md:w-40 md:h-40 rounded-full flex flex-col items-center justify-center z-10 transition-all duration-300 group",
-        selectedDate === "December 20, 2025"
-          ? "bg-[#EA4A3E] text-white shadow-xl scale-105"
-          : "bg-gray-200 text-gray-800 hover:bg-[#FFC91F] hover:text-white hover:shadow-lg hover:scale-105"
-      )}
-    >
-      <span className="text-sm sm:text-base md:text-lg font-bold">
-        20 DEC
-      </span>
-      <span
-        className={clsx(
-          "text-xs sm:text-sm font-semibold transition-colors duration-300",
-          selectedDate === "December 20, 2025"
-            ? "text-white"
-            : "text-[#EA4A3E] group-hover:text-white"
-        )}
-      >
-        SATURDAY
-      </span>
-    </div>
+        {/* Circles as Date Filters */}
+        <div className="mt-10 flex justify-center items-center">
+          <div className="relative flex md:inline-block">
+            {/* Day 1 Circle */}
+            <div
+              onClick={() => setSelectedDate("February 21, 2026")}
+              className={clsx(
+                "cursor-pointer w-24 h-24 sm:w-28 sm:h-28 md:w-40 md:h-40 rounded-full flex flex-col items-center justify-center z-10 transition-all duration-300 group",
+                selectedDate === "February 21, 2026"
+                  ? "bg-[#EA4A3E] text-white shadow-xl scale-105"
+                  : "bg-gray-200 text-gray-800 hover:bg-[#FFC91F] hover:text-white hover:shadow-lg hover:scale-105"
+              )}
+            >
+              <span className="text-sm sm:text-base md:text-lg font-bold">
+                21 FEB
+              </span>
+              <span
+                className={clsx(
+                  "text-xs sm:text-sm font-semibold transition-colors duration-300",
+                  selectedDate === "February 21, 2026"
+                    ? "text-white"
+                    : "text-[#EA4A3E] group-hover:text-white"
+                )}
+              >
+                SATURDAY
+              </span>
+            </div>
 
-    {/* Right Circle */}
-    <div
-      onClick={() => setSelectedDate("December 21, 2025")}
-      className={clsx(
-        `cursor-pointer w-24 h-24 sm:w-28 sm:h-28 md:w-44 md:h-44
-         rounded-full flex flex-col items-center justify-center shadow-lg z-20
-         -ml-1 sm:-ml-1 md:ml-0 md:absolute md:left-[80%] md:top-0 transition-all duration-300 group`,
-        selectedDate === "December 21, 2025"
-          ? "bg-[#EA4A3E] text-white shadow-xl scale-105"
-          : "bg-gray-200 text-gray-800 hover:bg-yellow-500 hover:text-white hover:shadow-lg hover:scale-105"
-      )}
-    >
-      <span className="text-sm sm:text-base md:text-lg font-bold">
-        21 DEC
-      </span>
-      <span
-        className={clsx(
-          "text-xs sm:text-sm font-semibold transition-colors duration-300",
-          selectedDate === "December 21, 2025"
-            ? "text-white"
-            : "text-[#EA4A3E] group-hover:text-white"
-        )}
-      >
-        SUNDAY
-      </span>
-    </div>
-  </div>
-</div>
-
+            {/* Day 2 Circle */}
+            <div
+              onClick={() => setSelectedDate("February 22, 2026")}
+              className={clsx(
+                `cursor-pointer w-24 h-24 sm:w-28 sm:h-28 md:w-44 md:h-44
+                 rounded-full flex flex-col items-center justify-center shadow-lg z-20
+                 -ml-1 sm:-ml-1 md:ml-0 md:absolute md:left-[80%] md:top-0 transition-all duration-300 group`,
+                selectedDate === "February 22, 2026"
+                  ? "bg-[#EA4A3E] text-white shadow-xl scale-105"
+                  : "bg-gray-200 text-gray-800 hover:bg-yellow-500 hover:text-white hover:shadow-lg hover:scale-105"
+              )}
+            >
+              <span className="text-sm sm:text-base md:text-lg font-bold">
+                22 FEB
+              </span>
+              <span
+                className={clsx(
+                  "text-xs sm:text-sm font-semibold transition-colors duration-300",
+                  selectedDate === "February 22, 2026"
+                    ? "text-white"
+                    : "text-[#EA4A3E] group-hover:text-white"
+                )}
+              >
+                SUNDAY
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Schedule Items */}
-      <div className="space-y-6">
+      {/* Schedule Items Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto px-4">
         {filteredEvents.length > 0 ? (
           filteredEvents.map((item) => (
             <div
               key={item.id}
-              className="bg-white rounded-xl shadow-md overflow-hidden"
+              className="bg-white rounded-2xl shadow-md overflow-hidden group hover:shadow-2xl hover:scale-[1.02] transform transition-all duration-300 flex flex-col"
             >
-              {/* Mobile layout */}
-              <div className="grid grid-cols-1 lg:hidden">
-                {/* Time & Location */}
-                <div className="bg-[#EA4A3E] text-white p-4 sm:p-6 text-center flex flex-col justify-center">
-                  <h6 className="text-xs sm:text-sm mb-1 sm:mb-2">
-                    {item.timeRange}
-                  </h6>
-                  <h6 className="text-base sm:text-lg font-semibold">
-                    {item.title}
-                  </h6>
-                  <p className="text-xs sm:text-sm mt-2">
-                    Location: {item.location}
-                  </p>
-                </div>
-
-                {/* Description */}
-                <div className="p-4 sm:p-6">
-                  <h5 className="text-base md:text-lg font-semibold text-gray-900 mb-2">
-                    {item.title}
-                  </h5>
-                  <p className="text-gray-600 text-sm md:text-base">
-                    {item.description}
-                  </p>
-                </div>
-
-                {/* Image */}
-                <div className="flex justify-center items-center p-4">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-28 h-28 sm:w-36 sm:h-36 object-cover rounded-full"
-                  />
-                </div>
-
-                {/* Button */}
-                <div className="flex justify-end px-4 sm:px-6 pb-4">
-                  <Button
-                    variant="outline"
-                    className="border-[#EA4A3E] text-pink-600 hover:bg-orange-500 hover:text-white text-sm sm:text-base"
-                    onClick={() => router.push(`/event/${item.id}`)}
-                  >
-                    LEARN MORE
-                  </Button>
+              {/* Event Image */}
+              <div className="relative w-full h-40 overflow-hidden">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute top-3 left-3 bg-[#EA4A3E] text-white text-xs font-semibold px-3 py-1 rounded-full shadow">
+                  {item.timeRange}
                 </div>
               </div>
 
-              {/* Desktop layout */}
-              <div className="hidden lg:grid lg:grid-cols-[20%_55%_25%]">
-                {/* Time & Location */}
-                <div className="bg-[#EA4A3E] text-white p-6 text-center flex flex-col justify-center">
-                  <h6 className="text-sm mb-2">{item.timeRange}</h6>
-                  <h6 className="text-lg font-semibold">{item.title}</h6>
-                  <p className="text-sm mt-2">Location: {item.location}</p>
-                </div>
+              {/* Event Details */}
+              <div className="flex flex-col flex-grow p-5 text-center">
+                <h6 className="text-lg font-bold text-gray-900 mb-2">
+                  {item.title}
+                </h6>
+                <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+                  {item.description}
+                </p>
 
-                {/* Description */}
-                <div className="p-6 flex flex-col justify-center">
-                  <h5 className="text-lg font-semibold text-gray-900 mb-2">
-                    {item.title}
-                  </h5>
-                  <p className="text-gray-600 text-base">{item.description}</p>
-                </div>
-
-                {/* Image + Button */}
-                <div className="p-6 flex flex-col items-center justify-center space-y-4">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-32 h-32 object-cover rounded-full"
-                  />
+                <div className="mt-auto">
                   <Button
-                    variant="outline"
-                    className="border-[#EA4A3E] text-pink-600 hover:bg-orange-500 hover:text-white text-base"
+                    className="w-full cursor-pointer bg-gradient-to-r from-[#EA4A3E] to-[#ff7b54] text-white font-semibold rounded-full px-6 py-2 transition-all duration-300 hover:shadow-lg hover:from-[#d63b30] hover:to-[#ff6339]"
                     onClick={() => router.push(`/event/${item.id}`)}
                   >
-                    LEARN MORE
+                    Learn More
                   </Button>
                 </div>
               </div>
             </div>
           ))
         ) : (
-          <div className="text-center text-gray-500">
-            No events found for this date.
+          <div className="text-center text-gray-500 col-span-1 lg:col-span-3 py-10">
+            No events found for {selectedDate}.
           </div>
         )}
       </div>

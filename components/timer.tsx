@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react"
 
 export default function Timer() {
-  const eventDate = new Date("2025-12-20T00:00:00") // 🎯 Event Start Date
+const eventDate = new Date("2026-02-21T00:00:00+05:30"); // 🎯 Event Start Date
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
