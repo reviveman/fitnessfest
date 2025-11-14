@@ -296,9 +296,9 @@ export default function TicketsPage() {
         {/* CTA Section */}
         <section className="py-6 bg-gradient-to-r from-[#EA4A3E] to-red-700 text-white">
   <div className="container mx-auto px-4 text-center">
-    <h2 className="text-3xl font-bold mb-4">Ready to Join DevCon 2024?</h2>
+    <h2 className="text-3xl font-bold mb-4">Ready to Join Fitness Fest 2026?</h2>
     <p className="text-lg opacity-90 mb-6 max-w-2xl mx-auto">
-      Don't miss out on the biggest tech conference of the year. Limited
+      Don't miss out on the biggest fitness event of the year. Limited
       seats available!
     </p>
     <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
