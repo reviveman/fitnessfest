@@ -20,10 +20,12 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs";
-import { Mail, Phone, Award, Dumbbell } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { submitContactForm } from "./actions";
 import ThankYouPage from "@/components/thankYou/ThankYouPage";
+
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
 
 export default function ContactPage() {
   const { toast } = useToast();
@@ -31,266 +33,314 @@ export default function ContactPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  // default to visitor if no ?type provided
   const typeFromUrl = searchParams.get("type")?.toLowerCase() || "visitor";
   const [activeTab, setActiveTab] = useState(typeFromUrl);
 
-  // keep tab in sync with query param
   useEffect(() => {
     setActiveTab(typeFromUrl);
   }, [typeFromUrl]);
 
-const handleSubmit = async (event: React.FormEvent) => {
-  event.preventDefault();
-  setIsSubmitting(true);
+  // Validation Schema
+  const validationSchema = Yup.object({
+    name: Yup.string().required("Full name is required"),
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    phone: Yup.string().required("Phone number is required"),
 
-  try {
-    const formData = new FormData(event.target as HTMLFormElement);
-    formData.append("type", activeTab);
+    fitnessLevel: Yup.string().when([], {
+      is: () => activeTab === "exhibitor",
+      then: (s) => s.required("Select fitness level"),
+    }),
+    competitionInterest: Yup.string().when([], {
+      is: () => activeTab === "exhibitor",
+      then: (s) => s.required("Select competition"),
+    }),
 
-    // 🚀 Redirect first (instant feedback to user)
-    router.push(`/contact?type=${activeTab}`);
+    company: Yup.string().when([], {
+      is: () => activeTab === "sponsor",
+      then: (s) => s.required("Enter company name"),
+    }),
+    website: Yup.string().when([], {
+      is: () => activeTab === "sponsor",
+      then: (s) => s.url("Invalid URL").required("Company website required"),
+    }),
+  });
 
-    // Run submission logic in background
-    submitContactForm(formData)
-      .then((result) => {
-        if (!result.success) {
-          console.error("Background submission failed:", result.error);
-        }
-      })
-      .catch((err) => {
-        console.error("Submission error:", err);
-      });
-  } catch (error: any) {
-    console.error("Contact form submission error:", error);
-    toast({
-      title: "Error",
-      description:
-        error.message || "Failed to send your message. Please try again.",
-      variant: "destructive",
-    });
-    setIsSubmitting(false);
-  }
-};
-
-
-  // ✅ If redirected with ?type=visitor/exhibitor/sponsor → show Thank You page
+  // Thank You Page redirect
   if (searchParams.has("type")) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className=" mt-10 min-h-screen flex items-center justify-center bg-gray-50">
         <ThankYouPage type={typeFromUrl} />
-        {/* <div className="mt-6 text-center">
-          <Button
-            onClick={() => router.push("/contact")}
-            className="bg-[#EA4A3E] hover:bg-[#EA4A3E]/90 text-white px-6 py-2 rounded-full"
-          >
-            Submit Another Response
-          </Button>
-        </div> */}
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Hero */}
-      <section
-        className="min-h-[70vh] bg-cover bg-center py-20 flex items-center relative"
-        style={{ backgroundImage: "url('/images/eventum-img1.jpg')" }}
-      >
-        <div className="absolute inset-0 bg-black opacity-80"></div>
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <h1 className="text-white text-5xl font-bold mb-4">Contact Us</h1>
-        </div>
-      </section>
+    <div className="min-h-screen bg-white py-16">
+      <div className="container max-w-7xl mx-auto px-4">
+        
+        {/* TWO COLUMN LAYOUT */}
+        <div className="mt-45 grid grid-cols-1 lg:grid-cols-2 gap-0">
 
-      {/* Contact */}
-      <section className="py-16">
-        <div className="container max-w-5xl mx-auto px-4">
-          <div className="bg-white rounded-lg shadow-lg p-8">
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
-              <TabsList className="grid grid-cols-3 mb-6 bg-gray-100">
+          {/* LEFT COLUMN - FORM */}
+          <div className="bg-white border border-gray-300 shadow-sm p-8">
+
+            {/* TABS */}
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-8">
+              <TabsList className="flex gap-2 bg-transparent p-0 shadow-none">
+                
                 <TabsTrigger
                   value="visitor"
-                  className=" cursor-pointer flex items-center gap-2 data-[state=active]:bg-[#EA4A3E] data-[state=active]:text-white"
+                  className="
+                    px-6 py-2 text-sm font-semibold border border-black rounded-none
+                    data-[state=active]:bg-black data-[state=active]:text-white
+                    hover:bg-gray-100
+                  "
                 >
-                  <Mail className="w-4 h-4" />
                   Visitor
                 </TabsTrigger>
+
                 <TabsTrigger
                   value="exhibitor"
-                  className=" cursor-pointer flex items-center gap-2 data-[state=active]:bg-[#EA4A3E] data-[state=active]:text-white"
+                  className="
+                    px-6 py-2 text-sm font-semibold border border-black rounded-none
+                    data-[state=active]:bg-black data-[state=active]:text-white
+                    hover:bg-gray-100
+                  "
                 >
-                  <Dumbbell className="w-4 h-4" />
                   Exhibitor
                 </TabsTrigger>
+
                 <TabsTrigger
                   value="sponsor"
-                  className=" cursor-pointer flex items-center gap-2 data-[state=active]:bg-[#EA4A3E] data-[state=active]:text-white"
+                  className="
+                    px-6 py-2 text-sm font-semibold border border-black rounded-none
+                    data-[state=active]:bg-black data-[state=active]:text-white
+                    hover:bg-gray-100
+                  "
                 >
-                  <Award className="w-4 h-4" />
                   Sponsor
                 </TabsTrigger>
+
               </TabsList>
 
-              <form className="space-y-6" onSubmit={handleSubmit}>
-                {/* Visitor Tab */}
-                <TabsContent value="visitor">
-                  <p className="text-sm text-gray-600 mb-4">
-                    Have a question about our event? Our team is ready to help you with any general inquiries.
-                  </p>
-                </TabsContent>
+              {/* FORM */}
+              <Formik
+                initialValues={{
+                  name: "",
+                  email: "",
+                  phone: "",
+                  subject: "",
+                  message: "",
+                  fitnessLevel: "",
+                  competitionInterest: "",
+                  experience: "",
+                  company: "",
+                  website: "",
+                  sponsorshipLevel: "",
+                }}
+                validationSchema={validationSchema}
+              onSubmit={async (values) => {
+  setIsSubmitting(true);
 
-                {/* Exhibitor Tab */}
-                <TabsContent value="exhibitor">
-                  <p className="text-sm text-gray-600 mb-4">
-                    Interested in exhibiting at our event? Tell us about your
-                    experience and what you’d like to showcase.
-                  </p>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Fitness Level
-                    </label>
-                    <Select name="fitnessLevel">
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select your fitness level" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="beginner">Beginner</SelectItem>
-                        <SelectItem value="intermediate">Intermediate</SelectItem>
-                        <SelectItem value="advanced">Advanced</SelectItem>
-                        <SelectItem value="elite">Elite/Professional</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Competition Interest
-                    </label>
-                    <Select name="competitionInterest">
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select competition" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="powerlifting">Powerlifting Challenge</SelectItem>
-                        <SelectItem value="crossfit">CrossFit Championship</SelectItem>
-                        <SelectItem value="marathon">Fitness Marathon</SelectItem>
-                        <SelectItem value="obstacle">Obstacle Course</SelectItem>
-                        <SelectItem value="yoga">Yoga & Flexibility</SelectItem>
-                        <SelectItem value="team">Team Challenge</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Previous Experience
-                    </label>
-                    <Textarea
-                      name="experience"
-                      placeholder="Tell us about your previous competition experience"
-                      rows={3}
-                    />
-                  </div>
-                </TabsContent>
+  const formData = new FormData();
+  Object.entries(values).forEach(([key, value]) => {
+    formData.append(key, value as string);
+  });
 
-                {/* Sponsor Tab */}
-                <TabsContent value="sponsor">
-                  <p className="text-sm text-gray-600 mb-4">
-                    Interested in sponsoring our event? Let us know about your
-                    company and sponsorship interests.
-                  </p>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Company Name
-                    </label>
-                    <Input name="company" placeholder="Your company name" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Company Website
-                    </label>
-                    <Input name="website" placeholder="https://yourcompany.com" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Sponsorship Level
-                    </label>
-                    <Select name="sponsorshipLevel">
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select sponsorship level" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="platinum">Platinum</SelectItem>
-                        <SelectItem value="gold">Gold</SelectItem>
-                        <SelectItem value="silver">Silver</SelectItem>
-                        <SelectItem value="bronze">Bronze</SelectItem>
-                        <SelectItem value="custom">Custom</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </TabsContent>
+  formData.append("type", activeTab);
 
-                {/* Common fields */}
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Full Name
-                    </label>
-                    <Input name="name" placeholder="Your name" required />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Email Address
-                    </label>
-                    <Input
-                      name="email"
-                      type="email"
-                      placeholder="Your email"
-                      required
-                    />
-                  </div>
-                </div>
+  try {
+    const result = await submitContactForm(formData);
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Phone Number
-                  </label>
-                  <Input name="phone" placeholder="+91 98765 43210" />
-                </div>
+    if (result.success) {
+      router.push(`/contact?type=${activeTab}`);
+    } else {
+      console.error(result.error);
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+    }
+  } catch (err) {
+    console.error(err);
+    toast({
+      title: "Server Error",
+      description: "Unable to submit your request.",
+      variant: "destructive",
+    });
+  }
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Subject
-                  </label>
-                  <Input name="subject" placeholder="Message subject" required />
-                </div>
+  setIsSubmitting(false);
+}}
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Message
-                  </label>
-                  <Textarea
-                    name="message"
-                    placeholder="Your message"
-                    rows={5}
-                    required
-                  />
-                </div>
+              >
+                {({ setFieldValue, errors, touched }) => (
+                  <Form className="space-y-6">
 
-                <div className="text-center">
-                  <Button
-                    type="submit"
-                    className="bg-[#EA4A3E] hover:bg-[#EA4A3E]/90 text-white px-8 py-3 rounded-full font-semibold cursor-pointer"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? "Sending..." : "Submit"}
-                  </Button>
-                </div>
-              </form>
+                    {/* Visitor */}
+                    <TabsContent value="visitor">
+                      <p className="text-sm text-gray-600 mb-4">
+                        Have a question? We are ready to help.
+                      </p>
+                    </TabsContent>
+
+                    {/* Exhibitor */}
+                    <TabsContent value="exhibitor">
+                      <p className="text-sm text-gray-600 mb-4">
+                        Want to exhibit? Tell us more.
+                      </p>
+
+                      <div>
+                        <label className="block font-medium mb-1">Fitness Level</label>
+                        <Select onValueChange={(value) => setFieldValue("fitnessLevel", value)}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select your fitness level" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="beginner">Beginner</SelectItem>
+                            <SelectItem value="intermediate">Intermediate</SelectItem>
+                            <SelectItem value="advanced">Advanced</SelectItem>
+                            <SelectItem value="elite">Elite</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        {errors.fitnessLevel && touched.fitnessLevel && (
+                          <p className="text-red-500 text-sm">{errors.fitnessLevel}</p>
+                        )}
+                      </div>
+
+                      <div>
+                        <label className="block font-medium mb-1">Competition Interest</label>
+                        <Select onValueChange={(value) => setFieldValue("competitionInterest", value)}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select competition" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="powerlifting">Powerlifting</SelectItem>
+                            <SelectItem value="crossfit">CrossFit</SelectItem>
+                            <SelectItem value="marathon">Marathon</SelectItem>
+                            <SelectItem value="obstacle">Obstacle Course</SelectItem>
+                            <SelectItem value="yoga">Yoga</SelectItem>
+                            <SelectItem value="team">Team Challenge</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        {errors.competitionInterest && touched.competitionInterest && (
+                          <p className="text-red-500 text-sm">{errors.competitionInterest}</p>
+                        )}
+                      </div>
+
+                      <div>
+                        <label className="block font-medium mb-1">Experience</label>
+                        <Field
+                          as={Textarea}
+                          name="experience"
+                          rows={3}
+                          placeholder="Tell us about your previous competition experience"
+                        />
+                      </div>
+                    </TabsContent>
+
+                    {/* Sponsor */}
+                    <TabsContent value="sponsor">
+                      <p className="text-sm text-gray-600 mb-4">
+                        Sponsorship details help us prepare.
+                      </p>
+
+                      <div>
+                        <label className="block font-medium mb-1">Company Name</label>
+                        <Field as={Input} name="company" />
+                        {errors.company && touched.company && (
+                          <p className="text-red-500 text-sm">{errors.company}</p>
+                        )}
+                      </div>
+
+                      <div>
+                        <label className="block font-medium mb-1">Company Website</label>
+                        <Field as={Input} name="website" />
+                        {errors.website && touched.website && (
+                          <p className="text-red-500 text-sm">{errors.website}</p>
+                        )}
+                      </div>
+
+                      <div>
+                        <label className="block font-medium mb-1">Sponsorship Level</label>
+                        <Select onValueChange={(value) => setFieldValue("sponsorshipLevel", value)}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select sponsorship level" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="platinum">Platinum</SelectItem>
+                            <SelectItem value="gold">Gold</SelectItem>
+                            <SelectItem value="silver">Silver</SelectItem>
+                            <SelectItem value="bronze">Bronze</SelectItem>
+                            <SelectItem value="custom">Custom</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </TabsContent>
+
+                    {/* Common Fields */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block font-medium mb-1">Full Name</label>
+                        <Field as={Input} name="name" />
+                        {errors.name && touched.name && (
+                          <p className="text-red-500 text-sm">{errors.name}</p>
+                        )}
+                      </div>
+
+                      <div>
+                        <label className="block font-medium mb-1">Email Address</label>
+                        <Field as={Input} name="email" type="email" />
+                        {errors.email && touched.email && (
+                          <p className="text-red-500 text-sm">{errors.email}</p>
+                        )}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block font-medium mb-1">Phone Number</label>
+                      <Field as={Input} name="phone" />
+                      {errors.phone && touched.phone && (
+                        <p className="text-red-500 text-sm">{errors.phone}</p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label className="block font-medium mb-1">Message</label>
+                      <Field as={Textarea} name="message" rows={5} />
+                      {errors.message && touched.message && (
+                        <p className="text-red-500 text-sm">{errors.message}</p>
+                      )}
+                    </div>
+
+                    <div className="flex justify-end">
+                      <Button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="bg-[#EA4A3E] hover:bg-[#EA4A3E]/90 text-white px-8 py-3 rounded-none font-semibold cursor-pointer"
+                      >
+                        {isSubmitting ? "Sending..." : "Submit"}
+                      </Button>
+                    </div>
+                  </Form>
+                )}
+              </Formik>
             </Tabs>
+
           </div>
+
+          {/* RIGHT COLUMN - IMAGE */}
+          <div className="w-full h-full">
+            <img
+              src="/images/eventum-img1.jpg"
+              className="w-full h-full object-cover rounded-none"
+              alt="Contact"
+            />
+          </div>
+
         </div>
-      </section>
+      </div>
     </div>
   );
 }

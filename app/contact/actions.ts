@@ -9,11 +9,11 @@ export async function submitContactForm(formData: FormData) {
     const name = formData.get("name") as string
     const email = formData.get("email") as string
     const phone = (formData.get("phone") as string) || null
-    const subject = formData.get("subject") as string
     const message = formData.get("message") as string
     const type = formData.get("type") as string
 
-    if (!name || !email || !subject || !message) {
+    // ❗ subject removed from validation
+    if (!name || !email || !message) {
       return {
         success: false,
         error: "Missing required fields. Please fill out all required fields.",
@@ -25,32 +25,36 @@ export async function submitContactForm(formData: FormData) {
       name,
       email,
       phone,
-      subject,
       message,
       type,
     }
 
-    if (type === "competitor") {
-      submissionData.fitnessLevel = (formData.get("fitnessLevel") as string) || null
-      submissionData.competitionInterest = (formData.get("competitionInterest") as string) || null
-      submissionData.experience = (formData.get("experience") as string) || null
-    } else if (type === "sponsor") {
+    if (type === "exhibitor") {
+      submissionData.fitnessLevel =
+        (formData.get("fitnessLevel") as string) || null
+      submissionData.competitionInterest =
+        (formData.get("competitionInterest") as string) || null
+      submissionData.experience =
+        (formData.get("experience") as string) || null
+    } 
+    
+    else if (type === "sponsor") {
       submissionData.company = (formData.get("company") as string) || null
       submissionData.website = (formData.get("website") as string) || null
-      submissionData.sponsorshipLevel = (formData.get("sponsorshipLevel") as string) || null
+      submissionData.sponsorshipLevel =
+        (formData.get("sponsorshipLevel") as string) || null
     }
 
     // Save to DB
-    const result = await prisma.contactSubmission.create({ data: submissionData })
-    // console.log("✅ Contact submission saved:", result.id)
+    const result = await prisma.contactSubmission.create({
+      data: submissionData,
+    })
 
     // Send thank-you email
     try {
       await sendThankYouEmail(email, name)
-      // console.log(`📧 Email sent successfully to ${email}`)
     } catch (emailErr) {
       console.error("❌ Failed to send email:", emailErr)
-      // Still return success (DB worked), but notify about email failure
       return {
         success: true,
         id: result.id,
@@ -59,6 +63,7 @@ export async function submitContactForm(formData: FormData) {
     }
 
     return { success: true, id: result.id }
+
   } catch (error) {
     console.error("❌ Error submitting contact form:", error)
     return {

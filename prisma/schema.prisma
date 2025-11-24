@@ -13,7 +13,7 @@ model ContactSubmission {
   name      String
   email     String
   phone     String?
-  subject   String
+  subject   String?
   message   String
   type      String   // general, competitor, sponsor
   company   String?
