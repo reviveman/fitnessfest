@@ -1,6 +1,7 @@
 "use client"
 
-import Schedule from "@/components/events"
+// import Schedule from "@/components/events"
+import Schedule from "@/components/schedule"
 
 export default function EventPage() {
 
