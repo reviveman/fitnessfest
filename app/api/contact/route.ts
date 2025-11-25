@@ -6,22 +6,21 @@ export async function POST(request: Request) {
   try {
     const data = await request.json()
 
-    // ✅ Validate required fields
-    if (!data.name || !data.email || !data.subject || !data.message) {
+    // ❗ SUBJECT REMOVED FROM REQUIRED FIELDS
+    if (!data.name || !data.email || !data.message) {
       return NextResponse.json(
-        { error: "Missing required fields: name, email, subject, and message are required" },
+        { error: "Missing required fields: name, email, and message are required" },
         { status: 400 },
       )
     }
 
-    // ✅ Save to DB
+    // ❗ SUBJECT REMOVED FROM SAVE
     const contact = await prisma.contactSubmission.create({
       data: {
         type: data.type || "general",
         name: data.name,
         email: data.email,
         phone: data.phone || null,
-        subject: data.subject,
         message: data.message,
         company: data.company || null,
         website: data.website || null,
@@ -32,11 +31,11 @@ export async function POST(request: Request) {
       },
     })
 
-    // ✅ Send Thank-You Email
+    // SEND EMAIL
     await sendThankYouEmail(data.email, data.name)
-    // console.log(data)
 
     return NextResponse.json({ success: true, id: contact.id })
+
   } catch (error) {
     console.error("❌ Error processing contact form:", error)
     return NextResponse.json({ error: "Failed to process contact form" }, { status: 500 })

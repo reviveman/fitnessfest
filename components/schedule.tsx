@@ -5,6 +5,8 @@ import { events } from "@/data/events";
 import { Button } from "@/components/ui/button";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+
 
 export default function Schedule() {
   // Set initial state to match your events data
@@ -99,9 +101,10 @@ export default function Schedule() {
             >
               {/* Event Image */}
               <div className="relative w-full h-40 overflow-hidden">
-                <img
+                <Image
                   src={item.image}
                   alt={item.title}
+                  fill
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
                 <div className="absolute top-3 left-3 bg-[#EA4A3E] text-white text-xs font-semibold px-3 py-1 rounded-full shadow">

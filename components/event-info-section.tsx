@@ -88,9 +88,9 @@ export default function EventInfoSection() {
           <h3 className="font-bold text-gray-800 text-lg mb-2">WHERE IS THE EVENT :</h3>
           <p className="text-gray-600 text-sm font-semibold">
             KARNATAKA TRADE PROMOTION ORGANISATION
-XPJC+V2G, Export Promotion Industrial Park Plot NO.121, Road no Ⅴ, EPIP 2nd phase, Industrial Area, Whitefield
+        
             <br />
-           Bengaluru, Karnataka 560066 
+           Whitefield, Bengaluru, Karnataka 560066 
           </p>
         </div>
       </div>
