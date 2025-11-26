@@ -20,6 +20,7 @@ export default function CompetitionsPage() {
             className="text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#EA4A3E] to-[#FFC91F]"
           >
             Competitions
+            
           </motion.h1>
           <p className="mt-6 text-gray-200 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
             Experience the thrill of world-class fitness competitions at the Bengaluru Fitness Festival 2026.
