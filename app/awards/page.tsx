@@ -168,11 +168,14 @@ export default function AwardsPage() {
   </div>
 
 {/* Cards Grid */}
+{/* Cards Grid */}
 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
   {awardCategories.map((category) => (
-    <div
+    <Link
       key={category.id}
-      className="group bg-white rounded-3xl shadow-md border border-gray-100 overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2"
+      href={`/awards/${category.slug}`}
+      className="group block bg-white rounded-3xl shadow-md border border-gray-100 overflow-hidden 
+                 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2"
     >
       {/* Large Full-Width Image */}
       <div className="relative h-48 w-full overflow-hidden">
@@ -181,9 +184,8 @@ export default function AwardsPage() {
           alt={category.title}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
-        {/* Overlay Gradient */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent"></div>
-        {/* Title Overlay */}
+
         <div className="absolute bottom-4 left-4 text-white">
           <h4 className="text-2xl font-bold">{category.title}</h4>
           <span className="text-sm opacity-90">{category.category}</span>
@@ -192,12 +194,10 @@ export default function AwardsPage() {
 
       {/* Content */}
       <div className="p-6 flex flex-col h-full">
-        {/* Description */}
         <p className="text-gray-600 mb-6 flex-grow leading-relaxed line-clamp-3">
           {category.shortDescription}
         </p>
 
-        {/* Footer */}
         <div className="flex items-center justify-between text-sm font-medium text-gray-500">
           <span>Nominees</span>
           <span className="bg-[#EA4A3E] text-white px-3 py-1 rounded-full text-xs font-bold shadow-sm">
@@ -205,16 +205,17 @@ export default function AwardsPage() {
           </span>
         </div>
 
-        {/* CTA Button */}
-        <Link href={`/awards/${category.slug}`} className="block mt-6">
-          <Button className="w-full bg-gradient-to-r from-[#EA4A3E] to-[#ff7b54] text-white font-semibold rounded-xl hover:shadow-xl hover:scale-[1.02] transition-all">
-            Learn More
-          </Button>
-        </Link>
+        <Button
+          className="w-full mt-6 bg-gradient-to-r from-[#EA4A3E] to-[#ff7b54] text-white font-semibold rounded-xl 
+                     hover:shadow-xl hover:scale-[1.02] transition-all"
+        >
+          Learn More
+        </Button>
       </div>
-    </div>
+    </Link>
   ))}
 </div>
+
 
 
 </div>

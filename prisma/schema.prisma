@@ -82,39 +82,35 @@ model User {
 
 model Nomination {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  
+
   // Award Information
   awardTitle String
   awardId    String
-  
+
   // Basic Information
-  fullName     String
-  dateOfBirth  DateTime
-  gender       String
+  fullName      String
+  dateOfBirth   DateTime
+  gender        String
   contactNumber String
-  email        String
-  cityArea     String
-  organization String?
-  designation  String
-  profilePhotoUrl String?
-  
-  // Professional data stored as JSON
-  professionalData Json?
-  
-  // Social media information stored as JSON
-  socialMediaData Json?
-  
-  // File upload URLs (local paths) stored as JSON
-  uploadedFiles Json?
-  
-  // Status and metadata
+  email         String
+  cityArea      String
+  organization  String?
+  designation   String
+
+  // All cloudinary URLs of uploaded files
+  uploadedFiles Json?       // { profilePhoto: ["url"], ... }
+
+  // JSON fields
+  professionalData Json?    // category-specific
+  socialMediaData Json?     // instagram, facebook, website, media mentions...
+
+  // Status
   status      NominationStatus @default(PENDING)
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
   reviewedBy  String?
   adminNotes  String?
-  
-  // Indexes
+
   @@map("nominations")
 }
 
@@ -125,3 +121,4 @@ enum NominationStatus {
   REJECTED
   SHORTLISTED
 }
+

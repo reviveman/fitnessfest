@@ -1,7 +1,6 @@
 "use client"
 
-import type React from "react"
-
+import React, { useMemo } from "react"
 import { useState } from "react"
 import { Send, User, Building, Upload, Award } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -9,10 +8,18 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Separator } from "@/components/ui/separator"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { useFormik } from "formik"
+import * as Yup from "yup"
 
 interface NominationFormProps {
   awardTitle: string
@@ -34,6 +41,7 @@ interface CategoryFields {
   [key: string]: FormField[]
 }
 
+/* ---------- Keep your field definitions (same as before) ---------- */
 const commonFields: FormField[] = [
   { id: "fullName", label: "Full Name", type: "text", required: true },
   { id: "dateOfBirth", label: "Date of Birth", type: "date", required: true },
@@ -251,142 +259,258 @@ const socialMediaFields: FormField[] = [
   },
 ]
 
+/* ---------------------- Helper: build Yup schema --------------------- */
+const buildValidationSchema = (fields: FormField[]) => {
+  const shape: Record<string, any> = {}
+
+  fields.forEach((f) => {
+    switch (f.type) {
+      case "email":
+        shape[f.id] = f.required ? Yup.string().email("Invalid email").required("Required") : Yup.string().email("Invalid email")
+        break
+      case "tel":
+        shape[f.id] = f.required ? Yup.string().required("Required") : Yup.string()
+        break
+      case "date":
+        shape[f.id] = f.required ? Yup.date().required("Required") : Yup.date().nullable()
+        break
+      case "select":
+      case "text":
+      case "textarea":
+        shape[f.id] = f.required ? Yup.string().required("Required") : Yup.string().nullable()
+        break
+      case "file":
+        // For files, we store File or FileList in formik value. Make a custom test to check presence if required
+        if (f.required) {
+          shape[f.id] = Yup.mixed().test("file-required", `${f.label} is required`, (value) => {
+            if (!value) return false
+            if (value instanceof FileList) return value.length > 0
+            if (Array.isArray(value)) return value.length > 0
+            return value instanceof File
+          })
+        } else {
+          shape[f.id] = Yup.mixed().nullable()
+        }
+        break
+      case "radio":
+        shape[f.id] = f.required ? Yup.string().required("Required") : Yup.string().nullable()
+        break
+      default:
+        shape[f.id] = f.required ? Yup.string().required("Required") : Yup.string().nullable()
+    }
+  })
+
+  // Terms checkbox
+  shape["agreeToTerms"] = Yup.boolean().oneOf([true], "You must accept terms")
+
+  return Yup.object().shape(shape)
+}
+
+/* ---------------------- Component --------------------- */
 export default function NominationForm({ awardTitle, awardId }: NominationFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [formData, setFormData] = useState<Record<string, any>>({})
-
   const categoryFields = categorySpecificFields[awardId] || []
+  const allFields = [...commonFields, ...categoryFields, ...socialMediaFields]
 
-  const handleInputChange = (field: string, value: string | boolean | File | FileList | null) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }))
-  }
+  const validationSchema = useMemo(() => buildValidationSchema(allFields), [awardId])
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-
-    const form = new FormData()
-    form.append("awardTitle", awardTitle)
-    form.append("awardId", awardId)
-
-    Object.entries(formData).forEach(([key, value]) => {
-      if (value instanceof FileList) {
-        Array.from(value).forEach((file) => form.append(key, file))
-      } else if (value instanceof File) {
-        form.append(key, value)
-      } else {
-        form.append(key, value)
-      }
+  const initialValues = useMemo(() => {
+    const v: Record<string, any> = {}
+    allFields.forEach((f) => {
+      // file fields start as null
+      v[f.id] = f.type === "file" ? null : ""
     })
+    v.agreeToTerms = false
+    v.awardTitle = awardTitle
+    v.awardId = awardId
+    return v
+  }, [awardId, awardTitle])
 
-    try {
-      const res = await fetch("/api/nominations", {
-        method: "POST",
-        body: form,
-      })
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: async (values) => {
+      setIsSubmitting(true)
 
-      const result = await res.json()
+      try {
+        const form = new FormData()
+        // append metadata fields
+        form.append("awardTitle", awardTitle)
+        form.append("awardId", awardId)
 
-      if (result.success) {
-        alert("Nomination submitted successfully! You will receive a confirmation email shortly.")
-        setFormData({})
-      } else {
-        alert("Something went wrong. Please try again.")
+        // append text fields
+        Object.keys(values).forEach((key) => {
+          const val = values[key]
+          if (val === null || val === undefined) return
+          // file fields are handled below
+          const fieldDef = allFields.find((f) => f.id === key)
+          if (fieldDef?.type === "file") return
+          if (key === "agreeToTerms") {
+            form.append(key, val ? "true" : "false")
+            return
+          }
+          // other values
+          form.append(key, typeof val === "string" ? val : JSON.stringify(val))
+        })
+
+        // handle files: each file input may be File or FileList
+        allFields
+          .filter((f) => f.type === "file")
+          .forEach((f) => {
+            const val = (values as any)[f.id]
+            if (!val) return
+            if (val instanceof FileList) {
+              Array.from(val).forEach((file) => {
+                form.append(f.id, file)
+              })
+            } else if (Array.isArray(val)) {
+              val.forEach((file: File) => form.append(f.id, file))
+            } else if (val instanceof File) {
+              form.append(f.id, val)
+            }
+          })
+
+        const res = await fetch("/api/nominations", {
+          method: "POST",
+          body: form,
+        })
+
+        const result = await res.json()
+        if (res.ok && result.success) {
+          alert("Nomination submitted successfully! You will receive a confirmation email shortly.")
+          formik.resetForm()
+        } else {
+          console.error(result)
+          alert(result.message || "Something went wrong. Please try again.")
+        }
+      } catch (err) {
+        console.error(err)
+        alert("Server error occurred.")
+      } finally {
+        setIsSubmitting(false)
       }
-    } catch (err) {
-      alert("Server error occurred.")
-      console.error(err)
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
+    },
+  })
 
+  /* ---------------------- render helpers ---------------------- */
   const renderField = (field: FormField) => {
-    const value = formData[field.id] || ""
+    const error = (formik.touched as any)[field.id] && (formik.errors as any)[field.id]
+    const commonProps = {
+      id: field.id,
+      name: field.id,
+    }
 
     switch (field.type) {
       case "select":
         return (
-          <Select onValueChange={(value) => handleInputChange(field.id, value)} required={field.required}>
-            <SelectTrigger>
-              <SelectValue placeholder={`Select ${field.label.toLowerCase()}`} />
-            </SelectTrigger>
-            <SelectContent>
-              {field.options?.map((option) => (
-                <SelectItem key={option} value={option.toLowerCase()}>
-                  {option}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <div>
+            <Select
+              onValueChange={(value) => formik.setFieldValue(field.id, value)}
+              value={formik.values[field.id] || ""}
+              required={field.required}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder={`Select ${field.label.toLowerCase()}`} />
+              </SelectTrigger>
+              <SelectContent>
+                {field.options?.map((option) => (
+                  <SelectItem key={option} value={option}>
+                    {option}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
+          </div>
         )
 
       case "textarea":
         return (
-          <Textarea
-            value={value}
-            onChange={(e) => handleInputChange(field.id, e.target.value)}
-            placeholder={field.placeholder}
-            rows={4}
-            required={field.required}
-          />
+          <>
+            <Textarea
+              {...commonProps}
+              value={formik.values[field.id] || ""}
+              onChange={(e) => formik.setFieldValue(field.id, e.target.value)}
+              placeholder={field.placeholder}
+              rows={4}
+            />
+            {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
+          </>
         )
 
       case "file":
         return (
-          <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-            <Upload className="h-8 w-8 mx-auto text-gray-400 mb-2" />
-            <Input
-              type="file"
-              accept={field.accept}
-              multiple={field.multiple}
-              onChange={(e) =>
-                handleInputChange(field.id, field.multiple ? e.target.files : e.target.files?.[0] || null)
-              }
-              className="hidden"
-              id={field.id}
-              required={field.required}
-            />
-            <Label htmlFor={field.id} className="cursor-pointer">
-              <span className="text-sm text-gray-600">
-                Click to upload {field.label.toLowerCase()}
-                {field.multiple && " (multiple files allowed)"}
-              </span>
-            </Label>
-            {formData[field.id] && (
-              <p className="text-sm text-green-600 mt-2">
-                {field.multiple
-                  ? `${(formData[field.id] as FileList).length} file(s) selected`
-                  : `File selected: ${(formData[field.id] as File).name}`}
-              </p>
-            )}
+          <div>
+            <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+              <Upload className="h-8 w-8 mx-auto text-gray-400 mb-2" />
+              {/* Hidden native input */}
+              <input
+                {...commonProps}
+                type="file"
+                accept={field.accept}
+                multiple={field.multiple}
+                onChange={(e) => {
+                  const files = e.currentTarget.files
+                  // Set FileList or single file in formik
+                  if (!files) return
+                  if (field.multiple) {
+                    formik.setFieldValue(field.id, files)
+                  } else {
+                    formik.setFieldValue(field.id, files[0])
+                  }
+                }}
+                className="hidden"
+                id={field.id}
+              />
+              <label htmlFor={field.id} className="cursor-pointer">
+                <span className="text-sm text-gray-600">
+                  Click to upload {field.label.toLowerCase()}
+                  {field.multiple && " (multiple files allowed)"}
+                </span>
+              </label>
+              {/* selected file count / name */}
+              {formik.values[field.id] && (
+                <p className="text-sm text-green-600 mt-2">
+                  {field.multiple
+                    ? `${(formik.values[field.id] as FileList).length} file(s) selected`
+                    : `File selected: ${(formik.values[field.id] as File).name}`}
+                </p>
+              )}
+            </div>
+            {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
           </div>
         )
 
       case "radio":
         return (
-          <RadioGroup onValueChange={(value) => handleInputChange(field.id, value)} required={field.required}>
-            {field.options?.map((option) => (
-              <div key={option} className="flex items-center space-x-2">
-                <RadioGroupItem value={option.toLowerCase()} id={`${field.id}-${option}`} />
-                <Label htmlFor={`${field.id}-${option}`}>{option}</Label>
-              </div>
-            ))}
-          </RadioGroup>
+          <>
+            <RadioGroup
+              onValueChange={(value) => formik.setFieldValue(field.id, value)}
+              value={formik.values[field.id] || ""}
+            >
+              {field.options?.map((option) => (
+                <div key={option} className="flex items-center space-x-2">
+                  <RadioGroupItem value={option} id={`${field.id}-${option}`} />
+                  <Label htmlFor={`${field.id}-${option}`}>{option}</Label>
+                </div>
+              ))}
+            </RadioGroup>
+            {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
+          </>
         )
 
       default:
         return (
-          <Input
-            type={field.type}
-            value={value}
-            onChange={(e) => handleInputChange(field.id, e.target.value)}
-            placeholder={field.placeholder}
-            required={field.required}
-          />
+          <>
+            <Input
+              {...commonProps}
+              type={field.type}
+              value={formik.values[field.id] || ""}
+              onChange={(e) => formik.setFieldValue(field.id, e.target.value)}
+              placeholder={field.placeholder}
+            />
+            {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
+          </>
         )
     }
   }
@@ -403,8 +527,8 @@ export default function NominationForm({ awardTitle, awardId }: NominationFormPr
         </CardDescription>
       </CardHeader>
       <CardContent className="pt-6">
-        <form onSubmit={handleSubmit} className="space-y-8">
-          {/* Step 1: Nominee Details */}
+        <form onSubmit={(e) => { e.preventDefault(); formik.handleSubmit() }} className="space-y-8">
+          {/* Nominee Details */}
           <div className="space-y-6">
             <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2 border-b pb-2">
               <User className="h-6 w-6" />
@@ -425,7 +549,7 @@ export default function NominationForm({ awardTitle, awardId }: NominationFormPr
 
           <Separator className="my-8" />
 
-          {/* Step 2: Category-Specific Fields */}
+          {/* Category specific */}
           {categoryFields.length > 0 && (
             <div className="space-y-6">
               <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2 border-b pb-2">
@@ -448,7 +572,7 @@ export default function NominationForm({ awardTitle, awardId }: NominationFormPr
 
           <Separator className="my-8" />
 
-          {/* Step 3: Social Media & Visibility */}
+          {/* Social Media */}
           <div className="space-y-6">
             <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2 border-b pb-2">
               <Building className="h-6 w-6" />
@@ -474,23 +598,22 @@ export default function NominationForm({ awardTitle, awardId }: NominationFormPr
             <div className="flex items-start space-x-2">
               <Checkbox
                 id="agreeToTerms"
-                checked={formData.agreeToTerms || false}
-                onCheckedChange={(checked) => handleInputChange("agreeToTerms", checked as boolean)}
-                required
+                checked={formik.values.agreeToTerms}
+                onCheckedChange={(checked) => formik.setFieldValue("agreeToTerms", checked)}
               />
               <Label htmlFor="agreeToTerms" className="text-sm leading-relaxed">
-                I agree to the terms and conditions and confirm that all information provided is accurate. I understand
-                that false information may disqualify the nomination. *
+                I agree to the terms and conditions and confirm that all information provided is accurate.
               </Label>
             </div>
+
             <Button
               type="submit"
-              disabled={isSubmitting || !formData.agreeToTerms}
+              disabled={isSubmitting || !formik.values.agreeToTerms}
               className="w-full bg-gradient-to-r from-[#fa0368] to-[#dc5044] hover:from-[#dc5044] hover:to-[#fa0368] text-white py-4 text-lg font-semibold"
             >
               {isSubmitting ? (
                 <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
                   Submitting Nomination...
                 </>
               ) : (
