@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData()
 
-    // Extract text + file fields
+    // Extract text + file fieldsgggg
     const data: Record<string, any> = {}
     const files: Record<string, File[]> = {}
 
@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Validate text fields
+    // Validate text fields cloud changes
     const validated = nominationSchema.parse(data)
 
     // Unique folder for nomination
