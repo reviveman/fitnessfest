@@ -8,6 +8,9 @@ import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { ArrowLeft, Download, Eye, Mail, Phone, MapPin, Building, Calendar, User } from "lucide-react"
 
+// Import your working client component
+import ActionsPanel from "./ActionsPanel"
+
 // Define the nomination type with all fields
 type NominationDetails = {
   id: string
@@ -37,7 +40,6 @@ interface PageProps {
 }
 
 export default async function NominationDetailPage({ params }: PageProps) {
-  // Prevent caching
   noStore()
 
   const { id } = await params
@@ -53,16 +55,13 @@ export default async function NominationDetailPage({ params }: PageProps) {
 
     const nominationData = nomination as NominationDetails
 
-    // Helper function to format date
-    const formatDate = (date: Date) => {
-      return new Date(date).toLocaleDateString("en-US", {
+    const formatDate = (date: Date) =>
+      new Date(date).toLocaleDateString("en-US", {
         year: "numeric",
         month: "long",
         day: "numeric",
       })
-    }
 
-    // Helper function to get status color
     const getStatusColor = (status: string) => {
       switch (status) {
         case "APPROVED":
@@ -95,7 +94,9 @@ export default async function NominationDetailPage({ params }: PageProps) {
             </div>
           </div>
           <div className="flex items-center space-x-2">
-            <Badge className={getStatusColor(nominationData.status)}>{nominationData.status}</Badge>
+            <Badge className={getStatusColor(nominationData.status)}>
+              {nominationData.status}
+            </Badge>
             <Button variant="outline" size="sm">
               <Mail className="h-4 w-4 mr-2" />
               Send Email
@@ -190,7 +191,9 @@ export default async function NominationDetailPage({ params }: PageProps) {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    {Object.entries(nominationData.professionalData as Record<string, any>).map(([key, value]) => {
+                    {Object.entries(
+                      nominationData.professionalData as Record<string, any>
+                    ).map(([key, value]) => {
                       if (!value) return null
                       return (
                         <div key={key}>
@@ -206,7 +209,7 @@ export default async function NominationDetailPage({ params }: PageProps) {
               </Card>
             )}
 
-            {/* Social Media Data */}
+            {/* Social Media */}
             {nominationData.socialMediaData && (
               <Card>
                 <CardHeader>
@@ -214,7 +217,9 @@ export default async function NominationDetailPage({ params }: PageProps) {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    {Object.entries(nominationData.socialMediaData as Record<string, any>).map(([key, value]) => {
+                    {Object.entries(
+                      nominationData.socialMediaData as Record<string, any>
+                    ).map(([key, value]) => {
                       if (!value) return null
                       return (
                         <div key={key}>
@@ -222,14 +227,15 @@ export default async function NominationDetailPage({ params }: PageProps) {
                             {key.replace(/([A-Z])/g, " $1").trim()}
                           </label>
                           <p className="mt-1">
-                            {key.includes("Handle") || key.includes("Page") || key.includes("Website") ? (
+                            {typeof value === "string" &&
+                            (key.includes("Handle") || key.includes("Page") || key.includes("Website")) ? (
                               <a
-                                href={String(value)}
+                                href={value}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-blue-600 hover:underline"
                               >
-                                {String(value)}
+                                {value}
                               </a>
                             ) : (
                               String(value)
@@ -245,46 +251,53 @@ export default async function NominationDetailPage({ params }: PageProps) {
 
             {/* Uploaded Files */}
             {nominationData.uploadedFiles &&
-              Object.keys(nominationData.uploadedFiles as Record<string, any>).length > 0 && (
+              Object.keys(
+                nominationData.uploadedFiles as Record<string, any>
+              ).length > 0 && (
                 <Card>
                   <CardHeader>
                     <CardTitle>Uploaded Files</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
-                      {Object.entries(nominationData.uploadedFiles as Record<string, string[]>).map(
-                        ([fieldName, files]) => (
-                          <div key={fieldName}>
-                            <label className="text-sm font-medium text-gray-500 capitalize">
-                              {fieldName.replace(/([A-Z])/g, " $1").trim()}
-                            </label>
-                            <div className="mt-2 space-y-2">
-                              {files.map((fileUrl, index) => (
-                                <div key={index} className="flex items-center justify-between p-3 border rounded-lg">
-                                  <div className="flex items-center space-x-3">
-                                    <Eye className="h-4 w-4 text-gray-400" />
-                                    <span className="text-sm">{fileUrl.split("/").pop() || `File ${index + 1}`}</span>
-                                  </div>
-                                  <div className="flex space-x-2">
-                                    <Button variant="outline" size="sm" asChild>
-                                      <a href={fileUrl} target="_blank" rel="noopener noreferrer">
-                                        <Eye className="h-4 w-4 mr-1" />
-                                        View
-                                      </a>
-                                    </Button>
-                                    <Button variant="outline" size="sm" asChild>
-                                      <a href={fileUrl} download>
-                                        <Download className="h-4 w-4 mr-1" />
-                                        Download
-                                      </a>
-                                    </Button>
-                                  </div>
+                      {Object.entries(
+                        nominationData.uploadedFiles as Record<string, string[]>
+                      ).map(([fieldName, files]) => (
+                        <div key={fieldName}>
+                          <label className="text-sm font-medium text-gray-500 capitalize">
+                            {fieldName.replace(/([A-Z])/g, " $1").trim()}
+                          </label>
+                          <div className="mt-2 space-y-2">
+                            {files.map((fileUrl, index) => (
+                              <div
+                                key={index}
+                                className="flex items-center justify-between p-3 border rounded-lg"
+                              >
+                                <div className="flex items-center space-x-3">
+                                  <Eye className="h-4 w-4 text-gray-400" />
+                                  <span className="text-sm">
+                                    {fileUrl.split("/").pop() || `File ${index + 1}`}
+                                  </span>
                                 </div>
-                              ))}
-                            </div>
+                                <div className="flex space-x-2">
+                                  <Button variant="outline" size="sm" asChild>
+                                    <a href={fileUrl} target="_blank" rel="noopener noreferrer">
+                                      <Eye className="h-4 w-4 mr-1" />
+                                      View
+                                    </a>
+                                  </Button>
+                                  <Button variant="outline" size="sm" asChild>
+                                    <a href={fileUrl} download>
+                                      <Download className="h-4 w-4 mr-1" />
+                                      Download
+                                    </a>
+                                  </Button>
+                                </div>
+                              </div>
+                            ))}
                           </div>
-                        ),
-                      )}
+                        </div>
+                      ))}
                     </div>
                   </CardContent>
                 </Card>
@@ -311,50 +324,13 @@ export default async function NominationDetailPage({ params }: PageProps) {
               </Card>
             )}
 
-            {/* Status & Actions */}
+            {/* Status & Actions = REPLACED WITH CLIENT COMPONENT */}
             <Card>
               <CardHeader>
                 <CardTitle>Status & Actions</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <label className="text-sm font-medium text-gray-500">Current Status</label>
-                  <div className="mt-1">
-                    <Badge className={getStatusColor(nominationData.status)}>{nominationData.status}</Badge>
-                  </div>
-                </div>
-
-                <Separator />
-
-                <div className="space-y-2">
-                  <Button className="w-full" variant="default">
-                    Approve Nomination
-                  </Button>
-                  <Button className="w-full" variant="outline">
-                    Mark Under Review
-                  </Button>
-                  <Button className="w-full" variant="outline">
-                    Shortlist
-                  </Button>
-                  <Button className="w-full" variant="destructive">
-                    Reject Nomination
-                  </Button>
-                </div>
-
-                <Separator />
-
-                <div>
-                  <label className="text-sm font-medium text-gray-500">Admin Notes</label>
-                  <textarea
-                    className="mt-1 w-full p-2 border rounded-md"
-                    rows={3}
-                    placeholder="Add notes about this nomination..."
-                    defaultValue={nominationData.adminNotes || ""}
-                  />
-                  <Button size="sm" className="mt-2">
-                    Save Notes
-                  </Button>
-                </div>
+              <CardContent>
+                <ActionsPanel nomination={nominationData} />
               </CardContent>
             </Card>
 

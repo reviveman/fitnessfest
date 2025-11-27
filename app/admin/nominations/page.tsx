@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic" // ⬅ completely disables caching for this page
+
 import { unstable_noStore as noStore } from "next/cache"
 import Link from "next/link"
 import { prisma } from "@/lib/prisma"
@@ -20,15 +22,11 @@ type NominationData = {
 }
 
 export default async function NominationsPage() {
-  // Prevent caching
-  noStore()
+  noStore() // ⬅ ensures this page always fetches fresh data
 
   try {
-    // Get all nominations
     const nominations = await prisma.nomination.findMany({
-      orderBy: {
-        createdAt: "desc",
-      },
+      orderBy: { createdAt: "desc" },
       select: {
         id: true,
         fullName: true,
@@ -79,12 +77,12 @@ export default async function NominationsPage() {
                           nomination.status === "APPROVED"
                             ? "bg-green-100 text-green-800"
                             : nomination.status === "REJECTED"
-                              ? "bg-red-100 text-red-800"
-                              : nomination.status === "UNDER_REVIEW"
-                                ? "bg-yellow-100 text-yellow-800"
-                                : nomination.status === "SHORTLISTED"
-                                  ? "bg-blue-100 text-blue-800"
-                                  : "bg-gray-100 text-gray-800"
+                            ? "bg-red-100 text-red-800"
+                            : nomination.status === "UNDER_REVIEW"
+                            ? "bg-yellow-100 text-yellow-800"
+                            : nomination.status === "SHORTLISTED"
+                            ? "bg-blue-100 text-blue-800"
+                            : "bg-gray-100 text-gray-800"
                         }`}
                       >
                         {nomination.status}
@@ -92,12 +90,16 @@ export default async function NominationsPage() {
                     </TableCell>
                     <TableCell>{new Date(nomination.createdAt).toLocaleDateString()}</TableCell>
                     <TableCell>
-                      <Link href={`/admin/nominations/${nomination.id}`} className="text-blue-600 hover:underline">
+                      <Link
+                        href={`/admin/nominations/${nomination.id}`}
+                        className="text-blue-600 hover:underline"
+                      >
                         View Details
                       </Link>
                     </TableCell>
                   </TableRow>
                 ))}
+
                 {nominations.length === 0 && (
                   <TableRow>
                     <TableCell colSpan={7} className="text-center py-8 text-gray-500">
