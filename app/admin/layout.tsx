@@ -1,7 +1,12 @@
+"use client"
+
 import type { ReactNode } from "react"
 import Link from "next/link"
+import { useAuth } from "@/lib/auth-context"
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
+  const { logout } = useAuth()
+
   return (
     <div className="min-h-screen flex pt-40 bg-black">
       {/* Sidebar */}
@@ -28,7 +33,10 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
               </Link>
             </li>
             <li>
-              <Link href="/admin/users" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-800">
+              <Link
+                href="/admin/users"
+                className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-800"
+              >
                 Users
               </Link>
             </li>
@@ -57,7 +65,10 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
               </Link>
             </li>
             <li>
-              <Link href="/admin/votes" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-800">
+              <Link
+                href="/admin/votes"
+                className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-800"
+              >
                 Votes
               </Link>
             </li>
@@ -72,16 +83,17 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             <div className="flex justify-between items-center">
               <h2 className="font-semibold text-xl text-gray-800">Admin Panel</h2>
               <div>
-                <Link
-                  href="/api/auth/logout"
+                <button
+                  onClick={logout}
                   className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
                 >
                   Logout
-                </Link>
+                </button>
               </div>
             </div>
           </div>
         </header>
+
         <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">{children}</main>
       </div>
     </div>
