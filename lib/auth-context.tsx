@@ -43,33 +43,43 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     loadUserFromCookie()
   }, [])
 
-  const login = async (email: string, password: string) => {
-    setLoading(true)
+const login = async (email: string, password: string) => {
+  setLoading(true);
 
-    try {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      })
+  try {
+    const response = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+      credentials: "include", // Ensure cookies are set
+    });
 
-      if (!response.ok) {
-        const error = await response.json()
-        throw new Error(error.error || "Login failed")
-      }
-
-      const data = await response.json()
-      setUser(data.user)
-
-      // Redirect to admin dashboard after successful login
-      router.push("/admin/dashboard")
-    } catch (error) {
-      console.error("Login error:", error)
-      throw error
-    } finally {
-      setLoading(false)
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || "Login failed");
     }
+
+    const data = await response.json();
+    setUser(data.user);
+
+    // Instead of waiting, immediately redirect based on role
+    // The middleware will handle the actual auth
+    if (data.user.role === "admin") {
+      window.location.href = "/admin/dashboard";
+    } else if (data.user.role === "judge") {
+      window.location.href = "/judge/votes";
+    } else {
+      window.location.href = "/unauthorized";
+    }
+
+  } catch (error) {
+    console.error("Login error:", error);
+    throw error;
+  } finally {
+    setLoading(false);
   }
+}
+
 
   const logout = async () => {
     setLoading(true)

@@ -41,7 +41,7 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-[#dc5044] to-[#70adb0]">
+    <div className="mt-20 min-h-screen flex items-center justify-center bg-gradient-to-r from-[#dc5044] to-[#70adb0]">
       <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-xl shadow-2xl">
         <div className="text-center">
           <h1 className="text-3xl font-extrabold text-gray-900">Admin Login</h1>

@@ -19,6 +19,8 @@ export async function POST(request: NextRequest) {
       where: { email },
     })
 
+    console.log("LOGIN USER:", user?.email, "ROLE:", user?.role)
+
     if (!user) {
       return NextResponse.json({ error: "Invalid email or password" }, { status: 401 })
     }
