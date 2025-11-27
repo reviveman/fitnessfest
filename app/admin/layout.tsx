@@ -10,7 +10,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen flex pt-40 bg-black">
       {/* Sidebar */}
-      <div className="w-64 bg-gray-900 text-white">
+      <div className=" mt-17 w-64 bg-gray-900 text-white">
         <div className="p-4">
           <h1 className="text-2xl font-bold">Admin Panel</h1>
         </div>
@@ -77,11 +77,11 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       </div>
 
       {/* Main content */}
-      <div className="flex-1 bg-gray-100">
+      <div className=" mt-17 flex-1 bg-gray-100">
         <header className="bg-white shadow">
           <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center">
-              <h2 className="font-semibold text-xl text-gray-800">Admin Panel</h2>
+              <h2 className="font-semibold text-xl text-gray-800">Padmanabham</h2>
               <div>
                 <button
                   onClick={logout}

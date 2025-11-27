@@ -1,52 +1,59 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
+import { verifyJwt } from "@/lib/jwt"
+// import { error } from "console"
 
 export async function middleware(request: NextRequest) {
-  // Check if the request is for an admin route
-  if (request.nextUrl.pathname.startsWith("/admin")) {
-    // Get the token from the cookies
-    const token = request.cookies.get("auth_token")?.value
+  const pathname = request.nextUrl.pathname
+  const token = request.cookies.get("auth_token")?.value
 
-    // If there's no token, redirect to login
-    if (!token) {
-      const loginUrl = new URL("/login", request.url)
-      loginUrl.searchParams.set("from", request.nextUrl.pathname)
-      return NextResponse.redirect(loginUrl)
-    }
+  // Helper: force login
+  const redirectToLogin = () => {
+    const loginUrl = new URL("/login", request.url)
+    loginUrl.searchParams.set("from", pathname)
+    return NextResponse.redirect(loginUrl)
+  }
 
-    // For JWT tokens, we'll just check if they look valid
-    if (token.startsWith("ey")) {
-      // Allow access for JWT tokens
-      return NextResponse.next()
-    }
-
-    // For other token formats, do a simple check
+  // Helper: verify JWT
+  const getPayload = async () => {
+    if (!token) return null
     try {
-      const payload = JSON.parse(token)
-      if (!payload || !payload.id) {
-        const loginUrl = new URL("/login", request.url)
-        loginUrl.searchParams.set("from", request.nextUrl.pathname)
-        return NextResponse.redirect(loginUrl)
-      }
-    } catch (error) {
-      const loginUrl = new URL("/login", request.url)
-      loginUrl.searchParams.set("from", request.nextUrl.pathname)
-      return NextResponse.redirect(loginUrl)
+      const payload = await verifyJwt(token)
+      console.log("MIDDLEWARE PAYLOAD:", payload)   // <-- IMPORTANT DEBUG
+      return payload
+    } catch (err) {
+      console.log("JWT VERIFY FAILED:", err)
+      return null
     }
   }
 
-  // Add CORS headers for API routes
-  if (request.nextUrl.pathname.startsWith("/api/")) {
-    const response = NextResponse.next()
-    response.headers.set("Access-Control-Allow-Origin", "*")
-    response.headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-    response.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization")
-    return response
+  // ---------- ADMIN ----------
+  if (pathname.startsWith("/admin")) {
+    const payload = await getPayload()
+    if (!payload) return redirectToLogin()
+    if (payload.role !== "admin") {
+      console.log(payload)
+      return NextResponse.redirect(new URL("/unauthorized", request.url))
+    }
+    
+  }
+
+  // ---------- JUDGE ----------
+  if (pathname.startsWith("/judge")) {
+    const payload = await getPayload()
+    if (!payload) return redirectToLogin()
+    if (payload.role !== "judge") {
+      // console.log(payload);
+      // console.log(error);
+      
+      
+      return NextResponse.redirect(new URL("/unauthorized", request.url))
+    }
   }
 
   return NextResponse.next()
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/api/:path*"],
+  matcher: ["/admin/:path*", "/judge/:path*"],
 }
