@@ -46,7 +46,7 @@ export default function KnowMoreSection() {
               Get ready to experience Bengaluru’s most dynamic celebration of
               health, fitness, and holistic well-being. The Bengaluru Fitness
               Festival 2026, happening on{" "}
-              <strong>21–22 November</strong> at{" "}
+              <strong>21–22 February</strong> at{" "}
               <strong>KTPO Convention Centre</strong>, brings together fitness
               enthusiasts, industry experts, and wellness brands for an
               electrifying two-day event.
@@ -55,10 +55,10 @@ export default function KnowMoreSection() {
             <p className="text-gray-700 text-base sm:text-lg leading-relaxed text-justify">
               From high-intensity workouts and inspirational speaker sessions to
               wellness workshops, fitness competitions, and a vibrant healthy
-              living expo — this festival is designed to energize, educate, and
+              living expo - this festival is designed to energize, educate, and
               empower. Whether you're a seasoned athlete, a weekend warrior, or
               just beginning your wellness journey, there’s something here for
-              everyone. Join us in redefining fitness — not just as a routine,
+              everyone. Join us in redefining fitness - not just as a routine,
               but as a lifestyle.
             </p>
           </div>

@@ -519,7 +519,7 @@ export default function NominationForm({ awardTitle, awardId }: NominationFormPr
     <Card className="shadow-lg border-0">
       <CardHeader className="bg-gradient-to-r from-[#fa0368] to-[#dc5044] text-white rounded-t-lg">
         <CardTitle className="flex items-center gap-3 text-2xl">
-          <Send className="h-6 w-6" />
+          <Send className="h-20 w-6" />
           Submit Nomination for {awardTitle}
         </CardTitle>
         <CardDescription className="text-white/90">
