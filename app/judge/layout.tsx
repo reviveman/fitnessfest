@@ -9,7 +9,7 @@ export default function JudgeLayout({ children }: { children: React.ReactNode })
   return (
     <div className=" mt-30 min-h-screen flex bg-gray-900 text-white">
       {/* Sidebar */}
-      <aside className="w-64 bg-gray-800 p-5">
+      <aside className=" mt-25 w-64 bg-gray-800 p-5">
         <h2 className="text-xl font-bold mb-6">Judge Panel</h2>
 
         <nav>
@@ -20,6 +20,15 @@ export default function JudgeLayout({ children }: { children: React.ReactNode })
                 className="block px-4 py-2 rounded hover:bg-gray-700"
               >
                 Votes
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                href="/judge/votes"
+                className="block px-4 py-2 rounded hover:bg-gray-700"
+              >
+                Vote Details
               </Link>
             </li>
           </ul>

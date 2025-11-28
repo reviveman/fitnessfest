@@ -37,6 +37,7 @@ export async function POST(request: NextRequest) {
       email: user.email,
       name: user.name,
       role: user.role,
+      assignedCategories: user.assignedCategories,
     })
 
     // Set the token in a cookie
@@ -58,6 +59,7 @@ export async function POST(request: NextRequest) {
         email: user.email,
         name: user.name,
         role: user.role,
+        assignedCategories: user.assignedCategories || [],
       },
     })
   } catch (error) {
