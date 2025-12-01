@@ -34,7 +34,7 @@ export default function AwardsPage() {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
-            <Link href="/nominate">
+            <Link href="/register">
               <button className="px-8 py-3 rounded-full bg-[#EA4A3E] hover:bg-red-600 text-white font-semibold transition-all shadow-xl hover:shadow-[#EA4A3E]/40">
                 Nominate Now
               </button>

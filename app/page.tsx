@@ -29,6 +29,7 @@ import Hero from "@/components/Homehero";
 import EventInfoSection from "@/components/event-info-section";
 import Timer from "@/components/timer";
 import HomeClient from "./home-client";
+import HomeRegistration from "@/components/HomeRegistration";
 
 export default function Home() {
   return (
@@ -39,6 +40,8 @@ export default function Home() {
       </div>
 
       <EventInfoSection />
+      <HomeRegistration />
+
 
       {/* Everything heavy loads in client */}
       <HomeClient />

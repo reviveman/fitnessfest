@@ -33,8 +33,9 @@ export default function ContactPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const typeFromUrl = searchParams.get("type")?.toLowerCase() || "visitor";
-  const [activeTab, setActiveTab] = useState(typeFromUrl);
+  // read type from URL for deep linking / initial tab
+  const typeFromUrl = (searchParams.get("type") ?? "visitor").toLowerCase();
+  const [activeTab, setActiveTab] = useState<string>(typeFromUrl);
 
   useEffect(() => {
     setActiveTab(typeFromUrl);
@@ -65,10 +66,11 @@ export default function ContactPage() {
     }),
   });
 
-  // Thank You Page redirect
-  if (searchParams.has("type")) {
+  // Show Thank You Page ONLY when submitted=true
+  const isSubmitted = searchParams.get("submitted") === "true";
+  if (isSubmitted) {
     return (
-      <div className=" mt-10 min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="mt-10 min-h-screen flex items-center justify-center bg-gray-50">
         <ThankYouPage type={typeFromUrl} />
       </div>
     );
@@ -77,17 +79,22 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-white py-16">
       <div className="container max-w-7xl mx-auto px-4">
-        
         {/* TWO COLUMN LAYOUT */}
         <div className="mt-45 grid grid-cols-1 lg:grid-cols-2 gap-0">
-
           {/* LEFT COLUMN - FORM */}
           <div className="bg-white border border-gray-300 shadow-sm p-8">
-
             {/* TABS */}
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-8">
+            <Tabs
+              value={activeTab}
+              onValueChange={(value) => {
+                // update tab state AND URL query param (no submitted flag)
+                setActiveTab(value);
+                // use router.push with scroll: false to avoid jumping
+                router.push(`/register?type=${value}`, { scroll: false });
+              }}
+              className="mb-8"
+            >
               <TabsList className="flex gap-2 bg-transparent p-0 shadow-none">
-                
                 <TabsTrigger
                   value="visitor"
                   className="
@@ -120,7 +127,6 @@ export default function ContactPage() {
                 >
                   Sponsor
                 </TabsTrigger>
-
               </TabsList>
 
               {/* FORM */}
@@ -139,45 +145,45 @@ export default function ContactPage() {
                   sponsorshipLevel: "",
                 }}
                 validationSchema={validationSchema}
-              onSubmit={async (values) => {
-  setIsSubmitting(true);
+                onSubmit={async (values) => {
+                  setIsSubmitting(true);
 
-  const formData = new FormData();
-  Object.entries(values).forEach(([key, value]) => {
-    formData.append(key, value as string);
-  });
+                  const formData = new FormData();
+                  Object.entries(values).forEach(([key, value]) => {
+                    formData.append(key, value as string);
+                  });
 
-  formData.append("type", activeTab);
+                  // append currently selected type
+                  formData.append("type", activeTab);
 
-  try {
-    const result = await submitContactForm(formData);
+                  try {
+                    const result = await submitContactForm(formData);
 
-    if (result.success) {
-      router.push(`/contact?type=${activeTab}`);
-    } else {
-      console.error(result.error);
-      toast({
-        title: "Error",
-        description: "Something went wrong. Please try again.",
-        variant: "destructive",
-      });
-    }
-  } catch (err) {
-    console.error(err);
-    toast({
-      title: "Server Error",
-      description: "Unable to submit your request.",
-      variant: "destructive",
-    });
-  }
+                    if (result.success) {
+                      // redirect to submitted=true so ThankYouPage shows
+                      router.push(`/register?submitted=true&type=${activeTab}`);
+                    } else {
+                      console.error(result.error);
+                      toast({
+                        title: "Error",
+                        description: "Something went wrong. Please try again.",
+                        variant: "destructive",
+                      });
+                    }
+                  } catch (err) {
+                    console.error(err);
+                    toast({
+                      title: "Server Error",
+                      description: "Unable to submit your request.",
+                      variant: "destructive",
+                    });
+                  }
 
-  setIsSubmitting(false);
-}}
-
+                  setIsSubmitting(false);
+                }}
               >
                 {({ setFieldValue, errors, touched }) => (
                   <Form className="space-y-6">
-
                     {/* Visitor */}
                     <TabsContent value="visitor">
                       <p className="text-sm text-gray-600 mb-4">
@@ -327,7 +333,6 @@ export default function ContactPage() {
                 )}
               </Formik>
             </Tabs>
-
           </div>
 
           {/* RIGHT COLUMN - IMAGE */}
@@ -338,7 +343,6 @@ export default function ContactPage() {
               alt="Contact"
             />
           </div>
-
         </div>
       </div>
     </div>
