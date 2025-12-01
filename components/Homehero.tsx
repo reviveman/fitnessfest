@@ -6,16 +6,18 @@ import Link from "next/link"
 
 export default function Timer() {
   return (
-    <div
-      className="relative min-h-[70vh] lg:min-h-[60vh] xl:min-h-[90vh] 2xl:min-h-[50vh] flex items-center bg-white"
-      style={{
-        backgroundImage: "url('/images/image1.jpg')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        borderBottomLeftRadius: "10%",
-        borderBottomRightRadius: "10%",
-      }}
-    >
+   <div
+  className="relative min-h-[70vh] lg:min-h-[60vh] xl:min-h-[90vh] 2xl:min-h-[50vh] 
+             flex items-center bg-white pt-28 md:pt-40"
+  style={{
+    backgroundImage: "url('/images/image1.jpg')",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    borderBottomLeftRadius: "10%",
+    borderBottomRightRadius: "10%",
+  }}
+>
+
       {/* ✅ Overlay */}
       {/* <div className="absolute inset-0 bg-black bg-opacity-50 z-0"></div> */}
 
