@@ -150,6 +150,11 @@ export default function Header() {
               <span className="absolute bottom-0 left-0 h-1 w-full origin-right scale-x-0 rounded-md bg-[#EA4A3E] transition-transform duration-500 group-hover:scale-x-100"></span>
             </Link>
 
+                        <Link href="/5k-run" className="relative group text-white font-medium text-sm">
+              5K RUN
+              <span className="absolute bottom-0 left-0 h-1 w-full origin-right scale-x-0 rounded-md bg-[#EA4A3E] transition-transform duration-500 group-hover:scale-x-100"></span>
+            </Link>
+
             {/* ✅ UPDATED PATH */}
             <Link href="/register" className="relative group text-white font-medium text-sm">
               CONTACT US
