@@ -67,7 +67,7 @@ export default function BenefitsSection() {
         </div>
 
         {/* Why Join */}
-        <div className="bg-gradient-to-r from-[#EA4A3E] to-[#ff7b54] rounded-2xl p-12 text-white">
+        {/* <div className="bg-gradient-to-r from-[#EA4A3E] to-[#ff7b54] rounded-2xl p-12 text-white">
           <div className="grid md:grid-cols-2 gap-8">
             <div>
               <h3 className="text-3xl font-bold mb-6">Why Join?</h3>
@@ -100,7 +100,7 @@ export default function BenefitsSection() {
               }}
             />
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   )

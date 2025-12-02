@@ -94,7 +94,7 @@ export default function BenefitsSection() {
               className="hidden md:block rounded-xl overflow-hidden h-64"
               style={{
                 backgroundImage:
-                  "url(/placeholder.svg?height=400&width=600&query=community%20runners%20celebrating%20fitness)",
+                  "url(/images/fivekabout.png)",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
