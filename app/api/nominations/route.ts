@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
 import { prisma } from "@/lib/prisma"
 import { v2 as cloudinary } from "cloudinary"
+import { sendNominationEmails } from "@/lib/mail/sendNominationEmails"
 
 // ------------------ CLOUDINARY CONFIG ------------------ //
 cloudinary.config({
@@ -27,13 +28,13 @@ const nominationSchema = z.object({
   }),
 })
 
-// Helper to convert File → Buffer
+// Convert File to Buffer
 async function convertFileToBuffer(file: File) {
   const arrayBuffer = await file.arrayBuffer()
   return Buffer.from(arrayBuffer)
 }
 
-// Upload single file to Cloudinary
+// Upload file to Cloudinary
 async function uploadToCloudinary(file: File, folder: string) {
   const buffer = await convertFileToBuffer(file)
 
@@ -41,14 +42,13 @@ async function uploadToCloudinary(file: File, folder: string) {
     const uploadStream = cloudinary.uploader.upload_stream(
       {
         folder,
-        resource_type: "auto", // supports images, pdfs, videos
+        resource_type: "auto",
       },
       (err, result) => {
         if (err) reject(err)
         else resolve(result)
       }
     )
-
     uploadStream.end(buffer)
   })
 }
@@ -57,32 +57,28 @@ export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData()
 
-    // Extract text + file fieldsgggg
     const data: Record<string, any> = {}
     const files: Record<string, File[]> = {}
 
+    // Extract form fields
     for (const [key, value] of formData.entries()) {
       if (value instanceof File) {
         if (!files[key]) files[key] = []
         files[key].push(value)
       } else {
-        if (key === "agreeToTerms") {
-          data[key] = value === "true"
-        } else {
-          data[key] = value
-        }
+        data[key] = key === "agreeToTerms" ? value === "true" : value
       }
     }
 
-    // Validate text fields cloud changes
+    // Validate main fields
     const validated = nominationSchema.parse(data)
 
-    // Unique folder for nomination
+    // Unique Cloudinary folder
     const folder = `nominations/${Date.now()}-${validated.fullName}`
 
-    // Upload all files to Cloudinary
     const uploadedFiles: Record<string, string[]> = {}
 
+    // Upload each file
     for (const [fieldName, fileList] of Object.entries(files)) {
       uploadedFiles[fieldName] = []
 
@@ -92,7 +88,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Store in DB
+    // Save to DB
     const nomination = await prisma.nomination.create({
       data: {
         awardTitle: validated.awardTitle,
@@ -105,8 +101,6 @@ export async function POST(request: NextRequest) {
         cityArea: validated.cityArea,
         organization: data.organization || "",
         designation: validated.designation,
-
-        // JSON fields
         professionalData: data,
         socialMediaData: {
           instagramHandle: data.instagramHandle || null,
@@ -114,18 +108,29 @@ export async function POST(request: NextRequest) {
           youtubeWebsite: data.youtubeWebsite || null,
           mediaMentions: data.mediaMentions || null,
         },
-
         uploadedFiles,
-
         status: "PENDING",
       },
     })
+
+    // -------------------------
+    //  📩 SEND EMAILS (Nominee + Admin)
+    // -------------------------
+    await sendNominationEmails(
+      {
+        ...validated,
+        ...data,
+        uploadedFiles,
+      },
+      files
+    )
 
     return NextResponse.json({
       success: true,
       message: "Nomination submitted successfully",
       nominationId: nomination.id,
     })
+
   } catch (error) {
     console.error(error)
 

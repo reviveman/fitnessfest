@@ -7,9 +7,7 @@ import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-
 export default function Schedule() {
-  // Set initial state to match your events data
   const [selectedDate, setSelectedDate] = useState("February 21, 2026");
   const filteredEvents = events.filter((e) => e.date === selectedDate);
   const router = useRouter();
@@ -36,7 +34,7 @@ export default function Schedule() {
         {/* Circles as Date Filters */}
         <div className="mt-10 flex justify-center items-center">
           <div className="relative flex md:inline-block">
-            {/* Day 1 Circle */}
+            {/* Day 1 */}
             <div
               onClick={() => setSelectedDate("February 21, 2026")}
               className={clsx(
@@ -51,7 +49,7 @@ export default function Schedule() {
               </span>
               <span
                 className={clsx(
-                  "text-xs sm:text-sm font-semibold transition-colors duration-300",
+                  "text-xs sm:text-sm font-semibold",
                   selectedDate === "February 21, 2026"
                     ? "text-white"
                     : "text-[#EA4A3E] group-hover:text-white"
@@ -61,13 +59,14 @@ export default function Schedule() {
               </span>
             </div>
 
-            {/* Day 2 Circle */}
+            {/* Day 2 */}
             <div
               onClick={() => setSelectedDate("February 22, 2026")}
               className={clsx(
                 `cursor-pointer w-24 h-24 sm:w-28 sm:h-28 md:w-44 md:h-44
                  rounded-full flex flex-col items-center justify-center shadow-lg z-20
-                 -ml-1 sm:-ml-1 md:ml-0 md:absolute md:left-[80%] md:top-0 transition-all duration-300 group`,
+                 -ml-1 sm:-ml-1 md:ml-0 md:absolute md:left-[80%] md:top-0 
+                 transition-all duration-300 group`,
                 selectedDate === "February 22, 2026"
                   ? "bg-[#EA4A3E] text-white shadow-xl scale-105"
                   : "bg-gray-200 text-gray-800 hover:bg-yellow-500 hover:text-white hover:shadow-lg hover:scale-105"
@@ -78,7 +77,7 @@ export default function Schedule() {
               </span>
               <span
                 className={clsx(
-                  "text-xs sm:text-sm font-semibold transition-colors duration-300",
+                  "text-xs sm:text-sm font-semibold",
                   selectedDate === "February 22, 2026"
                     ? "text-white"
                     : "text-[#EA4A3E] group-hover:text-white"
@@ -97,38 +96,68 @@ export default function Schedule() {
           filteredEvents.map((item) => (
             <div
               key={item.id}
-              className="bg-white rounded-2xl shadow-md overflow-hidden group hover:shadow-2xl hover:scale-[1.02] transform transition-all duration-300 flex flex-col"
+              className="
+                bg-white rounded-2xl shadow-sm border border-gray-200 
+                overflow-hidden group transition-all duration-300 
+                hover:shadow-xl hover:-translate-y-1
+              "
             >
-              {/* Event Image */}
-              <div className="relative w-full h-40 overflow-hidden">
+              {/* Image */}
+              <div className="relative w-full h-44 overflow-hidden">
                 <Image
                   src={item.image}
                   alt={item.title}
                   fill
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  className="
+                    object-cover transition-all duration-500 
+                    group-hover:scale-110
+                  "
                 />
-                <div className="absolute top-3 left-3 bg-[#EA4A3E] text-white text-xs font-semibold px-3 py-1 rounded-full shadow">
+
+                {/* gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+
+                {/* Time badge */}
+                <div
+                  className="
+                    absolute top-3 left-3 
+                    bg-[#EA4A3E] text-white text-xs font-semibold 
+                    px-3 py-1 rounded-full shadow-md
+                  "
+                >
                   {item.timeRange}
                 </div>
               </div>
 
-              {/* Event Details */}
-              <div className="flex flex-col flex-grow p-5 text-center">
-                <h6 className="text-lg font-bold text-gray-900 mb-2">
-                  {item.title}
+              {/* Header bar */}
+              <div className="w-full bg-gray-100 px-5 py-2 border-b border-gray-200">
+                <h6 className="text-sm font-semibold text-gray-800 tracking-wide">
+                  {item.date || selectedDate}
+
                 </h6>
-                <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+              </div>
+
+              {/* Content */}
+              <div className="p-5 flex flex-col text-center">
+                <h3 className="text-lg font-bold text-gray-900 mb-2">
+                  {item.title}
+                </h3>
+
+                <p className="text-sm text-gray-600 mb-4 line-clamp-3">
                   {item.description}
                 </p>
 
-                <div className="mt-auto">
-                  <Button
-                    className="w-full cursor-pointer bg-gradient-to-r from-[#EA4A3E] to-[#ff7b54] text-white font-semibold rounded-full px-6 py-2 transition-all duration-300 hover:shadow-lg hover:from-[#d63b30] hover:to-[#ff6339]"
-                    onClick={() => router.push(`/event/${item.id}`)}
-                  >
-                    Learn More
-                  </Button>
-                </div>
+                <Button
+                  className="
+                    mt-auto w-full bg-gradient-to-r from-[#EA4A3E] to-[#ff7b54]
+                    text-white font-semibold rounded-full px-6 py-2 
+                    hover:shadow-lg hover:from-[#d63b30] hover:to-[#ff6339]
+                    transition-all duration-300 cursor-pointer
+                  "
+                  onClick={() => router.push(`/event/${item.id}`)}
+                >
+                  Learn More
+                </Button>
               </div>
             </div>
           ))
