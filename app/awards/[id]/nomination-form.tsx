@@ -377,8 +377,8 @@ export default function NominationForm({ awardTitle, awardId }: NominationFormPr
 
         const result = await res.json()
         if (res.ok && result.success) {
-          alert("Nomination submitted successfully! You will receive a confirmation email shortly.")
-          formik.resetForm()
+         // Redirect to Thank You Page
+window.location.href = "/thank-you?type=nomination";
         } else {
           console.error(result)
           alert(result.message || "Something went wrong. Please try again.")

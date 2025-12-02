@@ -9,12 +9,13 @@ declare global {
   }
 }
 
-const validTypes = ["visitor", "exhibitor", "sponsor"];
+const validTypes = ["visitor", "exhibitor", "sponsor", "nomination"];
 
 const titleMap: Record<string, string> = {
   visitor: "Visitor",
   exhibitor: "Exhibitor",
   sponsor: "Sponsor",
+  nomination: "Nomination",
 };
 
 const ThankYouPage = ({ type }: { type: string }) => {
@@ -68,12 +69,20 @@ const ThankYouPage = ({ type }: { type: string }) => {
       description: "Our team will contact you soon with sponsorship details.",
       date: "21 - 22 February 2026· KARNATAKA TRADE PROMOTION ORGANISATION Centre, Bengaluru",
     },
+    nomination: {
+    title: "Thank You for Submitting Your Nomination!",
+    bold: "Your nomination has been successfully recorded.",
+    description:
+      "Our jury panel will review all submissions and contact shortlisted nominees.",
+    date: "Award Ceremony: 21 - 22 February 2026 · KTPO, Bengaluru",
+  },
   };
 
   const { title, bold, description, date } = messages[type];
 
   return (
-    <div className="mt-8 flex min-h-[60vh] flex-col items-center justify-start bg-white px-4 py-12 text-center">
+    <div className="pt-[200px] flex min-h-[60vh] flex-col items-center justify-start bg-white px-4 pb-12 text-center">
+
       {/* Header Card */}
       <div className="mt-8 w-full max-w-2xl rounded-t-lg bg-[#EA4A3E] py-4 text-2xl font-bold text-white">
         {heading}

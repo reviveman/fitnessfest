@@ -83,7 +83,7 @@ export default function Pricing() {
 
                 {/* Button at bottom */}
                 <div className="mt-auto">
-                  <Button className="w-full bg-[#EA4A3E] hover:bg-orange-600 text-white py-3 rounded-md">
+                  <Button className="w-full bg-[#EA4A3E] hover:bg-orange-600 text-white py-3 rounded-md cursor-pointer">
                     BUY TICKET
                   </Button>
                 </div>
