@@ -10,7 +10,7 @@ export default function FiveKRunPage() {
     <main className="bg-[#0f172a] text-white overflow-hidden">
       <HeroSection />
       <EventDetails />
-      <BenefitsSection />
+      {/* <BenefitsSection /> */}
       <FAQSection />
       <RegistrationCTA />
     </main>
