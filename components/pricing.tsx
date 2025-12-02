@@ -1,107 +1,128 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
+import { Check, Ticket, Users } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { CheckCircle } from "lucide-react";
 
-export default function Pricing() {
-  const pricingPlans = [
+
+export default function TicketStylePricing() {
+  const passes = [
     {
-      name: "EARLY BIRD",
-      price: "₹1,999",
-      description: "Get your pass at the best early-bird price before tickets run out.",
-      progress: 65,
-      available: "325 / 500",
-      note: "All prices exclude 18% GST.",
+      title: "1-Day Pass",
+      subtitle: "Single Entry Ticket",
+      price: "₹699 + GST",
+      oldPrice: "₹999",
+      discount: "30% OFF",
+      features: [
+        "Full-day entry to Expo Zone",
+        "Zumba • HIIT • Yoga • CrossFit Demos",
+        "Access to all fitness challenges",
+        "Healthy Food & Nutrition Zone",
+        "Workshops (First-Come-First-Serve)",
+        "Event Wristband",
+        "Basic Goodie Bag",
+        "Digital Participation Certificate",
+      ],
     },
     {
-      name: "GOLD",
-      price: "₹5,999",
-      description: "Enjoy premium seating and access to exclusive sessions.",
-      progress: 80,
-      available: "200 / 250",
-      note: "All prices exclude 18% GST.",
+      title: "Buddy Pass (5 People)",
+      subtitle: "Group Ticket (5 Members)",
+      price: "₹4,999 + GST",
+      oldPrice: "₹7,500",
+      discount: "40% OFF",
+      features: [
+        "All 1-Day Pass Benefits",
+        "VIP entry gate",
+        "Premium Workout Arena Access",
+        "Celebrity Trainer Masterclasses",
+        "Priority workshop seating",
+        "Premium Goodie Kit (Bag, Bottle, T-shirt)",
+        "Reserved spot – 5K Fun Run / Saree Run",
+        "Free InBody Test Worth ₹499",
+        "Premium Certificate",
+        "Professional Event Photos",
+      ],
       featured: true,
     },
-    {
-      name: "PLATINUM",
-      price: "₹3,999",
-      description: "Best value for attendees who want more than just the basics.",
-      progress: 88,
-      available: "352 / 400",
-      note: "All prices exclude 18% GST.",
-    },
-  ]
+  ];
 
   return (
-    <section className="py-20 px-4 bg-gray-900 text-white">
+    <section className="bg-[#0f172a] text-white py-20 px-6">
       <div className="max-w-6xl mx-auto">
+
         {/* Header */}
-        <div className="text-center mb-16 px-2">
-          <h6 className="text-[#EA4A3E] text-sm font-semibold mb-2">PRICING TABLE</h6>
-          <h3 className="text-3xl md:text-4xl font-bold mb-4">GET YOUR TICKET !!</h3>
-          <p className="text-gray-300 max-w-2xl mx-auto text-sm md:text-base">
-            Choose the plan that fits you best and secure your spot at the festival.
-          </p>
-        </div>
+        <h2 className="text-3xl md:text-4xl font-bold mb-2 text-center">
+          FitnessFest Ticket Prices
+        </h2>
 
-        {/* Pricing Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {pricingPlans.map((plan, index) => (
+        <p className="text-gray-300 text-center text-sm md:text-base mb-12">
+          21–22 February 2026 • KTPO, Whitefield • 11 AM – 9 PM • Call: 9148319993
+        </p>
+
+        {/* Pricing Grid */}
+        <div className="grid md:grid-cols-2 gap-10">
+          {passes.map((p, i) => (
             <div
-              key={index}
-              className={`relative flex flex-col rounded-xl shadow-lg transition-transform duration-300 ${
-                plan.featured ? " " : ""
-              } hover:scale-105 bg-white text-gray-900`}
+              key={i}
+              className={`
+                relative bg-white text-gray-900 rounded-2xl border shadow-lg p-8 overflow-hidden
+                transition-all duration-500 animate-fadeIn
+                hover:scale-105 hover:shadow-[0_0_30px_rgba(234,74,62,0.45)]
+              `}
+              style={{ animationDelay: `${i * 0.2}s` }}
             >
-              {/* Badge (fixed) */}
-              {plan.featured && (
-                <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-[#EA4A3E] text-white px-4 py-1 text-xs font-semibold rounded shadow-md">
-                  EXCLUSIVE OFFER!
-                </div>
-              )}
+              {/* Top Gradient Border */}
+              <div className="absolute top-0 left-0 h-2 w-full bg-gradient-to-r from-[#EA4A3E] to-[#ff7b54]" />
 
-              <div className="flex flex-col h-full p-8 text-center">
-                <h6 className="text-[#EA4A3E] text-sm font-semibold mb-2">{plan.name}</h6>
-                <h2 className="text-4xl font-bold mb-4">{plan.price}</h2>
-                <p className="text-gray-600 mb-6 text-sm md:text-base">{plan.description}</p>
-                <p className="text-xs text-gray-500 mb-6">{plan.note}</p>
+              {/* Title */}
+              <h3 className="text-xl md:text-2xl font-bold">{p.title}</h3>
+              <p className="text-gray-500 text-sm mb-4">{p.subtitle}</p>
 
-                {/* Progress Bar */}
-                <div className="mb-4">
-                  <div className="flex justify-between text-sm mb-2 text-gray-700">
-                    <span>Seat booked</span>
-                    <span>{plan.progress}%</span>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div
-                      className="bg-[#EA4A3E] h-2 rounded-full"
-                      style={{ width: `${plan.progress}%` }}
-                    ></div>
-                  </div>
-                </div>
+              {/* Price */}
+              <p className="text-4xl md:text-5xl font-extrabold">{p.price}</p>
+              <p className="line-through text-gray-500 text-sm mt-1">{p.oldPrice}</p>
 
-                <p className="text-xs text-gray-500 mb-6">( {plan.available} ) Available seats</p>
-
-                {/* Button at bottom */}
-                <div className="mt-auto">
-                  <Button className="w-full bg-[#EA4A3E] hover:bg-orange-600 text-white py-3 rounded-md cursor-pointer">
-                    BUY TICKET
-                  </Button>
-                </div>
+              {/* Discount Badge */}
+              <div className="bg-[#EA4A3E] flex justify-between items-center text-white px-4 py-2 rounded-md text-xs font-semibold mt-5 mb-6">
+                <span>Discounted Price</span>
+                <span className="bg-black/20 px-2 py-1 rounded-md">{p.discount}</span>
               </div>
 
-              {/* Decorative Wave */}
-              <div className="absolute bottom-0 left-0 w-full">
-                <svg className="w-full h-6" viewBox="0 0 100 20" preserveAspectRatio="none">
-                  <path
-                    d="M0 20 Q5 0 10 20 T20 20 T30 20 T40 20 T50 20 T60 20 T70 20 T80 20 T90 20 T100 20 V20 H0 Z"
-                    fill="#111827"
-                  />
-                </svg>
-              </div>
+              {/* Features */}
+              <ul className="space-y-3 mb-8">
+                {p.features.map((item, idx) => (
+                  <li key={idx} className="flex items-center gap-2 text-sm text-gray-800">
+                    <CheckCircle className="w-5 h-5 text-[#EA4A3E]" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+
+              {/* CTA Button */}
+              <Button className="w-full bg-[#EA4A3E] hover:bg-orange-600 text-white py-3 rounded-lg text-sm md:text-base font-semibold transition-all duration-300">
+                Get Now
+              </Button>
             </div>
           ))}
         </div>
       </div>
+
+      {/* Fade-in Animation */}
+      <style jsx>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.8s ease forwards;
+        }
+      `}</style>
     </section>
-  )
+  );
 }
