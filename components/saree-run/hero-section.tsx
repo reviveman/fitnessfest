@@ -26,7 +26,7 @@ export default function SareeHeroSection() {
       <div className="relative z-10 max-w-5xl mx-auto text-center">
         {/* Decorative Crown Icon */}
         <div className="mb-6 flex justify-center">
-          <div className="text-6xl">👑</div>
+          {/* <div className="text-6xl">👑</div> */}
         </div>
 
         {/* Main Headline */}
