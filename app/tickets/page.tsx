@@ -2,7 +2,8 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Calendar, Clock, MapPin, Check } from "lucide-react"
+import { Calendar, Clock, MapPin, Check,  } from "lucide-react"
+import Link from "next/link"
 
 import Pricing from "@/components/pricing"   // ← YOUR PRICING COMPONENT
 
@@ -176,12 +177,17 @@ export default function TicketsPage() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+            <Link href="/competitions">
               <Button className="bg-white text-[#EA4A3E] hover:bg-gray-100 px-6 py-2 font-semibold rounded-full">
                 View Schedule
               </Button>
-              <Button className="border-2 border-white bg-transparent text-white hover:bg-white hover:text-[#EA4A3E] px-6 py-2 font-semibold rounded-full">
+            
+            </Link>
+         <Link href="/register">
+                   <Button className="border-2 border-white bg-transparent text-white hover:bg-white hover:text-[#EA4A3E] px-6 py-2 font-semibold rounded-full cursor-pointer">
                 Contact Us
               </Button>
+              </Link>
             </div>
 
           </div>
