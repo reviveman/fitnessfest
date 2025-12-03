@@ -13,7 +13,8 @@ export default function Schedule() {
   const router = useRouter();
 
   return (
-    <section className="max-w-6xl mx-auto px-4 py-10 bg-gray-50">
+   <section className="max-w-6xl mx-auto px-4 py-10 bg-gray-50 pt-58">
+
       {/* Header */}
       <div className="grid md:grid-cols-2 gap-8 md:gap-12 mb-12">
         <div>

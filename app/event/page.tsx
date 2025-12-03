@@ -1,7 +1,8 @@
 "use client"
 
-// import Schedule from "@/components/events"
-import Schedule from "@/components/schedule"
+import DetailedSchedule from "@/components/detailed-schedule"
+
+
 
 export default function EventPage() {
 
@@ -14,13 +15,13 @@ export default function EventPage() {
 
   <div className="container mx-auto px-4 relative z-10">
     <div className="max-w-3xl mx-auto text-center">
-   <h1 className="text-4xl md:text-5xl font-extrabold mb-6 text-transparent bg-clip-text bg-white">
+   {/* <h1 className="text-4xl md:text-5xl font-extrabold mb-6 text-transparent bg-clip-text bg-white">
   Events
-</h1>
+</h1> */}
     </div>
   </div>
 </section>
-    <Schedule />
+    <DetailedSchedule />
     </>
 
   )
