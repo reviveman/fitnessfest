@@ -112,8 +112,8 @@ export default function Header() {
               <span className="absolute bottom-0 left-0 h-1 w-full origin-right scale-x-0 rounded-md bg-[#EA4A3E] transition-transform duration-500 group-hover:scale-x-100"></span>
             </Link>
 
-            <Link href="/event" className="relative group text-white font-medium text-sm">
-              EVENTS
+            <Link href="/schedule" className="relative group text-white font-medium text-sm">
+              SCHEDULE
               <span className="absolute bottom-0 left-0 h-1 w-full origin-right scale-x-0 rounded-md bg-[#EA4A3E] transition-transform duration-500 group-hover:scale-x-100"></span>
             </Link>
 
@@ -139,9 +139,9 @@ export default function Header() {
                   Award Categories
                 </Link>
 
-                <Link href="/awards/vote" className="block px-4 py-2 text-sm text-white hover:bg-[#EA4A3E]">
+                {/* <Link href="/awards/vote" className="block px-4 py-2 text-sm text-white hover:bg-[#EA4A3E]">
                   Vote Now
-                </Link>
+                </Link> */}
               </div>
             </div>
 
@@ -152,6 +152,11 @@ export default function Header() {
 
                         <Link href="/5k-run" className="relative group text-white font-medium text-sm">
               5K RUN
+              <span className="absolute bottom-0 left-0 h-1 w-full origin-right scale-x-0 rounded-md bg-[#EA4A3E] transition-transform duration-500 group-hover:scale-x-100"></span>
+            </Link>
+
+            <Link href="/saree-run" className="relative group text-white font-medium text-sm">
+              SAREE RUN
               <span className="absolute bottom-0 left-0 h-1 w-full origin-right scale-x-0 rounded-md bg-[#EA4A3E] transition-transform duration-500 group-hover:scale-x-100"></span>
             </Link>
 

@@ -9,7 +9,7 @@ export default function SareeEmpowermentSection() {
       title: "Cultural Pride",
       description:
         "Celebrate the timeless beauty and strength of traditional Indian sarees while breaking fitness boundaries.",
-      image: "/images/culturepride.png",
+      image: "/images/sareerun/sareejog.png",
     },
     {
       icon: Users,
@@ -21,14 +21,14 @@ export default function SareeEmpowermentSection() {
       icon: Sparkles,
       title: "Empowerment",
       description: "Prove that tradition and modernity can coexist, inspiring the next generation of active women.",
-      image: "/images/saree.png",
+      image: "/images/sareerun/sareewalk.jpg",
     },
     {
       icon: Shield,
       title: "Safety & Support",
       description:
         "All-women's event with medical support, water stations, and trained volunteers every step of the way.",
-      image: "/images/culturepride.png",
+      image: "/images/sareerun/support.png",
     },
   ]
 
@@ -56,15 +56,16 @@ export default function SareeEmpowermentSection() {
                     src={pillar.image || "/placeholder.svg"}
                     alt={pillar.title}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="object-cover object-top group-hover:scale-[1.03] transition-transform duration-300"
+
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a] to-transparent"></div>
                 </div>
 
                 <div className="p-8">
-                  <div className="bg-gradient-to-r from-[#EA4A3E] to-[#ff7b54] p-4 rounded-lg w-fit mb-4 group-hover:scale-110 transition-transform duration-300">
+                  {/* <div className="bg-gradient-to-r from-[#EA4A3E] to-[#ff7b54] p-4 rounded-lg w-fit mb-4 group-hover:scale-110 transition-transform duration-300">
                     <Icon className="w-6 h-6 text-white" />
-                  </div>
+                  </div> */}
                   <h3 className="text-xl font-bold text-white mb-2">{pillar.title}</h3>
                   <p className="text-gray-300">{pillar.description}</p>
                 </div>
