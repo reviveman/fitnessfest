@@ -98,7 +98,7 @@ export default function Schedule() {
             <div
               key={item.id}
               className="
-                bg-white rounded-2xl shadow-sm border border-gray-200 
+                bg-white rounded-none shadow-sm border border-gray-200 
                 overflow-hidden group transition-all duration-300 
                 hover:shadow-xl hover:-translate-y-1
               "
@@ -148,17 +148,20 @@ export default function Schedule() {
                   {item.description}
                 </p>
 
-                <Button
-                  className="
-                    mt-auto w-full bg-gradient-to-r from-[#EA4A3E] to-[#ff7b54]
-                    text-white font-semibold rounded-full px-6 py-2 
-                    hover:shadow-lg hover:from-[#d63b30] hover:to-[#ff6339]
-                    transition-all duration-300 cursor-pointer
-                  "
-                  onClick={() => router.push(`/event/${item.id}`)}
-                >
-                  Learn More
-                </Button>
+          <div className="flex justify-end">
+  <Button
+    className="
+      mt-auto w-1/2 bg-gradient-to-r from-[#EA4A3E] to-[#ff7b54]
+      text-white font-semibold rounded-none px-6 py-2 
+      hover:shadow-lg hover:from-[#d63b30] hover:to-[#ff6339]
+      transition-all duration-300 cursor-pointer
+    "
+    onClick={() => router.push(`/competitions/${item.id}`)}
+  >
+    Learn More
+  </Button>
+</div>
+
               </div>
             </div>
           ))
@@ -170,11 +173,11 @@ export default function Schedule() {
       </div>
 
       {/* Bottom CTA */}
-      <div className="flex justify-center mt-10">
-        <Button className="bg-[#EA4A3E] hover:bg-orange-600 text-white px-6 py-3 md:px-8 md:py-4 rounded-2xl text-sm md:text-base">
+      {/* <div className="flex justify-center mt-10">
+        <Button className="bg-[#EA4A3E] hover:bg-orange-600 text-white px-6 py-3 md:px-8 md:py-4 rounded-none text-sm md:text-base">
           VIEW MORE DETAILS
         </Button>
-      </div>
+      </div> */}
     </section>
   );
 }

@@ -61,7 +61,7 @@ export default function RegistrationCTA() {
 
             <p className="mt-6 text-sm text-gray-400">
               Questions? Contact us at{" "}
-              <span className="text-[#EA4A3E] font-semibold">contact@bengalurufitnessfest.in</span> or{" "}
+              <span className="text-[#EA4A3E] font-semibold">info@fitnessfest.in</span> or{" "}
               <span className="text-[#EA4A3E] font-semibold">+91 91483 19993</span>
             </p>
           </div>

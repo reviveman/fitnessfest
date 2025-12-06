@@ -152,13 +152,7 @@ export default function DetailedSchedule() {
   return (
     <section className="bg-[#0f172a] text-white py-20 px-4">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-12 text-center">
-          <h2 className="text-4xl md:text-5xl font-extrabold mb-4 text-white">Festival Schedule</h2>
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto">
-            Timings: 11:00 AM – 9:00 PM | Experience workouts, competitions, and wellness sessions
-          </p>
-        </div>
+   
 
         {/* Day Tabs */}
         <div className="flex justify-center gap-4 mb-12">

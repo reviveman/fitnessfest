@@ -79,7 +79,7 @@ export default function SareeFAQSection() {
           <p className="text-white text-lg">
             Still have questions? <span className="font-bold text-[#EA4A3E]">Reach out to us!</span>
           </p>
-          <p className="text-gray-300 mt-2">Email: contact@bengalurufitnessfest.in | Phone: +91 91483 19993</p>
+          <p className="text-gray-300 mt-2">Email: info@fitnessfest.in | Phone: +91 91483 19993</p>
         </div>
       </div>
     </section>
