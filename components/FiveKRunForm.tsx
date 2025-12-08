@@ -9,6 +9,11 @@ import * as Yup from "yup"
 export default function FiveKRunForm({ open, setOpen }: any) {
   const [uploadedImage, setUploadedImage] = useState<string | null>(null)
 
+  const inputClass =
+    "w-full bg-[#1e293b] text-white border border-gray-500 rounded-md p-2 mt-1 focus:outline-none focus:ring-2 focus:ring-[#EA4A3E]"
+
+  const errorClass = "text-red-400 text-sm mt-1"
+
   const validationSchema = Yup.object({
     fullName: Yup.string().required("Required"),
     age: Yup.number().required("Required").min(10).max(80),
@@ -77,47 +82,47 @@ export default function FiveKRunForm({ open, setOpen }: any) {
               {/* Full Name */}
               <div>
                 <label>Full Name</label>
-                <Field name="fullName" className="input" />
-                <ErrorMessage component="div" className="error" name="fullName" />
+                <Field name="fullName" className={inputClass} />
+                <ErrorMessage component="div" className={errorClass} name="fullName" />
               </div>
 
               {/* Age */}
               <div>
                 <label>Age</label>
-                <Field name="age" className="input" />
-                <ErrorMessage component="div" className="error" name="age" />
+                <Field name="age" className={inputClass} />
+                <ErrorMessage component="div" className={errorClass} name="age" />
               </div>
 
               {/* Gender */}
               <div>
                 <label>Gender</label>
-                <Field as="select" name="gender" className="input">
+                <Field as="select" name="gender" className={inputClass}>
                   <option value="">Select</option>
                   <option>Male</option>
                   <option>Female</option>
                   <option>Others</option>
                 </Field>
-                <ErrorMessage component="div" className="error" name="gender" />
+                <ErrorMessage component="div" className={errorClass} name="gender" />
               </div>
 
               {/* Phone */}
               <div>
                 <label>Phone</label>
-                <Field name="phone" className="input" />
-                <ErrorMessage component="div" className="error" name="phone" />
+                <Field name="phone" className={inputClass} />
+                <ErrorMessage component="div" className={errorClass} name="phone" />
               </div>
 
               {/* Email */}
               <div>
                 <label>Email</label>
-                <Field name="email" className="input" />
-                <ErrorMessage component="div" className="error" name="email" />
+                <Field name="email" className={inputClass} />
+                <ErrorMessage component="div" className={errorClass} name="email" />
               </div>
 
               {/* T-shirt size */}
               <div>
                 <label>T-shirt Size</label>
-                <Field as="select" name="tshirt" className="input">
+                <Field as="select" name="tshirt" className={inputClass}>
                   <option value="">Select</option>
                   <option>XS</option>
                   <option>S</option>
@@ -126,14 +131,14 @@ export default function FiveKRunForm({ open, setOpen }: any) {
                   <option>XL</option>
                   <option>XXL</option>
                 </Field>
-                <ErrorMessage component="div" className="error" name="tshirt" />
+                <ErrorMessage component="div" className={errorClass} name="tshirt" />
               </div>
 
               {/* Emergency Contact */}
               <div>
                 <label>Emergency Contact Name & Number</label>
-                <Field as="textarea" name="emergency" className="input" />
-                <ErrorMessage component="div" className="error" name="emergency" />
+                <Field as="textarea" name="emergency" className={inputClass} />
+                <ErrorMessage component="div" className={errorClass} name="emergency" />
               </div>
 
               {/* Payment Screenshot */}
@@ -145,12 +150,12 @@ export default function FiveKRunForm({ open, setOpen }: any) {
                   onChange={(e) => {
                     setFieldValue("paymentScreenshot", e.currentTarget.files![0])
                   }}
-                  className="text-white"
+                  className="mt-1 text-white"
                 />
-                <ErrorMessage component="div" className="error" name="paymentScreenshot" />
+                <ErrorMessage component="div" className={errorClass} name="paymentScreenshot" />
               </div>
 
-              <Button type="submit" className="w-full bg-[#EA4A3E]">
+              <Button type="submit" className="w-full bg-[#EA4A3E] hover:bg-red-600">
                 Submit Registration
               </Button>
             </Form>
