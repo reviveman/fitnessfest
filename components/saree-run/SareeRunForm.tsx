@@ -60,13 +60,12 @@ export default function SareeRunForm({ open, setOpen }: Props) {
         waiver: values.waiver ? "Accepted" : "Not accepted",
       }
 
-      const res = await fetch(GOOGLE_SCRIPT_WEB_APP_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      })
+      const res = await fetch("/api/saree-run", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(payload),
+});
+
 
       // Expect JSON response from Apps Script (CORS enabled below)
       if (!res.ok) {

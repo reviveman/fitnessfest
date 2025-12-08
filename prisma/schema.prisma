@@ -150,3 +150,44 @@ model EventRegistration {
 }
 
 
+model FiveKRunRegistration {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+
+  fullName  String
+  age       Int
+  gender    String
+  phone     String
+  email     String
+  city      String?
+  emergency String
+  tshirt    String
+  participatedBefore String
+  heardFrom String[]
+  paymentScreenshot String   // store base64 or cloudinary URL
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("fivek_run_registrations")
+}
+
+model SareeRunRegistration {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+
+  fullName  String
+  age       Int
+  gender    String
+  phone     String
+  email     String
+  city      String?
+  emergencyContact  String
+  participatedBefore String
+  heardFrom String[]
+  heardFromOther String?
+  waiver    Boolean
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("saree_run_registrations")
+}
