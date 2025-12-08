@@ -9,13 +9,53 @@ declare global {
   }
 }
 
-const validTypes = ["visitor", "exhibitor", "sponsor", "nomination"];
+const validTypes = ["visitor", "exhibitor", "sponsor", "nomination", "competition"];
 
 const titleMap: Record<string, string> = {
   visitor: "Visitor",
   exhibitor: "Exhibitor",
   sponsor: "Sponsor",
   nomination: "Nomination",
+  competition: "Competition Registration",
+};
+
+const messages: Record<
+  string,
+  { title: string; bold: string; description: string; date: string }
+> = {
+  visitor: {
+    title: "Thank You For Registering as a Visitor!",
+    bold: "You are now part of the Bengaluru Fitness Festival 2026 community",
+    description:
+      "We look forward to welcoming you to explore fitness, health, and wellness experiences.",
+    date: "21 - 22 February 2026 · KTPO, Bengaluru",
+  },
+  exhibitor: {
+    title: "Thank You For Registering as an Exhibitor!",
+    bold: "You are now part of the Bengaluru Fitness Festival 2026 community",
+    description: "Our team will contact you soon with exhibition details.",
+    date: "21 - 22 February 2026 · KTPO, Bengaluru",
+  },
+  sponsor: {
+    title: "Thank You For Registering as a Sponsor!",
+    bold: "You are now part of the Bengaluru Fitness Festival 2026 community",
+    description: "Our team will contact you soon with sponsorship details.",
+    date: "21 - 22 February 2026 · KTPO, Bengaluru",
+  },
+  nomination: {
+    title: "Thank You for Submitting Your Nomination!",
+    bold: "Your nomination has been successfully recorded.",
+    description:
+      "Our jury panel will review all submissions and contact shortlisted nominees.",
+    date: "Award Ceremony: 21 - 22 February 2026 · KTPO, Bengaluru",
+  },
+  competition: {
+    title: "Thank You for Registering for the Competition!",
+    bold: "Your spot in the Bengaluru Fitness Festival Competition is confirmed.",
+    description:
+      "Our team will review your details and send event-day instructions shortly.",
+    date: "21 - 22 February 2026 · KTPO, Bengaluru",
+  },
 };
 
 const ThankYouPage = ({ type }: { type: string }) => {
@@ -27,6 +67,7 @@ const ThankYouPage = ({ type }: { type: string }) => {
     }
   }, [type]);
 
+  // ❌ Invalid type (404 behavior)
   if (!type || !validTypes.includes(type)) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center px-4 text-center">
@@ -46,43 +87,10 @@ const ThankYouPage = ({ type }: { type: string }) => {
     );
   }
 
-  const messages: Record<
-    string,
-    { title: string; bold: string; description: string; date: string }
-  > = {
-    visitor: {
-      title: "Thank You For Registering as a Visitor!",
-      bold: "You are now part of the Bengaluru Fitness Festival 2026 community",
-      description:
-        "We look forward to welcoming you to explore fitness, health, and wellness experiences.",
-      date: "21 - 22 February 2026· KARNATAKA TRADE PROMOTION ORGANISATION Centre, Bengaluru",
-    },
-    exhibitor: {
-      title: "Thank You For Registering as an Exhibitor!",
-      bold: "You are now part of the Bengaluru Fitness Festival 2026 community",
-      description: "Our team will contact you soon with exhibition details.",
-      date: "21 - 22 February 2026· KARNATAKA TRADE PROMOTION ORGANISATION Centre, Bengaluru",
-    },
-    sponsor: {
-      title: "Thank You For Registering as a Sponsor!",
-      bold: "You are now part of the Bengaluru Fitness Festival 2026 community",
-      description: "Our team will contact you soon with sponsorship details.",
-      date: "21 - 22 February 2026· KARNATAKA TRADE PROMOTION ORGANISATION Centre, Bengaluru",
-    },
-    nomination: {
-    title: "Thank You for Submitting Your Nomination!",
-    bold: "Your nomination has been successfully recorded.",
-    description:
-      "Our jury panel will review all submissions and contact shortlisted nominees.",
-    date: "Award Ceremony: 21 - 22 February 2026 · KTPO, Bengaluru",
-  },
-  };
-
   const { title, bold, description, date } = messages[type];
 
   return (
     <div className="pt-[200px] flex min-h-[60vh] flex-col items-center justify-start bg-white px-4 pb-12 text-center">
-
       {/* Header Card */}
       <div className="mt-8 w-full max-w-2xl rounded-t-lg bg-[#EA4A3E] py-4 text-2xl font-bold text-white">
         {heading}
