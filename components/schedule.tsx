@@ -19,16 +19,13 @@ export default function Schedule() {
       <div className="grid md:grid-cols-2 gap-8 md:gap-12 mb-12">
         <div>
           <h6 className="text-[#EA4A3E] text-sm font-semibold mb-2">
-            SCHEDULE DETAILS
+            COMPETITION SCHEDULE DETAILS
           </h6>
           <h3 className="text-2xl md:text-4xl font-bold text-gray-900 mb-4">
-            INFORMATION OF EVENT SCHEDULE!
+            YOUR COMPLETE GUIDE TO THE BFF 2026 CHAMPIONSHIPS!
           </h3>
           <p className="text-gray-600 text-sm md:text-base">
-            Stay on track with everything happening at the festival! From
-            high-energy workout sessions and expert talks to fun challenges and
-            wellness workshops — here's your complete guide to what's happening,
-            when, and where.
+           Stay updated with all the competitive action at Bengaluru Fitness Festival 2026! From strength showdowns and endurance battles to calisthenics finals and gym-versus-gym challenges — here’s your comprehensive guide to every competition, including what’s happening, when, and where. Get ready to witness the city’s fittest athletes push their limits and compete for glory!
           </p>
         </div>
 
