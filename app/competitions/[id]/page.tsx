@@ -13,7 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import EventRegistrationForm from "@/components/EventRegistrationForm"; 
+import EventRegistrationForm from "@/components/EventRegistrationForm";
 import { getEventById } from "@/data/events";
 
 type Props = {
@@ -24,7 +24,6 @@ export default function EventDetailPage({ params }: Props) {
   const resolvedParams = use(params);
   const event = getEventById(resolvedParams.id);
 
-  // 🔥 POPUP STATE FOR REGISTRATION FORM
   const [open, setOpen] = useState(false);
 
   if (!event) {
@@ -58,14 +57,17 @@ export default function EventDetailPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-
       {/* Banner */}
-      <section
-        className="min-h-[60vh] bg-cover bg-center py-20 flex items-center relative"
-        style={{ backgroundImage: "url('/images/eventum-img1.jpg')" }}
-      >
-        <div className="absolute inset-0 bg-black opacity-80"></div>
-      </section>
+<section
+  className="min-h-[60vh] bg-cover bg-center py-20 flex items-center justify-center text-center relative"
+  style={{ backgroundImage: "url('/images/eventum-img1.jpg')" }}
+>
+  {/* <div className="absolute inset-0 bg-black opacity-80"></div> */}
+  <h1 className="text-4xl md:text-5xl font-bold mt-45 text-white max-w-3xl mx-auto">
+    {event.title}
+  </h1>
+</section>
+
 
       {/* HERO */}
       <section className="bg-[#EA4A3E] text-white py-12">
@@ -74,7 +76,7 @@ export default function EventDetailPage({ params }: Props) {
             {event.description}
           </Badge>
 
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">{event.title}</h1>
+          {/* <h1 className="text-4xl md:text-5xl font-bold mb-4">{event.title}</h1> */}
 
           <p className="text-xl text-white/90 mb-6">
             Experience one of Bengaluru’s most exciting competitive fitness events at the 2026 Bengaluru Fitness Festival.
@@ -108,7 +110,6 @@ export default function EventDetailPage({ params }: Props) {
       <section className="py-16">
         <div className="container mx-auto px-14">
           <div className="grid lg:grid-cols-3 gap-12">
-
             {/* LEFT COLUMN */}
             <div className="lg:col-span-2 space-y-12">
               <Image
@@ -128,9 +129,35 @@ export default function EventDetailPage({ params }: Props) {
                   {event.description}
                 </p>
 
+                {/* ⭐ UPDATED FULL DESCRIPTION RENDER WITH ORANGE HEADINGS */}
                 {event.fullDescription && (
                   <div
-                    className="prose prose-lg max-w-none text-gray-800 whitespace-pre-line"
+                    className="
+                      prose prose-lg max-w-none text-gray-800 whitespace-pre-line
+
+                      /* Headings */
+                      [&_h1]:text-[#EA4A3E]
+                      [&_h2]:text-[#EA4A3E]
+                      [&_h3]:text-[#EA4A3E]
+                      [&_h4]:text-[#EA4A3E]
+
+                      /* Bold text */
+                      [&_strong]:text-[#EA4A3E]
+
+                      /* Emphasis if used like a heading */
+                      [&_em]:text-[#EA4A3E]
+
+                      /* List markers */
+                      [&_ul>li]:marker:text-[#EA4A3E]
+                      [&_ol>li]:marker:text-[#EA4A3E]
+
+                      /* Bold inside lists */
+                      [&_li>strong]:text-[#EA4A3E]
+
+                      /* Links */
+                      [&_a]:text-[#EA4A3E]
+                      [&_a:hover]:underline
+                    "
                     dangerouslySetInnerHTML={{ __html: event.fullDescription }}
                   />
                 )}
@@ -140,10 +167,7 @@ export default function EventDetailPage({ params }: Props) {
             {/* RIGHT SIDEBAR */}
             <div className="lg:col-span-1">
               <div className="sticky top-10 space-y-6">
-
                 <div className="bg-white rounded-2xl p-8 shadow-lg border border-[#EA4A3E]/20">
-
-                  {/* PRICE */}
                   <div className="text-center mb-6">
                     <div className="text-4xl font-bold text-[#EA4A3E] mb-2">
                       {event.price}
@@ -151,7 +175,6 @@ export default function EventDetailPage({ params }: Props) {
                     <p className="text-gray-600">per participant</p>
                   </div>
 
-                  {/* REGISTER NOW BUTTON → opens popup */}
                   <Button
                     onClick={() => setOpen(true)}
                     className="w-full bg-[#EA4A3E] hover:bg-[#D03F34] text-white py-4 text-lg font-semibold rounded-xl"
@@ -159,7 +182,6 @@ export default function EventDetailPage({ params }: Props) {
                     Register Now
                   </Button>
 
-                  {/* POPUP FORM */}
                   <Dialog open={open} onOpenChange={setOpen}>
                     <DialogContent className="bg-[#0f172a] text-white max-h-[90vh] overflow-y-auto border border-[#EA4A3E]">
                       <EventRegistrationForm closeForm={() => setOpen(false)} />
@@ -192,7 +214,6 @@ export default function EventDetailPage({ params }: Props) {
                         <span className="text-gray-600 text-sm">{event.location}</span>
                       </div>
                     </div>
-
                   </div>
                 </div>
 
@@ -212,7 +233,6 @@ export default function EventDetailPage({ params }: Props) {
                     </div>
                   </div>
                 </div>
-
               </div>
             </div>
 

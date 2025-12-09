@@ -186,87 +186,67 @@ export default function Header() {
         </div>
       </div>
 
-      {/* MOBILE MENU */}
-      {isMobileMenuOpen && (
-        <div className="lg:hidden bg-black border-t border-gray-700">
-          <nav className="flex flex-col px-4 py-4 space-y-3">
+    {/* MOBILE MENU */}
+{isMobileMenuOpen && (
+  <div className="lg:hidden bg-black border-t border-gray-700">
+    <nav className="flex flex-col px-4 py-4 space-y-3">
 
-            <Link 
-              href="/" 
-              className="text-white font-medium py-2"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              HOME
+      <Link href="/" className="text-white font-medium py-2" onClick={() => setIsMobileMenuOpen(false)}>
+        HOME
+      </Link>
+
+      <Link href="/about" className="text-white font-medium py-2" onClick={() => setIsMobileMenuOpen(false)}>
+        ABOUT US
+      </Link>
+
+      <Link href="/schedule" className="text-white font-medium py-2" onClick={() => setIsMobileMenuOpen(false)}>
+        SCHEDULE
+      </Link>
+
+      {/* Mobile Awards Accordion */}
+      <div>
+        <button
+          className="text-white font-medium py-2 flex justify-between w-full"
+          onClick={() => setIsAwardsOpen(!isAwardsOpen)}
+        >
+          AWARDS
+          <ChevronDown className={`w-5 h-5 transition ${isAwardsOpen ? "rotate-180" : ""}`} />
+        </button>
+
+        {isAwardsOpen && (
+          <div className="ml-4 mt-2 flex flex-col space-y-2">
+            <Link href="/awards" className="text-gray-300 text-sm py-1" onClick={() => setIsMobileMenuOpen(false)}>
+              Award Categories
             </Link>
 
-            <Link 
-              href="/about" 
-              className="text-white font-medium py-2"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              ABOUT US
-            </Link>
+            {/* Match desktop → remove Vote Now unless you want it */}
+            {/* <Link href="/awards/vote" className="text-gray-300 text-sm py-1" onClick={() => setIsMobileMenuOpen(false)}>
+              Vote Now
+            </Link> */}
+          </div>
+        )}
+      </div>
 
-            <Link 
-              href="/event" 
-              className="text-white font-medium py-2"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              EVENTS
-            </Link>
+      <Link href="/competitions" className="text-white font-medium py-2" onClick={() => setIsMobileMenuOpen(false)}>
+        COMPETITIONS
+      </Link>
 
-            {/* Mobile Awards Accordion */}
-            <div>
-              <button
-                className="text-white font-medium py-2 flex justify-between w-full"
-                onClick={() => setIsAwardsOpen(!isAwardsOpen)}
-              >
-                AWARDS
-                <ChevronDown className={`w-5 h-5 transition ${isAwardsOpen ? "rotate-180" : ""}`} />
-              </button>
+      <Link href="/5k-run" className="text-white font-medium py-2" onClick={() => setIsMobileMenuOpen(false)}>
+        5K RUN
+      </Link>
 
-              {isAwardsOpen && (
-                <div className="ml-4 mt-2 flex flex-col space-y-2">
+      <Link href="/saree-run" className="text-white font-medium py-2" onClick={() => setIsMobileMenuOpen(false)}>
+        SAREE RUN
+      </Link>
 
-                  <Link 
-                    href="/awards" 
-                    className="text-gray-300 text-sm py-1"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    Award Categories
-                  </Link>
+      <Link href="/register" className="text-white font-medium py-2" onClick={() => setIsMobileMenuOpen(false)}>
+        CONTACT US
+      </Link>
 
-                  <Link 
-                    href="/awards/vote" 
-                    className="text-gray-300 text-sm py-1"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    Vote Now
-                  </Link>
-                </div>
-              )}
-            </div>
+    </nav>
+  </div>
+)}
 
-            <Link 
-              href="/competitions" 
-              className="text-white font-medium py-2"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              COMPETITIONS
-            </Link>
-
-            {/* ✅ UPDATED PATH */}
-            <Link 
-              href="/register" 
-              className="text-white font-medium py-2"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              CONTACT US
-            </Link>
-
-          </nav>
-        </div>
-      )}
 
     </header>
   )
