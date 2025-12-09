@@ -201,19 +201,34 @@ export default function SareeRunForm({ open, setOpen }: Props) {
                   <div className="text-red-400 text-sm"><ErrorMessage name="heardFrom" /></div>
                 </div>
 
-                {/* Section 3: Waiver */}
-                <div className="bg-white/5 p-4 rounded">
-                  <label className="flex items-start gap-3">
-                    <input type="checkbox" checked={values.waiver} onChange={(e) => setFieldValue("waiver", e.target.checked)} />
-                    <span className="text-sm">
-                      I confirm that I am voluntarily participating in the Saree Run at Bengaluru Fitness Festival 2026.
-                      I am medically fit to participate. I understand that the organizers are not responsible for any injury,
-                      loss, or damage. I agree to follow event rules and allow the use of event photos/videos for promotional
-                      purposes.
-                    </span>
-                  </label>
-                  <div className="text-red-400 text-sm mt-1"><ErrorMessage name="waiver" /></div>
-                </div>
+               {/* Section 3: Waiver */}
+<div className="bg-white/5 p-4 rounded">
+  <label className="flex items-start gap-3">
+    <input
+      type="checkbox"
+      checked={values.waiver}
+      onChange={(e) => setFieldValue("waiver", e.target.checked)}
+    />
+    <span className="text-sm leading-relaxed">
+      I confirm that I am voluntarily participating in the Saree Run at Bengaluru Fitness Festival 2026.
+      I am medically fit to participate. I understand that the organizers are not responsible for any injury,
+      loss, or damage. I agree to follow event rules and allow the use of event photos/videos for promotional
+      purposes.
+      <br />
+      <a
+        href="/saree-run-terms"
+        target="_blank"
+        className="text-blue-400 underline hover:text-blue-300 ml-1"
+      >
+        Read Full Terms & Conditions
+      </a>
+    </span>
+  </label>
+  <div className="text-red-400 text-sm mt-1">
+    <ErrorMessage name="waiver" />
+  </div>
+</div>
+
 
                 {/* Submit */}
                 <div className="flex gap-3">

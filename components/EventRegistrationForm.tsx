@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/navigation";
@@ -402,9 +403,16 @@ export default function EventRegistrationForm({
         >
           Submit Registration
         </Button>
-        <p className="text-gray-500 text-sm text-center mt-3">
-          By submitting, you agree to our Terms of Service and Privacy Policy
-        </p>
+       <p className="text-gray-500 text-sm text-center mt-3">
+      By submitting, you agree to our{" "}
+      <Link href="/competition-terms" className="text-blue-600 underline">
+        Terms of Service
+      </Link>{" "}
+      and{" "}
+      <Link href="/competition-terms" className="text-blue-600 underline">
+        Privacy Policy
+      </Link>.
+    </p>
       </div>
     </div>
   );
