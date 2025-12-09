@@ -10,11 +10,16 @@ import Footer from "@/components/footer"
 // Prevent Font Awesome from adding its CSS since we did it manually above
 config.autoAddCss = false
 
+
+
 const montserrat = Montserrat({
   subsets: ["latin"],
   weight: ["400", "600", "700", "800"],
   variable: "--font-montserrat",
-})
+  display: "swap",
+  adjustFontFallback: true, // ✅ prevents fetch error
+});
+
 
 export const metadata = {
   title: "Fitness Fest - Event & Conference",
