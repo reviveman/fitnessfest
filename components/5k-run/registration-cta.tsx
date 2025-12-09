@@ -2,11 +2,21 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { CheckCircle } from "lucide-react"
-import FiveKRunForm from "@/components/FiveKRunForm"   // ✅ IMPORT FORM
+import { CheckCircle, Trophy } from "lucide-react"
+import FiveKRunForm from "@/components/FiveKRunForm"
 
 export default function RegistrationCTA() {
-  const [openForm, setOpenForm] = useState(false) // ✅ FORM OPEN STATE
+  const [openForm, setOpenForm] = useState(false)
+
+  const raceDetails = {
+    title: "5K RUN – Timed Race",
+    entryFee: "₹1,298",
+    prizes: {
+      first: "₹25,000",
+      second: "₹15,000", 
+      third: "₹10,000"
+    }
+  }
 
   return (
     <section
@@ -22,9 +32,31 @@ export default function RegistrationCTA() {
       <div className="max-w-4xl mx-auto relative z-10">
         <div className="bg-gradient-to-r from-[#EA4A3E]/20 to-[#ff7b54]/20 border border-[#EA4A3E]/40 rounded-2xl p-8 md:p-12">
           <div className="text-center">
-            <h2 className="text-4xl md:text-5xl font-black mb-6 text-white">Ready to Run?</h2>
+            <div className="inline-flex items-center gap-2 bg-[#EA4A3E]/30 border border-[#EA4A3E]/50 rounded-full px-4 py-2 mb-6">
+              <Trophy className="w-4 h-4 text-[#EA4A3E]" />
+              <span className="text-[#EA4A3E] font-bold">Cash Prizes Worth ₹50,000+</span>
+            </div>
+            
+            <h2 className="text-4xl md:text-5xl font-black mb-4 text-white">{raceDetails.title}</h2>
+            
+            {/* Prize Highlights */}
+            <div className="grid grid-cols-3 gap-4 max-w-md mx-auto mb-8">
+              <div className="bg-gradient-to-b from-amber-900/40 to-transparent border border-amber-500/30 rounded-xl p-3">
+                <div className="text-xs text-amber-300 mb-1">🥇 1st Prize</div>
+                <div className="text-lg font-bold text-white">{raceDetails.prizes.first}</div>
+              </div>
+              <div className="bg-gradient-to-b from-gray-800/40 to-transparent border border-gray-600/30 rounded-xl p-3">
+                <div className="text-xs text-gray-300 mb-1">🥈 2nd Prize</div>
+                <div className="text-lg font-bold text-white">{raceDetails.prizes.second}</div>
+              </div>
+              <div className="bg-gradient-to-b from-amber-800/40 to-transparent border border-amber-700/30 rounded-xl p-3">
+                <div className="text-xs text-amber-300 mb-1">🥉 3rd Prize</div>
+                <div className="text-lg font-bold text-white">{raceDetails.prizes.third}</div>
+              </div>
+            </div>
+
             <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              Join thousands of fitness enthusiasts on February 21, 2026. Register now to secure your spot.
+              Join the competitive 5K timed race with cash prizes for top performers in both Male & Female categories.
             </p>
 
             {/* Terms */}
@@ -37,25 +69,28 @@ export default function RegistrationCTA() {
               </div>
             </div>
 
-            {/* Register Button → Opens Modal */}
+            {/* Register Button */}
             <Button
               size="lg"
-              onClick={() => setOpenForm(true)}   // ✅ OPEN FORM
-              className="bg-[#EA4A3E] hover:bg-[#d63a2e] text-white px-12 py-7 rounded-lg text-lg font-bold transition-all duration-300 transform hover:scale-105 active:scale-95"
+              onClick={() => setOpenForm(true)}
+              className="bg-gradient-to-r from-[#EA4A3E] to-[#ff7b54] hover:from-[#d63a2e] hover:to-[#ff6b44] text-white px-12 py-7 rounded-lg text-lg font-bold transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-[0_0_40px_rgba(234,74,62,0.4)]"
             >
-              Register for 5K Run - ₹1,298
+              Register Now - {raceDetails.entryFee}
             </Button>
 
-            <p className="mt-6 text-sm text-gray-400">
-              Questions? Contact us at{" "}
-              <span className="text-[#EA4A3E] font-semibold">info@fitnessfest.in</span> or{" "}
-              <span className="text-[#EA4A3E] font-semibold">+91 91483 19993</span>
-            </p>
+            <div className="mt-6 text-gray-400 text-sm">
+              <p>Entry Fee: <span className="text-white font-bold">{raceDetails.entryFee}</span> (Fixed)</p>
+              <p className="mt-2">
+                Questions? Contact us at{" "}
+                <span className="text-[#EA4A3E] font-semibold">info@fitnessfest.in</span> or{" "}
+                <span className="text-[#EA4A3E] font-semibold">+91 91483 19993</span>
+              </p>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* 🔥 5K RUN FORM MODAL */}
+      {/* 5K RUN FORM MODAL */}
       <FiveKRunForm open={openForm} setOpen={setOpenForm} />
     </section>
   )
