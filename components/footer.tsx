@@ -106,7 +106,7 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-4">OTHER PAGES</h3>
             <ul className="space-y-2 text-sm text-gray-300">
               <li><a href="#">Support</a></li>
-              <li><a href="/contact">Contact Us</a></li>
+              <li><a href="/register">Contact Us</a></li>
               <li><a href="/faq">FAQ</a></li>
               <li><a href="/about/maxx">Organiser</a></li>
             </ul>
