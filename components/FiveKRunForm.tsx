@@ -305,6 +305,17 @@ export default function FiveKRunForm({ open, setOpen }: any) {
                     />
                     <ErrorMessage name="paymentScreenshot" component="div" className={errorClass} />
                   </div>
+                  <p className="text-gray-400 text-sm text-center mt-4">
+  By submitting, you agree to the{" "}
+  <a
+    href="/5k-run-terms"
+    target="_blank"
+    className="text-blue-400 underline hover:text-blue-300"
+  >
+    Terms & Conditions
+  </a>{" "}
+  of the 5K Run.
+</p>
 
                   {/* Submit Button */}
                   <Button
