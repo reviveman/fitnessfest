@@ -146,7 +146,7 @@ export default function TermsAndConditionsPage() {
                 <span className="font-semibold">Refunds/Cancellations:</span>{" "}
                 Unless otherwise stated, tickets/registrations are non-refundable.
                 In exceptional cases (such as event cancellation by us), refunds
-                will be processed within a reasonable time frame.
+                will be processed within 7 Working days.
               </p>
             </section>
 
