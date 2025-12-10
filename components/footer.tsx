@@ -151,6 +151,7 @@ export default function Footer() {
             <a href="/privacy" className="hover:text-white">Privacy Policy</a>
             <a href="/terms" className="hover:text-white">Terms & Condition</a>
             <a href="/disclaimer" className="hover:text-white">Disclaimer</a>
+            <a href="/refund-policy" className="hover:text-white">Refund-Policy</a>
           </div>
           <div>
             © 2026 <span className="font-semibold">Maxx Business Media Pvt. Ltd.</span> All Rights Reserved.
