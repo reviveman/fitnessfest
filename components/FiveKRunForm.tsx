@@ -19,7 +19,7 @@ type FormValues = {
   tshirt: string;
   participatedBefore: string;
   heardFrom: string[];
-  paymentScreenshot: File | null;
+  // paymentScreenshot: File | null;
 };
 
 export default function FiveKRunForm({ open, setOpen }: any) {
@@ -41,80 +41,37 @@ export default function FiveKRunForm({ open, setOpen }: any) {
     tshirt: Yup.string().required("Required"),
     participatedBefore: Yup.string().required("Required"),
     heardFrom: Yup.array().min(1, "Select at least 1 source"),
-    paymentScreenshot: Yup.mixed().required("Payment screenshot required"),
+    // paymentScreenshot: Yup.mixed().required("Payment screenshot required"),
   });
 
   // -------------------------
   // ✅ SUBMIT HANDLER
   // -------------------------
-  const handleSubmit = async (values: FormValues, { setSubmitting, resetForm }: any) => {
-    console.log("%cFORM SUBMIT CALLED", "color: green; font-size: 16px;");
-    console.log("VALUES:", values);
+const handleSubmit = async (values: FormValues, { setSubmitting, resetForm }: any) => {
+  try {
+    const res = await fetch("/api/fivek-run", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    });
 
-    try {
-      const file = values.paymentScreenshot;
-      if (!file) {
-        alert("Please upload payment screenshot");
-        setSubmitting(false);
-        return;
-      }
+    const data = await res.json();
 
-      const reader = new FileReader();
-      reader.onload = async () => {
-        const base64 = reader.result;
-
-        console.log("%cUploading to Cloudinary...", "color: orange; font-size: 14px;");
-
-        const uploadRes = await fetch("/api/upload", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ file: base64 }),
-        });
-
-        const uploadData = await uploadRes.json();
-        console.log("Cloudinary response:", uploadData);
-
-        if (!uploadData.success) {
-          alert("Image upload failed");
-          setSubmitting(false);
-          return;
-        }
-
-        // Save to DB
-        const payload = {
-          ...values,
-          paymentScreenshot: uploadData.url,
-        };
-
-        console.log("%cSaving to DB...", "color: cyan; font-size: 14px;");
-
-        const saveRes = await fetch("/api/fivek-run", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-
-        const saveJson = await saveRes.json();
-        console.log("DB Save Response:", saveJson);
-
-        if (saveJson.success) {
-          alert("Registration successful!");
-          resetForm();
-          setOpen(false);
-        } else {
-          alert("Failed to save registration");
-        }
-
-        setSubmitting(false);
-      };
-
-      reader.readAsDataURL(file);
-    } catch (err) {
-      console.error("Submit Error:", err);
-      alert("Something went wrong");
-      setSubmitting(false);
+    if (data.success) {
+      alert("Registration successful!");
+      resetForm();
+      setOpen(false);
+    } else {
+      alert("Registration failed");
     }
-  };
+  } catch (error) {
+    console.error(error);
+    alert("Something went wrong");
+  } finally {
+    setSubmitting(false);
+  }
+};
+
 
   // -------------------------
   // ✅ FORM UI
@@ -143,7 +100,7 @@ export default function FiveKRunForm({ open, setOpen }: any) {
               tshirt: "",
               participatedBefore: "",
               heardFrom: [] as string[],
-              paymentScreenshot: null,
+              // paymentScreenshot: null,
             }}
             validationSchema={validationSchema}
             validateOnChange
@@ -292,7 +249,7 @@ export default function FiveKRunForm({ open, setOpen }: any) {
                   </div>
 
                   {/* Payment Screenshot */}
-                  <div>
+                  {/* <div>
                     <label>Upload Payment Screenshot</label>
                     <input
                       type="file"
@@ -304,7 +261,7 @@ export default function FiveKRunForm({ open, setOpen }: any) {
                       className="mt-1 text-white"
                     />
                     <ErrorMessage name="paymentScreenshot" component="div" className={errorClass} />
-                  </div>
+                  </div> */}
                   <p className="text-gray-400 text-sm text-center mt-4">
   By submitting, you agree to the{" "}
   <a
