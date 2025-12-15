@@ -95,9 +95,11 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-4">QUICK LINKS</h3>
             <ul className="space-y-2 text-sm text-gray-300">
               <li><a href="/about">About the Festival</a></li>
-              <li><a href="/event">Schedule</a></li>
-              <li><a href="#">Wellness Updates</a></li>
-              <li><a href="#">Partners</a></li>
+              <li><a href="/schedule">Schedule</a></li>
+              {/* <li><a href="#">Wellness Updates</a></li> */}
+              <li><a href="/awards">Awards</a></li>
+              {/* <li><a href="#">Partners</a></li> */}
+              <li><a href="/competitions">Competitions</a></li>
             </ul>
           </div>
 
@@ -105,7 +107,7 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">OTHER PAGES</h3>
             <ul className="space-y-2 text-sm text-gray-300">
-              <li><a href="#">Support</a></li>
+              {/* <li><a href="#">Support</a></li> */}
               <li><a href="/register">Contact Us</a></li>
               <li><a href="/faq">FAQ</a></li>
               <li><a href="/about/maxx">Organiser</a></li>
