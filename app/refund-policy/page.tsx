@@ -4,7 +4,7 @@ import React from "react";
 
 export default function RefundPolicyPage() {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-10">
+    <div className=" mt-50 max-w-4xl mx-auto px-4 py-10">
       <h1 className="text-3xl font-bold mb-4">Refund & Cancellation Policy – Bengaluru Fitness Fest 2026</h1>
       <p className="text-gray-600 mb-6">Last Updated: December 2025</p>
 

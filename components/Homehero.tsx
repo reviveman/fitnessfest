@@ -59,11 +59,13 @@ Join a vibrant celebration where strength meets spirit, and wellness takes cente
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center">
-                <Button className="bg-[#EA4A3E] hover:bg-red-600 text-white px-8 py-6 rounded-full font-medium text-lg">
+              <Link href="/tickets">
+                    <Button className="bg-[#EA4A3E] hover:bg-red-600 text-white px-8 py-6 rounded-full font-medium text-lg cursor-pointer">
                   BOOK NOW
                 </Button>
+                </Link>
 
-                <Link href={"/event"}>
+                <Link href={"/schedule"}>
                         <Button
                   variant="outline"
                   className="cursor-pointer bg-transparent border-2 border-white text-white hover:bg-white hover:text-slate-800 px-8 py-6 rounded-full font-medium text-lg"
