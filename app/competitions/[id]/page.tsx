@@ -255,7 +255,7 @@ export default function EventDetailPage({ params }: Props) {
       </section>
 
       {/* Event Info Bar */}
-      <section className="bg-white border-b">
+      {/* <section className="bg-white border-b">
         <div className="container max-w-6xl mx-auto px-4 py-4">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="flex flex-wrap items-center gap-6">
@@ -288,7 +288,7 @@ export default function EventDetailPage({ params }: Props) {
             </Button>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Main Content */}
       <section className="py-12">
@@ -484,7 +484,7 @@ export default function EventDetailPage({ params }: Props) {
                 </div>
 
                 {/* Quick Stats */}
-                <div className="bg-white border rounded-xl shadow-md p-6">
+                {/* <div className="bg-white border rounded-xl shadow-md p-6">
                   <h3 className="font-medium text-gray-900 mb-4">Quick Stats</h3>
                   
                   <div className="space-y-3">
@@ -512,7 +512,7 @@ export default function EventDetailPage({ params }: Props) {
                       <span className="font-medium text-gray-900">Top 10</span>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
                 {/* Event Benefits */}
                 <div className="bg-white border rounded-xl shadow-md p-6">

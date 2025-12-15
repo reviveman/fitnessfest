@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import cloudinary from "@/lib/cloudinary";
 import { sendThankYouEmail } from "@/lib/nodemailer";
 
 export async function POST(req: Request) {
@@ -18,21 +17,10 @@ export async function POST(req: Request) {
       tshirt,
       participatedBefore,
       heardFrom,
-      paymentScreenshot
     } = data;
 
-    // ⭐ Upload payment screenshot to Cloudinary
-    const paymentUrl = paymentScreenshot
-      ? (
-          await cloudinary.uploader.upload(paymentScreenshot, {
-            folder: "fitnessfest/5k-run",
-            resource_type: "image",
-          })
-        ).secure_url
-      : null;
-
-    // ⭐ Save to DB
-    const saved = await prisma.fiveKRunRegistration.create({
+    // ✅ Save registration
+    await prisma.fiveKRunRegistration.create({
       data: {
         fullName,
         age: Number(age),
@@ -44,17 +32,16 @@ export async function POST(req: Request) {
         tshirt,
         participatedBefore,
         heardFrom,
-        paymentScreenshot: paymentUrl!,
       },
     });
 
-    // ⭐ Send Emails
+    // ✅ Emails
     await sendThankYouEmail(email, fullName);
     await sendThankYouEmail(process.env.EMAIL_USER!, `5K Run: ${fullName}`);
 
     return NextResponse.json({ success: true });
   } catch (err) {
     console.error("❌ 5K Run Registration Error:", err);
-    return NextResponse.json({ success: false, error: err }, { status: 500 });
+    return NextResponse.json({ success: false }, { status: 500 });
   }
 }

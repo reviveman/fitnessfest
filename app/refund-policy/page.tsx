@@ -66,16 +66,19 @@ export default function RefundPolicyPage() {
         </p>
       </section>
 
-      {/* Section 4 */}
-      <section className="mb-8">
-        <h2 className="text-xl font-semibold mb-2">4. Event Cancellation</h2>
-        <p className="mb-2">If the event is fully cancelled by the organizers:</p>
-        <ul className="list-disc pl-6 text-gray-700">
-          <li>A partial refund will be provided after deducting administrative fees</li>
-          <li>OR you may transfer your registration to the next edition of the event</li>
-        </ul>
-        <p className="mt-2">Refund options will be announced depending on the situation.</p>
-      </section>
+{/* Section 4 */}
+<section className="mb-8">
+  <h2 className="text-xl font-semibold mb-2">4. Event Cancellation</h2>
+
+  <p className="text-gray-700">
+    If the event is cancelled by the organizer, the ticket amount—after
+    deducting applicable payment gateway and bank charges—will be refunded
+    to the original mode of payment within <strong>7 working days</strong> from
+    the date of cancellation announcement.
+  </p>
+</section>
+
+
 
       {/* Section 5 */}
       <section className="mb-8">
