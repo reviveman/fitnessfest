@@ -24,6 +24,13 @@ type Props = {
   params: Promise<{ id: string }>;
 };
 
+/* ✅ helper to convert fee string to number */
+function parseEntryFee(fee: string): number {
+  if (!fee) return 0;
+  if (fee.toLowerCase() === "free") return 0;
+  return Number(fee.replace(/[₹,]/g, ""));
+}
+
 export default function EventDetailPage({ params }: Props) {
   const resolvedParams = use(params);
   const event = getEventById(resolvedParams.id);
@@ -178,6 +185,8 @@ export default function EventDetailPage({ params }: Props) {
     };
   };
 
+  
+
   const eventRewards = getEventRewards(event.title);
 
   // Calculate total prize pool
@@ -230,6 +239,9 @@ export default function EventDetailPage({ params }: Props) {
     return section.replace(/<[^>]*>/g, '').substring(0, 150) + '...';
   }
 
+    /* ✅ numeric fee */
+  const entryFeeAmount = parseEntryFee(eventRewards.entryFee);
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Banner */}
@@ -254,41 +266,7 @@ export default function EventDetailPage({ params }: Props) {
         </div>
       </section>
 
-      {/* Event Info Bar */}
-      {/* <section className="bg-white border-b">
-        <div className="container max-w-6xl mx-auto px-4 py-4">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div className="flex flex-wrap items-center gap-6">
-              <div className="flex items-center gap-2 text-gray-700">
-                <Calendar className="w-4 h-4 text-[#EA4A3E]" />
-                <span>{event.date}</span>
-              </div>
 
-              <div className="flex items-center gap-2 text-gray-700">
-                <Clock className="w-4 h-4 text-[#EA4A3E]" />
-                <span>{event.timeRange}</span>
-              </div>
-
-              <div className="flex items-center gap-2 text-gray-700">
-                <MapPin className="w-4 h-4 text-[#EA4A3E]" />
-                <span>{event.location}</span>
-              </div>
-
-              <div className="flex items-center gap-2 text-gray-700">
-                <Users className="w-4 h-4 text-[#EA4A3E]" />
-                <span>500+ Participants</span>
-              </div>
-            </div>
-            
-            <Button
-              onClick={() => setOpen(true)}
-              className="bg-[#EA4A3E] hover:bg-[#D03F34] text-white font-medium px-6 py-3"
-            >
-              Register Now - {eventRewards.entryFee}
-            </Button>
-          </div>
-        </div>
-      </section> */}
 
       {/* Main Content */}
       <section className="py-12">
@@ -444,13 +422,16 @@ export default function EventDetailPage({ params }: Props) {
                       Limited slots available
                     </p>
                   </div>
-<Dialog open={open} onOpenChange={setOpen}>
-  <DialogContent className="max-w-[95vw] max-h-[95vh] w-full overflow-hidden p-0 border-0 bg-transparent">
-    <div className="flex items-center justify-center min-h-screen p-4">
-      <EventRegistrationForm closeForm={() => setOpen(false)} />
-    </div>
-  </DialogContent>
-</Dialog>
+    {/* ✅ PASS FEE + EVENT TITLE */}
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogContent className="max-w-[95vw] p-0 bg-transparent border-0">
+              <EventRegistrationForm
+                closeForm={() => setOpen(false)}
+                eventTitle={event.title}
+                entryFee={entryFeeAmount}
+              />
+            </DialogContent>
+          </Dialog>
 
                   <div className="space-y-4 mt-6 pt-6 border-t">
                     <h3 className="font-medium text-gray-900">Event Information</h3>
@@ -483,36 +464,7 @@ export default function EventDetailPage({ params }: Props) {
                   </div>
                 </div>
 
-                {/* Quick Stats */}
-                {/* <div className="bg-white border rounded-xl shadow-md p-6">
-                  <h3 className="font-medium text-gray-900 mb-4">Quick Stats</h3>
-                  
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
-                      <span className="text-sm text-gray-700">Prize Pool</span>
-                      <span className="font-bold text-[#EA4A3E]">
-                        ₹{totalPrizePool.toLocaleString('en-IN')}
-                      </span>
-                    </div>
-                    
-                    <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
-                      <span className="text-sm text-gray-700">Minimum Age</span>
-                      <span className="font-medium text-gray-900">18+</span>
-                    </div>
-                    
-                    <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
-                      <span className="text-sm text-gray-700">Level</span>
-                      <span className="font-medium text-gray-900">
-                        {event.title.includes("Amateur") ? "Beginner" : "Professional"}
-                      </span>
-                    </div>
-                    
-                    <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
-                      <span className="text-sm text-gray-700">Advancement</span>
-                      <span className="font-medium text-gray-900">Top 10</span>
-                    </div>
-                  </div>
-                </div> */}
+             
 
                 {/* Event Benefits */}
                 <div className="bg-white border rounded-xl shadow-md p-6">

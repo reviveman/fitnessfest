@@ -1,20 +1,31 @@
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 
+// ✅ Ensure store exists
+if (!global.paymentStore) {
+  global.paymentStore = new Map<string, any>();
+}
+
+const paymentStore = global.paymentStore;
+
 export async function POST(req: Request) {
   const body = await req.json();
 
   const {
     amount,
-    merchantTransactionId,
     mobileNumber,
-    userName,
+    meta, // registration + event data
   } = body;
 
+  const merchantTransactionId = `TXN_${Date.now()}`;
+
+  // ✅ Save meta temporarily
+  paymentStore.set(merchantTransactionId, meta);
+
   const payload = {
-    merchantId: process.env.PHONEPE_MERCHANT_ID,
+    merchantId: process.env.PHONEPE_MERCHANT_ID!,
     merchantTransactionId,
-    merchantUserId: "USER_" + Date.now(),
+    merchantUserId: merchantTransactionId,
     amount: amount * 100, // paise
     redirectUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/api/phonepe/status`,
     redirectMode: "POST",
@@ -25,7 +36,9 @@ export async function POST(req: Request) {
     },
   };
 
-  const base64Payload = Buffer.from(JSON.stringify(payload)).toString("base64");
+  const base64Payload = Buffer
+    .from(JSON.stringify(payload))
+    .toString("base64");
 
   const checksum =
     crypto
@@ -52,6 +65,5 @@ export async function POST(req: Request) {
   );
 
   const data = await response.json();
-
   return NextResponse.json(data);
 }

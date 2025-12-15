@@ -47,22 +47,32 @@ export default function FiveKRunForm({ open, setOpen }: any) {
   // -------------------------
   // ✅ SUBMIT HANDLER
   // -------------------------
-const handleSubmit = async (values: FormValues, { setSubmitting, resetForm }: any) => {
+const handleSubmit = async (
+  values: FormValues,
+  { setSubmitting }: any
+) => {
   try {
-    const res = await fetch("/api/fivek-run", {
+    const res = await fetch("/api/phonepe/create-payment", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
+      body: JSON.stringify({
+        amount: 1298, // 5K Run entry fee
+        merchantTransactionId: "5KRUN_" + Date.now(),
+        mobileNumber: values.phone,
+        userName: values.fullName,
+
+        // 👇 pass form data temporarily
+        meta: values,
+      }),
     });
 
     const data = await res.json();
 
-    if (data.success) {
-      alert("Registration successful!");
-      resetForm();
-      setOpen(false);
+    if (data?.data?.instrumentResponse?.redirectInfo?.url) {
+      window.location.href =
+        data.data.instrumentResponse.redirectInfo.url;
     } else {
-      alert("Registration failed");
+      alert("Payment initiation failed");
     }
   } catch (error) {
     console.error(error);
@@ -71,6 +81,7 @@ const handleSubmit = async (values: FormValues, { setSubmitting, resetForm }: an
     setSubmitting(false);
   }
 };
+
 
 
   // -------------------------
