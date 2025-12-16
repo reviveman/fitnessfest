@@ -1,50 +1,80 @@
 import { NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
-import { sendThankYouEmail } from "@/lib/nodemailer";
 
 export async function POST(req: Request) {
-  const body = await req.json();
+  try {
+    // PhonePe sends data as form-data or JSON
+    let body: any;
 
-  const merchantTransactionId =
-    body?.data?.merchantTransactionId;
+    const contentType = req.headers.get("content-type") || "";
 
-  const meta = global.paymentStore?.get(merchantTransactionId);
+    if (contentType.includes("application/json")) {
+      body = await req.json();
+    } else {
+      const formData = await req.formData();
+      body = Object.fromEntries(formData.entries());
+    }
 
-  if (!meta) {
+    console.log("📥 PhonePe status callback:", body);
+
+    const merchantTransactionId =
+      body.merchantTransactionId ||
+      body.transactionId ||
+      body.merchantTransactionReference;
+
+    if (!merchantTransactionId) {
+      console.error("❌ Missing merchantTransactionId");
+      return NextResponse.json({ success: false });
+    }
+
+    // 🔐 STEP 1: Verify payment with PhonePe
+    const verifyResponse = await fetch(
+      `${process.env.PHONEPE_PG_BASE_URL}/pg/checkout/v2/status/${process.env.PHONEPE_MERCHANT_ID}/${merchantTransactionId}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${process.env.PHONEPE_ACCESS_TOKEN!}`,
+          "X-CLIENT-VERSION": process.env.PHONEPE_CLIENT_VERSION!,
+          Accept: "application/json",
+        },
+      }
+    );
+
+    const verifyData = await verifyResponse.json();
+
+    console.log("✅ PhonePe verified status:", verifyData);
+
+    // 🧠 STEP 2: Decide result
+    const paymentState = verifyData?.data?.state;
+
+    if (paymentState === "COMPLETED") {
+      // ✅ Payment success
+      // TODO: Save to DB
+      // TODO: Send confirmation mail
+      // TODO: Generate ticket
+
+      return NextResponse.redirect(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/thankyou?status=success`,
+        { status: 303 }
+      );
+    }
+
+    if (paymentState === "FAILED") {
+      return NextResponse.redirect(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/thankyou?status=failed`,
+        { status: 303 }
+      );
+    }
+
+    // ⏳ Pending / unknown
     return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/payment/failed`,
-      302
+      `${process.env.NEXT_PUBLIC_BASE_URL}/thankyou?status=pending`,
+      { status: 303 }
+    );
+  } catch (err) {
+    console.error("❌ PhonePe status error:", err);
+    return NextResponse.redirect(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/thankyou?status=error`,
+      { status: 303 }
     );
   }
-
-  // ✅ Save registration
-  await prisma.fiveKRunRegistration.create({
-    data: {
-      fullName: meta.fullName,
-      age: Number(meta.age),
-      gender: meta.gender,
-      phone: meta.phone,
-      email: meta.email,
-      city: meta.city,
-      emergency: meta.emergency,
-      tshirt: meta.tshirt,
-      participatedBefore: meta.participatedBefore,
-      heardFrom: meta.heardFrom,
-    },
-  });
-
-  // ✅ Cleanup
-  global.paymentStore?.delete(merchantTransactionId);
-
-  // ✅ Emails
-  await sendThankYouEmail(meta.email, meta.fullName);
-  await sendThankYouEmail(
-    process.env.EMAIL_USER!,
-    `Registration: ${meta.fullName}`
-  );
-
-  return NextResponse.redirect(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/payment/success`,
-    302
-  );
 }
