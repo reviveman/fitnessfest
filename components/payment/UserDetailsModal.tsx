@@ -1,66 +1,115 @@
-
-
-
 "use client";
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
-export default function UserDetailsModal({ open, onClose, amount }: any) {
+type Props = {
+  open: boolean;
+  onClose: () => void;
+  baseAmount: number;
+};
+
+export default function UserDetailsModal({
+  open,
+  onClose,
+  baseAmount,
+}: Props) {
   const [name, setName] = useState("");
   const [mobile, setMobile] = useState("");
   const [loading, setLoading] = useState(false);
 
   if (!open) return null;
 
-const handleSubmit = async () => {
-  if (!name || mobile.length !== 10) {
-    alert("Enter valid name and mobile number");
-    return;
-  }
+  // ✅ GST logic ONLY here
+  const GST_RATE = 0.18;
+  const gstAmount = Math.round(baseAmount * GST_RATE);
+  const totalAmount = baseAmount + gstAmount;
 
-  setLoading(true);
-
-  try {
-    const res = await fetch("/api/phonepe/pay", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        amount,
-        mobileNumber: mobile,
-      }),
-    });
-
-    const data = await res.json();
-    console.log("PhonePe response:", data);
-
-    // ✅ STANDARD CHECKOUT v2 RESPONSE
-    const redirectUrl = data?.redirectUrl;
-
-    if (redirectUrl) {
-      window.location.href = redirectUrl;
-    } else {
-      console.error("No redirect URL from PhonePe:", data);
-      alert("Payment initiation failed");
+  const handleSubmit = async () => {
+    if (!name || mobile.length !== 10) {
+      alert("Enter valid name and mobile number");
+      return;
     }
-  } catch (err) {
-    console.error("Payment error:", err);
-    alert("Something went wrong");
-  } finally {
-    setLoading(false);
-  }
-};
 
+    setLoading(true);
 
+    try {
+      const res = await fetch("/api/phonepe/pay", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amount: totalAmount,       // ✅ FINAL AMOUNT
+          mobileNumber: mobile,
+          userName: name,
+        }),
+      });
+
+      const data = await res.json();
+      console.log("PhonePe response:", data);
+
+      const redirectUrl = data?.redirectUrl;
+
+      if (redirectUrl) {
+        window.location.href = redirectUrl;
+      } else {
+        alert("Payment initiation failed");
+      }
+    } catch (err) {
+      console.error("Payment error:", err);
+      alert("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
-      <div className="bg-white p-6 rounded-xl w-full max-w-md">
-        <input placeholder="Name" onChange={(e) => setName(e.target.value)} />
-        <input placeholder="Mobile" onChange={(e) => setMobile(e.target.value)} />
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+      <div className="bg-white p-6 rounded-xl w-full max-w-md space-y-4">
+        <h2 className="text-xl font-bold">Complete Payment</h2>
 
-        <Button onClick={handleSubmit}>
-          {loading ? "Processing..." : `Pay ₹${amount}`}
+        <input
+          placeholder="Full Name"
+          className="w-full border rounded px-3 py-2"
+          onChange={(e) => setName(e.target.value)}
+        />
+
+        <input
+          placeholder="Mobile Number"
+          maxLength={10}
+          className="w-full border rounded px-3 py-2"
+          onChange={(e) => setMobile(e.target.value)}
+        />
+
+        {/* 💰 PRICE BREAKUP */}
+        <div className="bg-gray-50 p-4 rounded space-y-2 text-sm">
+          <div className="flex justify-between">
+            <span>Base Amount</span>
+            <span>₹{baseAmount}</span>
+          </div>
+          <div className="flex justify-between">
+            <span>GST (18%)</span>
+            <span>₹{gstAmount}</span>
+          </div>
+          <div className="flex justify-between font-bold text-lg">
+            <span>Total</span>
+            <span>₹{totalAmount}</span>
+          </div>
+        </div>
+
+        <Button
+          onClick={handleSubmit}
+          disabled={loading}
+          className="w-full bg-[#EA4A3E] text-white"
+        >
+          {loading ? "Processing..." : `Pay ₹${totalAmount}`}
+        </Button>
+
+        <Button
+          variant="outline"
+          onClick={onClose}
+          className="w-full"
+        >
+          Cancel
         </Button>
       </div>
     </div>
