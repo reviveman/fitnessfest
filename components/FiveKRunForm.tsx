@@ -52,35 +52,36 @@ const handleSubmit = async (
   { setSubmitting }: any
 ) => {
   try {
-    const res = await fetch("/api/phonepe/create-payment", {
+    const res = await fetch("/api/phonepe/pay", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         amount: 1298, // 5K Run entry fee
-        merchantTransactionId: "5KRUN_" + Date.now(),
         mobileNumber: values.phone,
-        userName: values.fullName,
-
-        // 👇 pass form data temporarily
         meta: values,
       }),
     });
 
     const data = await res.json();
+    console.log("PhonePe response:", data);
 
-    if (data?.data?.instrumentResponse?.redirectInfo?.url) {
-      window.location.href =
-        data.data.instrumentResponse.redirectInfo.url;
+    // ✅ STANDARD CHECKOUT v2
+    const redirectUrl = data?.redirectUrl;
+
+    if (redirectUrl) {
+      window.location.href = redirectUrl;
     } else {
+      console.error("No redirect URL from PhonePe:", data);
       alert("Payment initiation failed");
     }
   } catch (error) {
-    console.error(error);
+    console.error("Payment error:", error);
     alert("Something went wrong");
   } finally {
     setSubmitting(false);
   }
 };
+
 
 
 
@@ -259,20 +260,7 @@ const handleSubmit = async (
                     <ErrorMessage name="heardFrom" component="div" className={errorClass} />
                   </div>
 
-                  {/* Payment Screenshot */}
-                  {/* <div>
-                    <label>Upload Payment Screenshot</label>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => {
-                        console.log("FILE SELECTED:", e.target.files?.[0]);
-                        setFieldValue("paymentScreenshot", e.target.files?.[0] || null);
-                      }}
-                      className="mt-1 text-white"
-                    />
-                    <ErrorMessage name="paymentScreenshot" component="div" className={errorClass} />
-                  </div> */}
+                 
                   <p className="text-gray-400 text-sm text-center mt-4">
   By submitting, you agree to the{" "}
   <a
