@@ -4,7 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 
@@ -38,7 +37,6 @@ export default function EventRegistrationForm({
   eventTitle,
   entryFee,
 }: Props) {
-  const router = useRouter();
   const [showPayment, setShowPayment] = useState(false);
   const [paymentStarted, setPaymentStarted] = useState(false);
 
@@ -55,14 +53,18 @@ export default function EventRegistrationForm({
     "Obstacle Course Challenge",
   ];
 
+  /* ================= VALIDATION ================= */
+
   const validation = Yup.object({
     fullName: Yup.string().required("Required"),
-    mobile: Yup.string().matches(/^[0-9]{10}$/, "Enter 10 digits").required(),
-    email: Yup.string().email().required(),
-    dob: Yup.string().required(),
-    gender: Yup.string().required(),
-    city: Yup.string().required(),
-    emergencyContact: Yup.string().required(),
+    mobile: Yup.string()
+      .matches(/^[0-9]{10}$/, "Enter 10 digits")
+      .required("Required"),
+    email: Yup.string().email("Invalid email").required("Required"),
+    dob: Yup.string().required("Required"),
+    gender: Yup.string().required("Required"),
+    city: Yup.string().required("Required"),
+    emergencyContact: Yup.string().required("Required"),
     events: Yup.array().min(1, "Select at least one event"),
     idProof: Yup.mixed().required("ID Proof required"),
     waiverForm: Yup.mixed().required("Waiver form required"),
@@ -107,7 +109,7 @@ export default function EventRegistrationForm({
         }}
       >
         {({ values, setFieldValue }) => (
-          <Form id="event-form" className="px-8 py-6 space-y-8 max-h-[65vh] overflow-y-auto">
+          <Form className="px-8 py-6 space-y-8 max-h-[65vh] overflow-y-auto">
 
             {/* PERSONAL INFO */}
             <div>
@@ -149,7 +151,10 @@ export default function EventRegistrationForm({
                       checked={values.events.includes(ev)}
                       onChange={(e) => {
                         const arr = [...values.events];
-                        e.target.checked ? arr.push(ev) : arr.splice(arr.indexOf(ev), 1);
+                        e.target.checked
+                          ? arr.push(ev)
+                          : arr.splice(arr.indexOf(ev), 1);
+
                         setFieldValue("events", arr);
                         setShowPayment(arr.length > 0);
                       }}
@@ -158,6 +163,7 @@ export default function EventRegistrationForm({
                   </label>
                 ))}
               </div>
+              <ErrorMessage name="events" component="div" className="text-red-500 text-sm" />
             </div>
 
             {/* DECLARATION */}
@@ -166,6 +172,11 @@ export default function EventRegistrationForm({
                 <Field type="checkbox" name="declarationAccepted" />
                 <span>I accept Terms & Conditions</span>
               </label>
+              <ErrorMessage
+                name="declarationAccepted"
+                component="div"
+                className="text-red-500 text-sm"
+              />
             </div>
 
             {/* PAYMENT */}
@@ -186,37 +197,41 @@ export default function EventRegistrationForm({
                   <span>₹{totalAmount}</span>
                 </div>
 
-                <button
+                <Button
                   type="button"
                   disabled={paymentStarted}
                   onClick={async () => {
                     setPaymentStarted(true);
 
-                    const res = await fetch("/api/phonepe/create-payment", {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                   body: JSON.stringify({
-  amount: totalAmount,
-  mobileNumber: values.mobile,
-  merchantTransactionId: "EVT_" + Date.now(),
-  userName: values.fullName, // ✅ ADD THIS
-  meta: { ...values, eventTitle },
-}),
+                    try {
+                      const res = await fetch("/api/phonepe/pay", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                          amount: totalAmount,
+                          mobileNumber: values.mobile,
+                        }),
+                      });
 
-                    });
+                      const data = await res.json();
+                      console.log("PhonePe response:", data);
 
-                    const data = await res.json();
-
-                    const url =
-                      data?.data?.instrumentResponse?.redirectInfo?.url;
-
-                    if (url) window.location.href = url;
-                    else alert("Payment initiation failed");
+                      if (data?.redirectUrl) {
+                        window.location.href = data.redirectUrl;
+                      } else {
+                        alert("Payment initiation failed");
+                        setPaymentStarted(false);
+                      }
+                    } catch (err) {
+                      console.error(err);
+                      alert("Payment error");
+                      setPaymentStarted(false);
+                    }
                   }}
                   className="mt-4 w-full bg-[#EA4A3E] text-white py-3 rounded-lg"
                 >
                   Pay ₹{totalAmount} & Continue
-                </button>
+                </Button>
               </div>
             )}
           </Form>

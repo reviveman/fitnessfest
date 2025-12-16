@@ -97,7 +97,7 @@ export default function TicketStylePricing() {
   const [amount, setAmount] = useState(0);
 
   const passes = [
-    { title: "1-Day Pass", amount: 699, price: "₹11 + GST", features: [] },
+    { title: "1-Day Pass", amount: 1, price: "₹699 + GST", features: [] },
     { title: "Buddy Pass", amount: 4999, price: "₹4,999 + GST", features: [] },
   ];
 
