@@ -195,12 +195,14 @@ export default function EventRegistrationForm({
                     const res = await fetch("/api/phonepe/create-payment", {
                       method: "POST",
                       headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({
-                        amount: totalAmount,
-                        mobileNumber: values.mobile,
-                        merchantTransactionId: "EVT_" + Date.now(),
-                        meta: { ...values, eventTitle },
-                      }),
+                   body: JSON.stringify({
+  amount: totalAmount,
+  mobileNumber: values.mobile,
+  merchantTransactionId: "EVT_" + Date.now(),
+  userName: values.fullName, // ✅ ADD THIS
+  meta: { ...values, eventTitle },
+}),
+
                     });
 
                     const data = await res.json();
