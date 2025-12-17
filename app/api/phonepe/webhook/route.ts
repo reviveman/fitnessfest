@@ -1,61 +1,70 @@
 import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { sendThankYouMail } from "@/lib/mail";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    console.log("🔔 PhonePe Webhook Received:", body);
-
-    /**
-     * Example payload fields (may vary slightly):
-     * body.orderId
-     * body.state → COMPLETED | FAILED | PENDING
-     * body.amount
-     * body.merchantOrderId
-     */
-
-    const {
-      merchantOrderId,
-      orderId,
-      state,
-      amount,
-    } = body;
+    const { merchantOrderId, state, amount } = body;
 
     if (!merchantOrderId || !state) {
-      console.error("❌ Invalid webhook payload");
       return NextResponse.json({ success: false }, { status: 400 });
     }
 
-    /**
-     * 🔐 IMPORTANT:
-     * Check DB first to avoid duplicate processing
-     */
+    // ✅ SIMPLE & SAFE QUERY
+    const registration = await prisma.eventRegistration.findUnique({
+      where: { merchantOrderId },
+    });
 
-    // const existing = await db.payment.findUnique({ where: { merchantOrderId }});
-    // if (existing?.status === "SUCCESS") return NextResponse.json({ ok: true });
-
-    if (state === "COMPLETED") {
-      console.log("✅ Payment SUCCESS:", merchantOrderId);
-
-      // ✅ Save success to DB
-      // await db.payment.update({ ... })
-
-      // ✅ Trigger email / ticket / confirmation
-
-    } else if (state === "FAILED") {
-      console.log("❌ Payment FAILED:", merchantOrderId);
-
-      // ❌ Save failed state
-    } else {
-      console.log("⏳ Payment PENDING:", merchantOrderId);
+    if (!registration) {
+      return NextResponse.json({ success: false }, { status: 404 });
     }
 
-    /**
-     * PhonePe expects 200 OK
-     */
+    // 🔒 Prevent duplicate processing
+    const paymentInfo = (registration.paymentInfo as any) || {};
+
+    if (paymentInfo.status === "SUCCESS") {
+      return NextResponse.json({ success: true });
+    }
+
+    // ✅ SUCCESS
+    if (state === "COMPLETED") {
+      await prisma.eventRegistration.update({
+        where: { merchantOrderId },
+        data: {
+          paymentInfo: {
+            ...paymentInfo,
+            status: "SUCCESS",
+            paidAmount: amount,
+            paidAt: new Date().toISOString(),
+          },
+        },
+      });
+
+      await sendThankYouMail({
+        to: registration.email,
+        name: registration.fullName,
+        event: registration.events.join(", "),
+      });
+    }
+
+    // ❌ FAILED
+    if (state === "FAILED") {
+      await prisma.eventRegistration.update({
+        where: { merchantOrderId },
+        data: {
+          paymentInfo: {
+            ...paymentInfo,
+            status: "FAILED",
+          },
+        },
+      });
+    }
+
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("❌ Webhook Error:", error);
+    console.error("Webhook error:", error);
     return NextResponse.json({ success: false }, { status: 500 });
   }
 }

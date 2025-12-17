@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -37,21 +37,11 @@ export default function EventRegistrationForm({
   eventTitle,
   entryFee,
 }: Props) {
-  const [showPayment, setShowPayment] = useState(false);
+  const [showPayment, setShowPayment] = useState(true);
   const [paymentStarted, setPaymentStarted] = useState(false);
 
   const gst = Math.round(entryFee * 0.18);
   const totalAmount = entryFee + gst;
-
-  const EVENT_OPTIONS = [
-    "Functional Fitness Challenge – Eliminations",
-    "Strength Endurance Circuit",
-    "Calisthenics Freestyle",
-    "Powerlifting King/Queen",
-    "Push-Up/Plank Challenge",
-    "Battle of Gyms",
-    "Obstacle Course Challenge",
-  ];
 
   /* ================= VALIDATION ================= */
 
@@ -65,7 +55,7 @@ export default function EventRegistrationForm({
     gender: Yup.string().required("Required"),
     city: Yup.string().required("Required"),
     emergencyContact: Yup.string().required("Required"),
-    events: Yup.array().min(1, "Select at least one event"),
+    events: Yup.array().min(1, "Event is required"),
     idProof: Yup.mixed().required("ID Proof required"),
     waiverForm: Yup.mixed().required("Waiver form required"),
     declarationAccepted: Yup.boolean().oneOf([true], "Required"),
@@ -97,7 +87,7 @@ export default function EventRegistrationForm({
           gender: "",
           city: "",
           emergencyContact: "",
-          events: [],
+          events: [eventTitle], // ✅ auto-selected event
           idProof: null,
           waiverForm: null,
           eligibilityVideo: null,
@@ -108,7 +98,8 @@ export default function EventRegistrationForm({
           alert("Please complete payment first");
         }}
       >
-        {({ values, setFieldValue }) => (
+        {({ values }) => (
+
           <Form className="px-8 py-6 space-y-8 max-h-[65vh] overflow-y-auto">
 
             {/* PERSONAL INFO */}
@@ -140,30 +131,15 @@ export default function EventRegistrationForm({
               </div>
             </div>
 
-            {/* EVENTS */}
+            {/* SELECTED EVENT (LOCKED) */}
             <div>
-              <h3 className="font-semibold mb-4">Select Events</h3>
-              <div className="grid md:grid-cols-2 gap-3">
-                {EVENT_OPTIONS.map((ev) => (
-                  <label key={ev} className="flex gap-2 items-center">
-                    <input
-                      type="checkbox"
-                      checked={values.events.includes(ev)}
-                      onChange={(e) => {
-                        const arr = [...values.events];
-                        e.target.checked
-                          ? arr.push(ev)
-                          : arr.splice(arr.indexOf(ev), 1);
-
-                        setFieldValue("events", arr);
-                        setShowPayment(arr.length > 0);
-                      }}
-                    />
-                    {ev}
-                  </label>
-                ))}
+              <h3 className="font-semibold mb-4">Selected Event</h3>
+              <div className="p-4 bg-gray-50 border rounded-lg">
+                <label className="flex gap-2 items-center">
+                  <input type="checkbox" checked disabled />
+                  <span className="font-medium">{eventTitle}</span>
+                </label>
               </div>
-              <ErrorMessage name="events" component="div" className="text-red-500 text-sm" />
             </div>
 
             {/* DECLARATION */}
@@ -200,34 +176,61 @@ export default function EventRegistrationForm({
                 <Button
                   type="button"
                   disabled={paymentStarted}
-                  onClick={async () => {
-                    setPaymentStarted(true);
+                 onClick={async () => {
+  setPaymentStarted(true);
 
-                    try {
-                      const res = await fetch("/api/phonepe/pay", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                          amount: totalAmount,
-                          mobileNumber: values.mobile,
-                        }),
-                      });
+  try {
+    /**
+     * 1️⃣ SAVE REGISTRATION (PENDING)
+     */
+    const saveRes = await fetch("/api/registrations/initiate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        fullName: values.fullName,
+        mobile: values.mobile,
+        email: values.email,
+        dob: values.dob,
+        gender: values.gender,
+        city: values.city,
+        emergencyContact: values.emergencyContact,
+        eventTitle,
+        amount: totalAmount,
+      }),
+    });
 
-                      const data = await res.json();
-                      console.log("PhonePe response:", data);
+    const saveData = await saveRes.json();
 
-                      if (data?.redirectUrl) {
-                        window.location.href = data.redirectUrl;
-                      } else {
-                        alert("Payment initiation failed");
-                        setPaymentStarted(false);
-                      }
-                    } catch (err) {
-                      console.error(err);
-                      alert("Payment error");
-                      setPaymentStarted(false);
-                    }
-                  }}
+    if (!saveData?.merchantOrderId) {
+      throw new Error("Failed to create registration");
+    }
+
+    /**
+     * 2️⃣ START PHONEPE PAYMENT
+     */
+    const payRes = await fetch("/api/phonepe/pay", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        amount: totalAmount,
+        merchantOrderId: saveData.merchantOrderId, // 🔑 CRITICAL
+      }),
+    });
+
+    const payData = await payRes.json();
+
+    if (payData?.redirectUrl) {
+      window.location.href = payData.redirectUrl;
+    } else {
+      throw new Error("Payment initiation failed");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Something went wrong. Please try again.");
+    setPaymentStarted(false);
+  }
+}}
+
                   className="mt-4 w-full bg-[#EA4A3E] text-white py-3 rounded-lg"
                 >
                   Pay ₹{totalAmount} & Continue

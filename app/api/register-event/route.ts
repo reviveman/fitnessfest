@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { sendThankYouEmail } from "@/lib/nodemailer";
 import prisma from "@/lib/prisma";
-import cloudinary from "@/lib/cloudinary"; // ⭐ added
+import cloudinary from "@/lib/cloudinary";
 
 export async function POST(req: Request) {
   try {
@@ -20,7 +20,7 @@ export async function POST(req: Request) {
       waiverForm,
       eligibilityVideo,
       declarationAccepted,
-      paymentInfo
+      paymentInfo,
     } = data;
 
     if (!declarationAccepted) {
@@ -30,8 +30,19 @@ export async function POST(req: Request) {
       );
     }
 
-    // ⭐ Cloudinary Upload Helper
-    const uploadToCloudinary = async (file: string | null, folder: string) => {
+    /**
+     * ✅ REQUIRED by Prisma schema
+     * Used for both paid & free registrations
+     */
+    const merchantOrderId = "MANUAL_" + Date.now();
+
+    /**
+     * ☁️ Cloudinary Upload Helper
+     */
+    const uploadToCloudinary = async (
+      file: string | null,
+      folder: string
+    ) => {
       if (!file) return null;
 
       const uploaded = await cloudinary.uploader.upload(file, {
@@ -42,20 +53,31 @@ export async function POST(req: Request) {
       return uploaded.secure_url;
     };
 
-    // ⭐ Upload files (Base64 → Cloudinary)
-    const idProofUrl = await uploadToCloudinary(idProof, "fitnessfest/idproofs");
+    /**
+     * ☁️ Upload files (Base64 → Cloudinary)
+     */
+    const idProofUrl = await uploadToCloudinary(
+      idProof,
+      "fitnessfest/idproofs"
+    );
+
     const waiverFormUrl = await uploadToCloudinary(
       waiverForm,
       "fitnessfest/waivers"
     );
+
     const eligibilityVideoUrl = await uploadToCloudinary(
       eligibilityVideo,
       "fitnessfest/videos"
     );
 
-    // ⭐ Store in DB
+    /**
+     * 💾 Store Registration in DB
+     */
     const registrant = await prisma.eventRegistration.create({
       data: {
+        merchantOrderId, // ✅ REQUIRED FIELD
+
         fullName,
         mobile,
         email,
@@ -64,16 +86,25 @@ export async function POST(req: Request) {
         city,
         emergencyContact,
         events,
+
         idProof: idProofUrl,
         waiverForm: waiverFormUrl,
         eligibilityVideo: eligibilityVideoUrl,
-        paymentInfo,
+
+        paymentInfo: paymentInfo ?? {
+          status: "FREE_EVENT",
+          method: "MANUAL",
+        },
+
         declarationAccepted,
       },
     });
 
-    // ⭐ Send Email Notifications
+    /**
+     * 📧 Send Email Notifications
+     */
     await sendThankYouEmail(email, fullName);
+
     await sendThankYouEmail(
       process.env.EMAIL_USER!,
       `${fullName} (New Registration)`
@@ -81,9 +112,9 @@ export async function POST(req: Request) {
 
     return NextResponse.json({
       success: true,
+      merchantOrderId,
       redirect: "/thankyou?type=competition",
     });
-
   } catch (err) {
     console.error("❌ Registration Error:", err);
     return NextResponse.json(

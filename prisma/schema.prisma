@@ -129,6 +129,9 @@ enum NominationStatus {
 
 model EventRegistration {
   id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+
+  merchantOrderId     String   @unique   // ✅ ADD THIS
+
   fullName            String
   mobile              String
   email               String
@@ -140,6 +143,7 @@ model EventRegistration {
   idProof             String?
   waiverForm          String?
   eligibilityVideo    String?
+
   paymentInfo         Json?
   declarationAccepted Boolean
 
@@ -148,6 +152,7 @@ model EventRegistration {
 
   @@map("event_registrations")
 }
+
 
 
 model FiveKRunRegistration {
