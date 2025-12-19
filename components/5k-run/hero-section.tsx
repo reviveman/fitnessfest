@@ -29,7 +29,7 @@ export default function HeroSection() {
         {/* Date Badge */}
         <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-[#EA4A3E]/20 border border-[#EA4A3E] rounded-full">
           <span className="w-2 h-2 bg-[#EA4A3E] rounded-full animate-pulse" />
-          <span className="text-sm font-semibold text-[#EA4A3E]">21 FEBRUARY 2026</span>
+          <span className="text-sm font-semibold text-[#EA4A3E]">28 March 2026</span>
         </div>
 
         {/* Main Title */}

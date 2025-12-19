@@ -105,7 +105,7 @@ export default function EventInfoSection() {
         <div>
           <h3 className="font-bold text-gray-800 text-lg mb-2">WHEN IS THE EVENT :</h3>
           <p className="text-gray-600 text-sm font-semibold">
-            ( Saturday & Sunday ) <br />21 & 22 February 2026
+            ( Saturday & Sunday ) <br />28 & 29 March 2026
           </p>
         </div>
       </div>

@@ -28,33 +28,33 @@ const messages: Record<
     bold: "You are now part of the Bengaluru Fitness Festival 2026 community",
     description:
       "We look forward to welcoming you to explore fitness, health, and wellness experiences.",
-    date: "21 - 22 February 2026 · KTPO, Bengaluru",
+    date: "28 - 29 March 2026 · KTPO, Bengaluru",
   },
   exhibitor: {
     title: "Thank You For Registering as an Exhibitor!",
     bold: "You are now part of the Bengaluru Fitness Festival 2026 community",
     description: "Our team will contact you soon with exhibition details.",
-    date: "21 - 22 February 2026 · KTPO, Bengaluru",
+    date: "28 - 29 March 2026 · KTPO, Bengaluru",
   },
   sponsor: {
     title: "Thank You For Registering as a Sponsor!",
     bold: "You are now part of the Bengaluru Fitness Festival 2026 community",
     description: "Our team will contact you soon with sponsorship details.",
-    date: "21 - 22 February 2026 · KTPO, Bengaluru",
+    date: "28 - 29 March 2026 · KTPO, Bengaluru",
   },
   nomination: {
     title: "Thank You for Submitting Your Nomination!",
     bold: "Your nomination has been successfully recorded.",
     description:
       "Our jury panel will review all submissions and contact shortlisted nominees.",
-    date: "Award Ceremony: 21 - 22 February 2026 · KTPO, Bengaluru",
+    date: "Award Ceremony: 28 - 29 March 2026 · KTPO, Bengaluru",
   },
   competition: {
     title: "Thank You for Registering for the Competition!",
     bold: "Your spot in the Bengaluru Fitness Festival Competition is confirmed.",
     description:
       "Our team will review your details and send event-day instructions shortly.",
-    date: "21 - 22 February 2026 · KTPO, Bengaluru",
+    date: "28 - 29 March 2026 · KTPO, Bengaluru",
   },
 };
 

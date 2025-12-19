@@ -126,7 +126,7 @@ export const events: Event[] = [
 <h3>10. Awards & Recognition</h3>
 <p>🏅 Top 3 Men & Top 3 Women receive: Trophy + Medal, Certificate, Goodie bag, Automatic entry to next year's festival finals</p>
 `,
-    date: "February 21, 2026",
+    date: "March 28, 2026",
     time: "11",
     period: "AM",
     timeRange: "11:30 AM - 1:00 PM",
@@ -134,8 +134,8 @@ export const events: Event[] = [
     price: "Entry Fee: 100",
     image: "/images/21/four.jpg",
     featured: false,
-    startDate: "February 21, 2026",
-    endDate: "February 21, 2026",
+    startDate: "March 28, 2026",
+    endDate: "March 28, 2026",
     speakerIds: ["1", "2"],
     sponsors: ["PowerGear", "FitLife Nutrition"],
     sponsorIds: ["1", "2"],
@@ -237,7 +237,7 @@ export const events: Event[] = [
   <li>Highlight Bangalore's growing functional training community</li>
 </ul>
 `,
-    date: "February 21, 2026",
+    date: "March 28, 2026",
     time: "2",
     period: "PM",
     timeRange: "2:00 PM - 4:00 PM",
@@ -245,8 +245,8 @@ export const events: Event[] = [
     price: "Entry Fee: 100",
     image: "/images/21/eight.jpg",
     featured: true,
-    startDate: "February 21, 2026",
-    endDate: "February 21, 2026",
+    startDate: "March 28, 2026",
+    endDate: "March 28, 2026",
     speakerIds: ["1", "2"],
     sponsors: ["FitLife Nutrition", "PowerGear"],
     sponsorIds: ["1", "2"],
@@ -396,7 +396,7 @@ export const events: Event[] = [
   <li>Encourage safe, disciplined lifting culture</li>
 </ul>
 `,
-    date: "February 21, 2026",
+    date: "March 28, 2026",
     time: "4",
     period: "PM",
     timeRange: "4:15 PM - 6:00 PM",
@@ -404,8 +404,8 @@ export const events: Event[] = [
     price: "Free Entry",
     image: "/images/21/two.jpg",
     featured: false,
-    startDate: "February 21, 2026",
-    endDate: "February 21, 2026",
+    startDate: "March 28, 2026",
+    endDate: "March 28, 2026",
     speakerIds: ["2", "4"],
     sponsors: ["PowerGear", "HealthTech"],
     sponsorIds: ["2", "4"],
@@ -548,7 +548,7 @@ export const events: Event[] = [
   <li>Showcase discipline, endurance, and proper form</li>
 </ul>
 `,
-    date: "February 21, 2026",
+    date: "March 28, 2026",
     time: "6",
     period: "PM",
     timeRange: "6:15 PM - 7:15 PM",
@@ -556,8 +556,8 @@ export const events: Event[] = [
     price: "Entry Fee: 100",
     image: "/images/21/ten.jpg",
     featured: false,
-    startDate: "February 21, 2026",
-    endDate: "February 21, 2026",
+    startDate: "March 28, 2026",
+    endDate: "March 28, 2026",
     speakerIds: ["2", "3"],
     sponsors: ["FitLife Nutrition", "PowerGear"],
     sponsorIds: ["1", "2"],
@@ -754,7 +754,7 @@ export const events: Event[] = [
   <li>Make the sport accessible, inclusive, and inspiring</li>
 </ul>
 `,
-    date: "February 21, 2026",
+    date: "March 28, 2026",
     time: "1",
     period: "PM",
     timeRange: "1:00 PM - 3:00 PM",
@@ -762,8 +762,8 @@ export const events: Event[] = [
     price: "Entry Fee: 100",
     image: "/images/21/nine.jpg",
     featured: false,
-    startDate: "February 21, 2026",
-    endDate: "February 21, 2026",
+    startDate: "March 28, 2026",
+    endDate: "March 28, 2026",
     speakerIds: ["3", "4"],
     sponsors: ["ActiveWear", "VitaBoost"],
     sponsorIds: ["3", "5"],
@@ -924,7 +924,7 @@ export const events: Event[] = [
   <li>Special "Record Breaker" mention for exceptional lifts</li>
 </ul>
 `,
-    date: "February 21, 2026",
+    date: "March 28, 2026",
     time: "3",
     period: "PM",
     timeRange: "3:00 PM - 5:00 PM",
@@ -932,8 +932,8 @@ export const events: Event[] = [
     price: "Entry Fee: 100",
     image: "/images/21/deadlift.jpg",
     featured: false,
-    startDate: "February 21, 2026",
-    endDate: "February 21, 2026",
+    startDate: "March 28, 2026",
+    endDate: "March 28, 2026",
     speakerIds: ["2", "4"],
     sponsors: ["PowerGear", "ActiveWear"],
     sponsorIds: ["2", "3"],
@@ -1077,7 +1077,7 @@ export const events: Event[] = [
   <li>Engage both athletes and spectators in high-energy action</li>
 </ul>
 `,
-    date: "February 21, 2026",
+    date: "March 28, 2026",
     time: "6",
     period: "PM",
     timeRange: "6:30 PM - 8:00 PM",
@@ -1085,8 +1085,8 @@ export const events: Event[] = [
     price: "Entry Fee: 100",
     image: "/images/21/seven.jpg",
     featured: true,
-    startDate: "February 21, 2026",
-    endDate: "February 21, 2026",
+    startDate: "March 28, 2026",
+    endDate: "March 28, 2026",
     speakerIds: ["1", "3"],
     sponsors: ["FitLife Nutrition", "PowerGear", "HealthTech"],
     sponsorIds: ["1", "2", "4"],
@@ -1221,7 +1221,7 @@ export const events: Event[] = [
 <h3>🎯 Purpose of the Finals</h3>
 <p>The Finals celebrate: True functional athleticism, High-performance fitness, Mental grit + physical endurance, The culture of competitive fitness in Bengaluru, The spirit of excellence, sportsmanship & community.</p>
 `,
-    date: "February 22, 2026",
+    date: "March 29, 2026",
     time: "9",
     period: "AM",
     timeRange: "9:00 AM - 12:00 PM",
@@ -1229,8 +1229,8 @@ export const events: Event[] = [
     price: "Entry Fee: 100",
     image: "/images/21/eight.jpg",
     featured: true,
-    startDate: "February 22, 2026",
-    endDate: "February 22, 2026",
+    startDate: "March 29, 2026",
+    endDate: "March 29, 2026",
     speakerIds: ["1", "2", "3"],
     sponsors: ["FitLife Nutrition", "ActiveWear"],
     sponsorIds: ["1", "3"],
@@ -1238,7 +1238,7 @@ export const events: Event[] = [
 
   // DEADLIFT CHAMPIONSHIP – FINALS (id: 21)
   {
-    id: "21",
+    id: "28",
     title: "Deadlift Championship – Finals",
     description: "Raw Power • Perfect Technique • Maximum Lift",
     fullDescription: `
@@ -1376,7 +1376,7 @@ export const events: Event[] = [
 <h3>🎯 Purpose of the Championship</h3>
 <p>The Finals celebrate: Strength excellence, Perfect technique, Mental determination, Bengaluru's growing strength-sport community, A fair, RAW lifting platform for all athletes.</p>
 `,
-    date: "February 22, 2026",
+    date: "March 29, 2026",
     time: "1",
     period: "PM",
     timeRange: "1:00 PM - 3:00 PM",
@@ -1384,8 +1384,8 @@ export const events: Event[] = [
     price: "Free Entry",
     image: "/images/21/two.jpg",
     featured: true,
-    startDate: "February 22, 2026",
-    endDate: "February 22, 2026",
+    startDate: "March 29, 2026",
+    endDate: "March 29, 2026",
     speakerIds: ["2", "4"],
     sponsors: ["PowerGear", "HealthTech"],
     sponsorIds: ["2", "4"],
@@ -1393,7 +1393,7 @@ export const events: Event[] = [
 
   // PUSH-UP & PLANK ENDURANCE – FINALS (id: 22)
   {
-    id: "22",
+    id: "29",
     title: "Push-Up & Plank Endurance – Finals",
     description: "Strength • Stability • Stamina",
     fullDescription: `
@@ -1557,7 +1557,7 @@ export const events: Event[] = [
 <h3>🎯 Purpose of the Event</h3>
 <p>The Push-Up & Plank Endurance Finals promote: Pure bodyweight strength, Functional fitness, Discipline & technique, Mental endurance, Fitness accessibility for all levels. This event is designed to be both inspiring and spectator-friendly, making it one of the festival's most crowd-attracting competitions.</p>
 `,
-    date: "February 22, 2026",
+    date: "March 29, 2026",
     time: "3",
     period: "PM",
     timeRange: "3:30 PM - 5:00 PM",
@@ -1565,8 +1565,8 @@ export const events: Event[] = [
     price: "Entry Fee: 100",
     image: "/images/21/ten.jpg",
     featured: false,
-    startDate: "February 22, 2026",
-    endDate: "February 22, 2026",
+    startDate: "March 29, 2026",
+    endDate: "March 29, 2026",
     speakerIds: ["2", "3"],
     sponsors: ["FitLife Nutrition", "PowerGear"],
     sponsorIds: ["1", "2"],
@@ -1647,7 +1647,7 @@ export const events: Event[] = [
   <li><strong>Special Awards (optional):</strong> Best Dynamic Athlete, Best Static Strength Performer, Best Freestyle Flow Artist</li>
 </ul>
 `,
-    date: "February 22, 2026",
+    date: "March 29, 2026",
     time: "11",
     period: "AM",
     timeRange: "11:00 AM - 12:30 PM",
@@ -1655,8 +1655,8 @@ export const events: Event[] = [
     price: "Entry Fee: 100",
     image: "/images/21/nine.jpg",
     featured: false,
-    startDate: "February 22, 2026",
-    endDate: "February 22, 2026",
+    startDate: "March 29, 2026",
+    endDate: "March 29, 2026",
     speakerIds: ["3", "4"],
     sponsors: ["ActiveWear", "VitaBoost"],
     sponsorIds: ["3", "5"],
@@ -1759,7 +1759,7 @@ export const events: Event[] = [
   <li><strong>Special awards (optional):</strong> Fastest Station Performer, Best Technique Award, Iron Athlete Award</li>
 </ul>
 `,
-    date: "February 22, 2026",
+    date: "March 29, 2026",
     time: "12",
     period: "PM",
     timeRange: "12:45 PM - 2:15 PM",
@@ -1767,8 +1767,8 @@ export const events: Event[] = [
     price: "Entry Fee: 100",
     image: "/images/21/eleven.jpg",
     featured: false,
-    startDate: "February 22, 2026",
-    endDate: "February 22, 2026",
+    startDate: "March 29, 2026",
+    endDate: "March 29, 2026",
     speakerIds: ["1", "2"],
     sponsors: ["FitLife Nutrition", "PowerGear"],
     sponsorIds: ["1", "2"],
@@ -1903,7 +1903,7 @@ export const events: Event[] = [
   <li><strong>Special Awards (Optional):</strong> Best Squat, Best Bench Press, Best Deadlift, Best Overall Technician, Best Rookie Lifter</li>
 </ul>
 `,
-    date: "February 22, 2026",
+    date: "March 29, 2026",
     time: "2",
     period: "PM",
     timeRange: "2:30 PM - 4:30 PM",
@@ -1911,8 +1911,8 @@ export const events: Event[] = [
     price: "Free Entry",
     image: "/images/21/deadlift.jpg",
     featured: true,
-    startDate: "February 22, 2026",
-    endDate: "February 22, 2026",
+    startDate: "March 29, 2026",
+    endDate: "March 29, 2026",
     speakerIds: ["2", "4"],
     sponsors: ["PowerGear", "ActiveWear"],
     sponsorIds: ["2", "3"],
@@ -2037,7 +2037,7 @@ export const events: Event[] = [
   <li>🥉 <strong>3rd Place</strong> – Medals + Certificate</li>
 </ul>
 `,
-    date: "February 22, 2026",
+    date: "March 29, 2026",
     time: "5",
     period: "PM",
     timeRange: "5:00 PM - 7:00 PM",
@@ -2045,8 +2045,8 @@ export const events: Event[] = [
     price: "Entry Fee: 100",
     image: "/images/21/seven.jpg",
     featured: true,
-    startDate: "February 22, 2026",
-    endDate: "February 22, 2026",
+    startDate: "March 29, 2026",
+    endDate: "March 29, 2026",
     speakerIds: ["1", "3"],
     sponsors: ["FitLife Nutrition", "PowerGear", "HealthTech"],
     sponsorIds: ["1", "2", "4"],
@@ -2092,7 +2092,7 @@ export const speakers: Speaker[] = [
     title: "Head Coach",
     bio: "John is a lead coach with 10+ years building functional athletes.",
     image: "/placeholder.svg?height=200&width=200",
-    day: "Feb 21",
+    day: "March 28",
     timing: "10:00 AM",
     mobileNumber: "123-456-7890",
     address: {
@@ -2114,7 +2114,7 @@ export const speakers: Speaker[] = [
     title: "Strength Coach",
     bio: "Jane specializes in strength sports and powerlifting coaching.",
     image: "/placeholder.svg?height=200&width=200",
-    day: "Feb 21",
+    day: "March 28",
     timing: "11:00 AM",
     mobileNumber: "456-789-0123",
     address: {
@@ -2136,7 +2136,7 @@ export const speakers: Speaker[] = [
     title: "Calisthenics Coach",
     bio: "Mike is a specialist in bodyweight strength and calisthenics progressions.",
     image: "/placeholder.svg?height=200&width=200",
-    day: "Feb 21",
+    day: "March 28",
     timing: "12:00 PM",
     mobileNumber: "789-012-3456",
     address: {
@@ -2158,7 +2158,7 @@ export const speakers: Speaker[] = [
     title: "Conditioning Specialist",
     bio: "Sara focuses on conditioning and athlete preparation for competitions.",
     image: "/placeholder.svg?height=200&width=200",
-    day: "Feb 22",
+    day: "March 29",
     timing: "10:30 AM",
     mobileNumber: "987-654-3210",
     address: {

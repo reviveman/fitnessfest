@@ -115,7 +115,7 @@ export default function VotePage() {
     <p className="mt-10 text-sm md:text-base tracking-widest text-gray-300 uppercase">
       Voting closes on{" "}
       <span className="font-bold text-[#EA4A3E] underline decoration-[#EA4A3E]/50">
-        Feb 21, 2026
+        March 28, 2026
       </span>
     </p>
 

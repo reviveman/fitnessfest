@@ -11,7 +11,7 @@ export async function POST(req: Request) {
 
     // Event details (you can pull these from env vars if needed)
     const EVENT_NAME = "Bengaluru Fitness Fest"
-    const EVENT_DATE = "February 21–22, 2026"
+    const EVENT_DATE = "March 28–29, 2026"
     const EVENT_WEBSITE = "https://bengalurufitnessfest.com"
     const EVENT_EMAIL = "info@bengalurufitnessfest.com"
 
