@@ -1,36 +1,48 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: Request) {
+/**
+ * PhonePe redirects USER BROWSER here using GET
+ * ❌ Do NOT verify payment here
+ * ✅ Webhook handles confirmation
+ */
+export async function GET(req: NextRequest) {
   try {
-    let body: any = {};
-    const contentType = req.headers.get("content-type") || "";
+    const searchParams = req.nextUrl.searchParams;
 
-    if (contentType.includes("application/json")) {
-      body = await req.json();
-    } else {
-      const formData = await req.formData();
-      body = Object.fromEntries(formData.entries());
+    const state = searchParams.get("state"); // COMPLETED | FAILED | etc
+    const merchantOrderId = searchParams.get("merchantOrderId");
+
+    console.log("🔁 PhonePe redirect (GET):", {
+      state,
+      merchantOrderId,
+    });
+
+    if (state === "FAILED") {
+      return NextResponse.redirect(
+        new URL("/thankyou?status=error", req.url)
+      );
     }
 
-    console.log("📥 PhonePe Redirect Callback:", body);
-
-    /**
-     * IMPORTANT:
-     * - Do NOT verify payment here
-     * - Just redirect user
-     * - Webhook will handle actual confirmation
-     */
-
+    // Default → processing
     return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/thankyou?status=processing`,
-      { status: 303 }
+      new URL("/thankyou?status=processing", req.url)
     );
   } catch (error) {
-    console.error("❌ PhonePe status error:", error);
-
+    console.error("❌ Status GET error:", error);
     return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/thankyou?status=error`,
-      { status: 303 }
+      new URL("/thankyou?status=error", req.url)
     );
   }
+}
+
+/**
+ * OPTIONAL:
+ * Some PhonePe setups may POST here
+ * Keep this for safety
+ */
+export async function POST(req: Request) {
+  return NextResponse.redirect(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/thankyou?status=processing`,
+    { status: 303 }
+  );
 }
