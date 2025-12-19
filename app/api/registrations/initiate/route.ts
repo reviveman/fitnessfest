@@ -2,31 +2,70 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 export async function POST(req: Request) {
-  const body = await req.json();
+  try {
+    const body = await req.json();
 
-  const merchantOrderId = "ORD_" + Date.now();
+    const {
+      fullName,
+      mobile,
+      email,
+      dob,
+      gender,
+      city,
+      emergencyContact,
+      eventTitle,
+      amount,
+    } = body;
 
-  await prisma.eventRegistration.create({
-    data: {
-      merchantOrderId, // ✅ now top-level
+    // ✅ BASIC VALIDATION
+    if (
+      !fullName ||
+      !mobile ||
+      !email ||
+      !eventTitle ||
+      !amount
+    ) {
+      return NextResponse.json(
+        { error: "Missing required fields" },
+        { status: 400 }
+      );
+    }
 
-      fullName: body.fullName,
-      mobile: body.mobile,
-      email: body.email,
-      dob: body.dob,
-      gender: body.gender,
-      city: body.city,
-      emergencyContact: body.emergencyContact,
-      events: [body.eventTitle],
-      declarationAccepted: true,
+    // ✅ UNIQUE ORDER ID (safe)
+    const merchantOrderId = `ORD_${Date.now()}_${Math.floor(
+      Math.random() * 1000
+    )}`;
 
-      paymentInfo: {
-        amount: body.amount,
-        status: "PENDING",
-        provider: "PHONEPE",
+    await prisma.eventRegistration.create({
+      data: {
+        merchantOrderId,
+
+        fullName,
+        mobile,
+        email,
+        dob,
+        gender,
+        city,
+        emergencyContact,
+        events: [eventTitle],
+        declarationAccepted: true,
+
+        paymentInfo: {
+          amount, // store ₹ amount
+          status: "PENDING",
+          provider: "PHONEPE",
+        },
       },
-    },
-  });
+    });
 
-  return NextResponse.json({ merchantOrderId });
+    return NextResponse.json({
+      merchantOrderId,
+    });
+  } catch (error) {
+    console.error("❌ Registration initiate error:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
 }
