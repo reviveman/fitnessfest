@@ -148,7 +148,8 @@ export default function EventDetailPage({ params }: Props) {
     
     if (title.includes("push-up") || title.includes("plank")) {
       return {
-        entryFee: "₹699",
+        // entryFee: "₹699",
+        entryFee: "₹1",
         prizes: [
           { position: "1st", amount: "₹15,000", items: "" },
           { position: "2nd", amount: "₹10,000", items: "" },
