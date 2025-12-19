@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
   try {
     const searchParams = req.nextUrl.searchParams;
 
-    const state = searchParams.get("state"); // COMPLETED | FAILED | etc
+    const state = searchParams.get("state");
     const merchantOrderId = searchParams.get("merchantOrderId");
 
     console.log("🔁 PhonePe redirect (GET):", {
@@ -17,15 +17,27 @@ export async function GET(req: NextRequest) {
       merchantOrderId,
     });
 
-    if (state === "FAILED") {
+    if (!merchantOrderId) {
       return NextResponse.redirect(
         new URL("/thankyou?status=error", req.url)
       );
     }
 
-    // Default → processing
+    if (state === "FAILED") {
+      return NextResponse.redirect(
+        new URL(
+          `/thankyou?status=failed&merchantOrderId=${merchantOrderId}`,
+          req.url
+        )
+      );
+    }
+
+    // Always go to processing
     return NextResponse.redirect(
-      new URL("/thankyou?status=processing", req.url)
+      new URL(
+        `/thankyou?status=processing&merchantOrderId=${merchantOrderId}`,
+        req.url
+      )
     );
   } catch (error) {
     console.error("❌ Status GET error:", error);
@@ -36,11 +48,9 @@ export async function GET(req: NextRequest) {
 }
 
 /**
- * OPTIONAL:
- * Some PhonePe setups may POST here
- * Keep this for safety
+ * OPTIONAL POST (safe fallback)
  */
-export async function POST(req: Request) {
+export async function POST() {
   return NextResponse.redirect(
     `${process.env.NEXT_PUBLIC_BASE_URL}/thankyou?status=processing`,
     { status: 303 }

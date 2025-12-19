@@ -1,20 +1,56 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+
+type Status = "processing" | "success" | "failed";
 
 export default function ThankYouClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const status = searchParams.get("status");
+
+  const merchantOrderId = searchParams.get("merchantOrderId");
+  const initialStatus = searchParams.get("status") as Status | null;
+
+  const [status, setStatus] = useState<Status>(
+    initialStatus || "processing"
+  );
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      router.push("/");
-    }, 5000);
+    if (!merchantOrderId) {
+      setStatus("failed");
+      return;
+    }
 
-    return () => clearTimeout(timer);
-  }, [router]);
+    if (status !== "processing") return;
+
+    const interval = setInterval(async () => {
+      try {
+        const res = await fetch(
+          `/api/registrations/status?merchantOrderId=${merchantOrderId}`
+        );
+        const data = await res.json();
+
+        if (data.status === "SUCCESS") {
+          setStatus("success");
+          clearInterval(interval);
+
+          setTimeout(() => router.push("/"), 5000);
+        }
+
+        if (data.status === "FAILED") {
+          setStatus("failed");
+          clearInterval(interval);
+
+          setTimeout(() => router.push("/"), 5000);
+        }
+      } catch (err) {
+        console.error("Status check failed", err);
+      }
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [merchantOrderId, status, router]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -30,23 +66,23 @@ export default function ThankYouClient() {
           </>
         )}
 
-        {status === "error" && (
+        {status === "success" && (
+          <>
+            <h1 className="text-2xl font-bold text-green-600 mb-2">
+              Thank You 🎉
+            </h1>
+            <p className="text-gray-600">
+              Payment successful! Your registration is confirmed.
+            </p>
+          </>
+        )}
+
+        {status === "failed" && (
           <>
             <h1 className="text-2xl font-bold text-red-600 mb-2">
               Payment Failed ❌
             </h1>
             <p>Please contact support.</p>
-          </>
-        )}
-
-        {!status && (
-          <>
-            <h1 className="text-2xl font-bold mb-2">
-              Thank You 🎉
-            </h1>
-            <p className="text-gray-600">
-              Your registration is complete.
-            </p>
           </>
         )}
 
