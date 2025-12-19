@@ -7,12 +7,14 @@ type Props = {
   open: boolean;
   onClose: () => void;
   baseAmount: number;
+  passTitle: string;
 };
 
 export default function UserDetailsModal({
   open,
   onClose,
   baseAmount,
+  passTitle,
 }: Props) {
   const [name, setName] = useState("");
   const [mobile, setMobile] = useState("");
@@ -20,44 +22,60 @@ export default function UserDetailsModal({
 
   if (!open) return null;
 
-  // ✅ GST logic ONLY here
   const GST_RATE = 0.18;
   const gstAmount = Math.round(baseAmount * GST_RATE);
   const totalAmount = baseAmount + gstAmount;
 
-  const handleSubmit = async () => {
+  const handlePay = async () => {
     if (!name || mobile.length !== 10) {
-      alert("Enter valid name and mobile number");
+      alert("Enter valid name and 10-digit mobile number");
       return;
     }
 
     setLoading(true);
 
     try {
-      const res = await fetch("/api/phonepe/pay", {
+      /**
+       * 1️⃣ SAVE TICKET REGISTRATION
+       */
+      const saveRes = await fetch("/api/tickets/initiate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          amount: totalAmount,       // ✅ FINAL AMOUNT
-          mobileNumber: mobile,
-          userName: name,
+          name,
+          mobile,
+          passTitle,
+          amount: totalAmount,
         }),
       });
 
-      const data = await res.json();
-      console.log("PhonePe response:", data);
+      const saveData = await saveRes.json();
+      if (!saveData?.merchantOrderId) {
+        throw new Error("Failed to create ticket order");
+      }
 
-      const redirectUrl = data?.redirectUrl;
+      /**
+       * 2️⃣ START PHONEPE PAYMENT
+       */
+      const payRes = await fetch("/api/phonepe/pay", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amount: totalAmount,
+          merchantOrderId: saveData.merchantOrderId,
+        }),
+      });
 
-      if (redirectUrl) {
-        window.location.href = redirectUrl;
+      const payData = await payRes.json();
+
+      if (payData?.redirectUrl) {
+        window.location.href = payData.redirectUrl;
       } else {
-        alert("Payment initiation failed");
+        throw new Error("Payment initiation failed");
       }
     } catch (err) {
-      console.error("Payment error:", err);
-      alert("Something went wrong");
-    } finally {
+      console.error(err);
+      alert("Something went wrong. Please try again.");
       setLoading(false);
     }
   };
@@ -70,6 +88,7 @@ export default function UserDetailsModal({
         <input
           placeholder="Full Name"
           className="w-full border rounded px-3 py-2"
+          value={name}
           onChange={(e) => setName(e.target.value)}
         />
 
@@ -77,10 +96,10 @@ export default function UserDetailsModal({
           placeholder="Mobile Number"
           maxLength={10}
           className="w-full border rounded px-3 py-2"
+          value={mobile}
           onChange={(e) => setMobile(e.target.value)}
         />
 
-        {/* 💰 PRICE BREAKUP */}
         <div className="bg-gray-50 p-4 rounded space-y-2 text-sm">
           <div className="flex justify-between">
             <span>Base Amount</span>
@@ -97,18 +116,14 @@ export default function UserDetailsModal({
         </div>
 
         <Button
-          onClick={handleSubmit}
+          onClick={handlePay}
           disabled={loading}
           className="w-full bg-[#EA4A3E] text-white"
         >
           {loading ? "Processing..." : `Pay ₹${totalAmount}`}
         </Button>
 
-        <Button
-          variant="outline"
-          onClick={onClose}
-          className="w-full"
-        >
+        <Button variant="outline" onClick={onClose} className="w-full">
           Cancel
         </Button>
       </div>

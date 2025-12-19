@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -27,7 +27,7 @@ interface EventFormValues {
 type Props = {
   closeForm: () => void;
   eventTitle: string;
-  entryFee: number;
+  entryFee: number; // numeric (0 for FREE)
 };
 
 /* ================= COMPONENT ================= */
@@ -37,11 +37,11 @@ export default function EventRegistrationForm({
   eventTitle,
   entryFee,
 }: Props) {
-  const [showPayment, setShowPayment] = useState(true);
   const [paymentStarted, setPaymentStarted] = useState(false);
 
   const gst = Math.round(entryFee * 0.18);
   const totalAmount = entryFee + gst;
+  const isFreeEvent = totalAmount === 0;
 
   /* ================= VALIDATION ================= */
 
@@ -56,8 +56,6 @@ export default function EventRegistrationForm({
     city: Yup.string().required("Required"),
     emergencyContact: Yup.string().required("Required"),
     events: Yup.array().min(1, "Event is required"),
-    idProof: Yup.mixed().required("ID Proof required"),
-    waiverForm: Yup.mixed().required("Waiver form required"),
     declarationAccepted: Yup.boolean().oneOf([true], "Required"),
   });
 
@@ -87,21 +85,17 @@ export default function EventRegistrationForm({
           gender: "",
           city: "",
           emergencyContact: "",
-          events: [eventTitle], // ✅ auto-selected event
+          events: [eventTitle], // ✅ auto-selected
           idProof: null,
           waiverForm: null,
           eligibilityVideo: null,
           declarationAccepted: false,
         }}
         validationSchema={validation}
-        onSubmit={() => {
-          alert("Please complete payment first");
-        }}
+        onSubmit={() => {}}
       >
         {({ values }) => (
-
           <Form className="px-8 py-6 space-y-8 max-h-[65vh] overflow-y-auto">
-
             {/* PERSONAL INFO */}
             <div>
               <h3 className="font-semibold mb-4">Personal Information</h3>
@@ -109,19 +103,31 @@ export default function EventRegistrationForm({
                 <div>
                   <label className={labelClass}>Full Name</label>
                   <Field name="fullName" className={inputClass} />
-                  <ErrorMessage name="fullName" component="div" className="text-red-500 text-sm" />
+                  <ErrorMessage
+                    name="fullName"
+                    component="div"
+                    className="text-red-500 text-sm"
+                  />
                 </div>
 
                 <div>
                   <label className={labelClass}>Mobile</label>
                   <Field name="mobile" className={inputClass} />
-                  <ErrorMessage name="mobile" component="div" className="text-red-500 text-sm" />
+                  <ErrorMessage
+                    name="mobile"
+                    component="div"
+                    className="text-red-500 text-sm"
+                  />
                 </div>
 
                 <div>
                   <label className={labelClass}>Email</label>
                   <Field name="email" className={inputClass} />
-                  <ErrorMessage name="email" component="div" className="text-red-500 text-sm" />
+                  <ErrorMessage
+                    name="email"
+                    component="div"
+                    className="text-red-500 text-sm"
+                  />
                 </div>
 
                 <div>
@@ -131,7 +137,7 @@ export default function EventRegistrationForm({
               </div>
             </div>
 
-            {/* SELECTED EVENT (LOCKED) */}
+            {/* SELECTED EVENT */}
             <div>
               <h3 className="font-semibold mb-4">Selected Event</h3>
               <div className="p-4 bg-gray-50 border rounded-lg">
@@ -155,88 +161,113 @@ export default function EventRegistrationForm({
               />
             </div>
 
-            {/* PAYMENT */}
-            {showPayment && (
-              <div className="bg-gray-50 p-6 rounded-lg border">
-                <h3 className="font-semibold mb-4">Payment Summary</h3>
+            {/* PAYMENT / SUBMIT */}
+            <div className="bg-gray-50 p-6 rounded-lg border">
+              {!isFreeEvent && (
+                <>
+                  <h3 className="font-semibold mb-4">Payment Summary</h3>
 
-                <div className="flex justify-between">
-                  <span>Base Amount</span>
-                  <span>₹{entryFee}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>GST (18%)</span>
-                  <span>₹{gst}</span>
-                </div>
-                <div className="flex justify-between font-bold text-lg mt-2">
-                  <span>Total</span>
-                  <span>₹{totalAmount}</span>
-                </div>
+                  <div className="flex justify-between">
+                    <span>Base Amount</span>
+                    <span>₹{entryFee}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>GST (18%)</span>
+                    <span>₹{gst}</span>
+                  </div>
+                  <div className="flex justify-between font-bold text-lg mt-2">
+                    <span>Total</span>
+                    <span>₹{totalAmount}</span>
+                  </div>
+                </>
+              )}
 
-                <Button
-                  type="button"
-                  disabled={paymentStarted}
-                 onClick={async () => {
-  setPaymentStarted(true);
+              <Button
+                type="button"
+                disabled={paymentStarted}
+                className="mt-4 w-full bg-[#EA4A3E] text-white py-3 rounded-lg"
+                onClick={async () => {
+                  setPaymentStarted(true);
 
-  try {
-    /**
-     * 1️⃣ SAVE REGISTRATION (PENDING)
-     */
-    const saveRes = await fetch("/api/registrations/initiate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        fullName: values.fullName,
-        mobile: values.mobile,
-        email: values.email,
-        dob: values.dob,
-        gender: values.gender,
-        city: values.city,
-        emergencyContact: values.emergencyContact,
-        eventTitle,
-        amount: totalAmount,
-      }),
-    });
+                  try {
+                    /**
+                     * 🆓 FREE EVENT
+                     */
+                    if (isFreeEvent) {
+                      const res = await fetch("/api/register-event", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                          fullName: values.fullName,
+                          mobile: values.mobile,
+                          email: values.email,
+                          dob: values.dob,
+                          gender: values.gender,
+                          city: values.city,
+                          emergencyContact: values.emergencyContact,
+                          events: [eventTitle],
+                          declarationAccepted: true,
+                        }),
+                      });
 
-    const saveData = await saveRes.json();
+                      if (!res.ok) throw new Error("Registration failed");
 
-    if (!saveData?.merchantOrderId) {
-      throw new Error("Failed to create registration");
-    }
+                      window.location.href = "/thankyou";
+                      return;
+                    }
 
-    /**
-     * 2️⃣ START PHONEPE PAYMENT
-     */
-    const payRes = await fetch("/api/phonepe/pay", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        amount: totalAmount,
-        merchantOrderId: saveData.merchantOrderId, // 🔑 CRITICAL
-      }),
-    });
+                    /**
+                     * 💰 PAID EVENT
+                     */
+                    const saveRes = await fetch(
+                      "/api/registrations/initiate",
+                      {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                          fullName: values.fullName,
+                          mobile: values.mobile,
+                          email: values.email,
+                          dob: values.dob,
+                          gender: values.gender,
+                          city: values.city,
+                          emergencyContact: values.emergencyContact,
+                          eventTitle,
+                          amount: totalAmount,
+                        }),
+                      }
+                    );
 
-    const payData = await payRes.json();
+                    const saveData = await saveRes.json();
+                    if (!saveData?.merchantOrderId)
+                      throw new Error("Failed to create registration");
 
-    if (payData?.redirectUrl) {
-      window.location.href = payData.redirectUrl;
-    } else {
-      throw new Error("Payment initiation failed");
-    }
-  } catch (err) {
-    console.error(err);
-    alert("Something went wrong. Please try again.");
-    setPaymentStarted(false);
-  }
-}}
+                    const payRes = await fetch("/api/phonepe/pay", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({
+                        amount: totalAmount,
+                        merchantOrderId: saveData.merchantOrderId,
+                      }),
+                    });
 
-                  className="mt-4 w-full bg-[#EA4A3E] text-white py-3 rounded-lg"
-                >
-                  Pay ₹{totalAmount} & Continue
-                </Button>
-              </div>
-            )}
+                    const payData = await payRes.json();
+                    if (!payData?.redirectUrl)
+                      throw new Error("Payment initiation failed");
+
+                    window.location.href = payData.redirectUrl;
+                  } catch (err) {
+                    console.error(err);
+                    alert("Something went wrong. Please try again.");
+                    setPaymentStarted(false);
+                  }
+                }}
+              >
+                {isFreeEvent
+                  ? "Register & Continue"
+                  : `Pay ₹${totalAmount} & Continue`}
+              </Button>
+            </div>
           </Form>
         )}
       </Formik>
