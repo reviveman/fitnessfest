@@ -99,7 +99,7 @@ export default function SareeRunForm({ open, setOpen }: Props) {
 
         <div className="p-6">
           <p className="text-sm text-gray-300 mb-4">
-            Bengaluru Fitness Festival 2026 — Run Date: 22 Feb 2026 • Reporting: 6:00 AM • Start: 6:30 AM • Venue: KTPO,
+            Bengaluru Fitness Festival 2026 — Run Date: 29 March 2026 • Reporting: 6:00 AM • Start: 6:30 AM • Venue: KTPO,
             Whitefield
           </p>
 

@@ -39,7 +39,7 @@ const faqs: FAQ[] = [
       },
       {
         q: "What are the event dates and timings?",
-        a: "The Bengaluru Fitness Festival 2026 is scheduled for 21–22 February 2026, from 10:00 AM – 7:00 PM on both days.",
+        a: "The Bengaluru Fitness Festival 2026 is scheduled for 28–29 March 2026, from 10:00 AM – 7:00 PM on both days.",
       },
       {
         q: "Is parking available at the venue?",

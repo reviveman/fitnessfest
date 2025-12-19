@@ -55,7 +55,7 @@ export default function TicketsPage() {
                     WHEN IS THE EVENT :
                   </span>
                   <span className="text-gray-600">(Saturday & Sunday)</span><br />
-                  <span className="text-gray-600">21 & 22 February 2026</span>
+                  <span className="text-gray-600">28 & 29 March 2026</span>
                 </div>
               </li>
 

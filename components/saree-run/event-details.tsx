@@ -7,7 +7,7 @@ export default function SareeEventDetails() {
     {
       icon: Calendar,
       title: "Date",
-      value: "22 February 2026",
+      value: "29 March 2026",
       image: "/placeholder.svg?key=event-date-calendar",
     },
     {

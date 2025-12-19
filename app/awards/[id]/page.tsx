@@ -167,7 +167,7 @@ export default async function AwardDetailPage({ params }: PageProps) {
                   <Separator />
                   <div className="flex justify-between">
                     <span className="text-gray-600">Awards Ceremony:</span>
-                    <span className="font-semibold">Feb 15, 2026</span>
+                    <span className="font-semibold">March 15, 2026</span>
                   </div>
                 </div>
               </CardContent>
