@@ -1,4 +1,6 @@
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function sendThankYouMail({
   to,
@@ -9,26 +11,21 @@ export async function sendThankYouMail({
   name: string;
   event: string;
 }) {
-  const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false,
-    auth: {
-      user: process.env.MAIL_USER,
-      pass: process.env.MAIL_PASS,
-    },
-  });
+  if (!process.env.RESEND_API_KEY) {
+    throw new Error("RESEND_API_KEY missing");
+  }
 
-  await transporter.sendMail({
-    from: `"Fitness Fest" <${process.env.MAIL_USER}>`,
+  await resend.emails.send({
+    from: `Fitness Fest <${process.env.MAIL_FROM}>`,
     to,
     subject: "Registration Confirmed – Fitness Fest 💪",
     html: `
       <h2>Hi ${name},</h2>
       <p>Your registration for <strong>${event}</strong> is confirmed.</p>
-      <p>Payment successful. We look forward to seeing you!</p>
+      <p><b>Payment successful.</b></p>
+      <p>We look forward to seeing you at Fitness Fest 💪</p>
       <br/>
-      <p>– Fitness Fest Team</p>
+      <p>— Fitness Fest Team</p>
     `,
   });
 }
