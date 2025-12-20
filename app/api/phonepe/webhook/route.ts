@@ -8,9 +8,13 @@ function unauthorized() {
 
 export async function POST(req: Request) {
   try {
+    /* ================== BASIC AUTH ================== */
     const authHeader = req.headers.get("authorization");
 
-    if (!authHeader?.startsWith("Basic ")) return unauthorized();
+    if (!authHeader?.startsWith("Basic ")) {
+      console.error("❌ Missing auth header");
+      return unauthorized();
+    }
 
     const decoded = Buffer.from(
       authHeader.split(" ")[1],
@@ -20,35 +24,50 @@ export async function POST(req: Request) {
     const [username, password] = decoded.split(":").map(v => v.trim());
 
     if (
-      username !== process.env.PHONEPE_WEBHOOK_USER ||
-      password !== process.env.PHONEPE_WEBHOOK_PASS
+      username.trim() !== process.env.PHONEPE_WEBHOOK_USER?.trim() ||
+      password.trim() !== process.env.PHONEPE_WEBHOOK_PASS?.trim()
     ) {
+      console.error("❌ Invalid webhook credentials", { username });
       return unauthorized();
     }
 
+    /* ================== BODY ================== */
     const body = await req.json();
     console.log("📩 PHONEPE WEBHOOK HIT:", body);
 
-    const { merchantOrderId, state, amount } = body;
+    /**
+     * PhonePe payload structure (IMPORTANT)
+     */
+    const payload = body?.payload || body;
+
+    const merchantOrderId = payload?.merchantOrderId;
+    const state = payload?.state;
+    const amount = payload?.amount;
 
     if (!merchantOrderId || !state) {
+      console.error("❌ Invalid webhook payload", payload);
       return NextResponse.json({ success: false }, { status: 400 });
     }
 
+    /* ================== DB ================== */
     const registration = await prisma.eventRegistration.findUnique({
       where: { merchantOrderId },
     });
 
     if (!registration) {
+      console.error("❌ Registration not found:", merchantOrderId);
       return NextResponse.json({ success: false }, { status: 404 });
     }
 
     const paymentInfo = (registration.paymentInfo as any) || {};
 
+    // 🔒 Idempotency
     if (paymentInfo.status === "SUCCESS") {
+      console.log("🔁 Duplicate webhook ignored");
       return NextResponse.json({ success: true });
     }
 
+    /* ================== SUCCESS ================== */
     if (state === "COMPLETED") {
       await prisma.eventRegistration.update({
         where: { merchantOrderId },
@@ -72,6 +91,7 @@ export async function POST(req: Request) {
       console.log("✅ Payment SUCCESS:", merchantOrderId);
     }
 
+    /* ================== FAILED ================== */
     if (state === "FAILED") {
       await prisma.eventRegistration.update({
         where: { merchantOrderId },
@@ -83,8 +103,13 @@ export async function POST(req: Request) {
           },
         },
       });
+
+      console.log("❌ Payment FAILED:", merchantOrderId);
     }
 
+    /**
+     * PhonePe REQUIRES 200 OK
+     */
     return NextResponse.json({ success: true });
   } catch (err) {
     console.error("❌ Webhook error:", err);
