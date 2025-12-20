@@ -19,8 +19,9 @@ export default function ThankYouClient() {
   useEffect(() => {
     if (status !== "processing") return;
 
-    const interval = setInterval(async () => {
-      // ❗ If merchantOrderId not yet available, keep waiting
+    let interval: NodeJS.Timeout;
+
+    interval = setInterval(async () => {
       if (!merchantOrderId) return;
 
       try {
@@ -32,13 +33,15 @@ export default function ThankYouClient() {
         if (data.status === "SUCCESS") {
           setStatus("success");
           clearInterval(interval);
-          setTimeout(() => router.push("/"), 5000);
+
+          setTimeout(() => router.push("/"), 8000);
         }
 
         if (data.status === "FAILED") {
           setStatus("failed");
           clearInterval(interval);
-          setTimeout(() => router.push("/"), 5000);
+
+          setTimeout(() => router.push("/"), 8000);
         }
       } catch (err) {
         console.error("Status check failed", err);
@@ -69,6 +72,9 @@ export default function ThankYouClient() {
             </h1>
             <p className="text-gray-600">
               Payment successful! Your registration is confirmed.
+            </p>
+            <p className="text-sm text-gray-500 mt-2">
+              A confirmation email has been sent.
             </p>
           </>
         )}
