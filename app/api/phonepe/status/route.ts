@@ -1,54 +1,42 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
- * PhonePe redirects USER BROWSER here using GET
- * ❌ Do NOT verify payment here
- * ✅ Webhook handles confirmation
+ * PhonePe redirect handler
+ * ❌ Never decide payment result here
+ * ✅ Always go to processing
  */
 export async function GET(req: NextRequest) {
   try {
     const searchParams = req.nextUrl.searchParams;
 
-    const state = searchParams.get("state");
-    const merchantOrderId = searchParams.get("merchantOrderId");
+    const merchantOrderId =
+      searchParams.get("merchantOrderId") ||
+      searchParams.get("merchantOrderId[]");
 
-    console.log("🔁 PhonePe redirect (GET):", {
-      state,
-      merchantOrderId,
-    });
+    console.log("🔁 PhonePe redirect params:", 
+      Object.fromEntries(searchParams.entries())
+    );
 
-    if (!merchantOrderId) {
-      return NextResponse.redirect(
-        new URL("/thankyou?status=error", req.url)
-      );
-    }
-
-    if (state === "FAILED") {
-      return NextResponse.redirect(
-        new URL(
-          `/thankyou?status=failed&merchantOrderId=${merchantOrderId}`,
-          req.url
-        )
-      );
-    }
-
-    // Always go to processing
     return NextResponse.redirect(
       new URL(
-        `/thankyou?status=processing&merchantOrderId=${merchantOrderId}`,
+        merchantOrderId
+          ? `/thankyou?status=processing&merchantOrderId=${merchantOrderId}`
+          : `/thankyou?status=processing`,
         req.url
       )
     );
   } catch (error) {
-    console.error("❌ Status GET error:", error);
+    console.error("❌ Redirect error:", error);
+
+    // Still go to processing
     return NextResponse.redirect(
-      new URL("/thankyou?status=error", req.url)
+      new URL("/thankyou?status=processing", req.url)
     );
   }
 }
 
 /**
- * OPTIONAL POST (safe fallback)
+ * Optional POST fallback
  */
 export async function POST() {
   return NextResponse.redirect(

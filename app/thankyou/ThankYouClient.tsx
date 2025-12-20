@@ -17,14 +17,12 @@ export default function ThankYouClient() {
   );
 
   useEffect(() => {
-    if (!merchantOrderId) {
-      setStatus("failed");
-      return;
-    }
-
     if (status !== "processing") return;
 
     const interval = setInterval(async () => {
+      // ❗ If merchantOrderId not yet available, keep waiting
+      if (!merchantOrderId) return;
+
       try {
         const res = await fetch(
           `/api/registrations/status?merchantOrderId=${merchantOrderId}`
@@ -34,14 +32,12 @@ export default function ThankYouClient() {
         if (data.status === "SUCCESS") {
           setStatus("success");
           clearInterval(interval);
-
           setTimeout(() => router.push("/"), 5000);
         }
 
         if (data.status === "FAILED") {
           setStatus("failed");
           clearInterval(interval);
-
           setTimeout(() => router.push("/"), 5000);
         }
       } catch (err) {
