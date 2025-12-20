@@ -1,27 +1,30 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic"; // 🚨 IMPORTANT
+
 export async function GET(req: NextRequest) {
   const merchantOrderId = req.nextUrl.searchParams.get("merchantOrderId");
 
   if (!merchantOrderId) {
-    return NextResponse.json({ status: "UNKNOWN" });
+    return NextResponse.json(
+      { status: "PENDING" },
+      { headers: { "Cache-Control": "no-store" } }
+    );
   }
 
   const registration = await prisma.eventRegistration.findUnique({
     where: { merchantOrderId },
   });
 
-  if (!registration || !registration.paymentInfo) {
-    return NextResponse.json({ status: "PENDING" });
-  }
+  const paymentInfo = registration?.paymentInfo as any;
 
-  // ✅ SAFE CAST
-  const paymentInfo = registration.paymentInfo as {
-    status?: "PENDING" | "SUCCESS" | "FAILED";
-  };
-
-  return NextResponse.json({
-    status: paymentInfo.status || "PENDING",
-  });
+  return NextResponse.json(
+    { status: paymentInfo?.status || "PENDING" },
+    {
+      headers: {
+        "Cache-Control": "no-store, no-cache, must-revalidate",
+      },
+    }
+  );
 }
