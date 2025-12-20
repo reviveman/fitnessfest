@@ -1,23 +1,18 @@
-
 import { NextResponse } from "next/server";
 import { getPhonePeAccessToken } from "@/lib/phonepeAuth";
 
 export async function POST(req: Request) {
-  const body = await req.json();
-  const { amount, merchantOrderId } = body;
+  const { amount, merchantOrderId } = await req.json();
 
   if (!merchantOrderId) {
-    return NextResponse.json(
-      { error: "merchantOrderId missing" },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "merchantOrderId missing" }, { status: 400 });
   }
 
   const token = await getPhonePeAccessToken();
 
   const payload = {
     merchantOrderId,
-    amount: amount * 100, // paise
+    amount: amount * 100,
     paymentFlow: {
       type: "PG_CHECKOUT",
       message: "Fitness Fest Registration",
@@ -40,8 +35,5 @@ export async function POST(req: Request) {
 
   return NextResponse.json({
     redirectUrl: data.redirectUrl,
-    orderId: data.orderId,
-    state: data.state,
   });
 }
-
