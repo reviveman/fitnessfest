@@ -19,7 +19,7 @@ export default function TicketStylePricing() {
   const passes: Pass[] = [
     {
       title: "1-Day Pass",
-      baseAmount: 699,
+      baseAmount: 1,
       price: "₹699",
       features: [
         "Full-day entry to Expo Zone",

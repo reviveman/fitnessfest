@@ -18,6 +18,7 @@ export default function UserDetailsModal({
 }: Props) {
   const [name, setName] = useState("");
   const [mobile, setMobile] = useState("");
+  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
   if (!open) return null;
@@ -27,8 +28,8 @@ export default function UserDetailsModal({
   const totalAmount = baseAmount + gstAmount;
 
   const handlePay = async () => {
-    if (!name || mobile.length !== 10) {
-      alert("Enter valid name and 10-digit mobile number");
+    if (!name || mobile.length !== 10 || !email) {
+      alert("Enter valid name, email, and 10-digit mobile number");
       return;
     }
 
@@ -44,6 +45,7 @@ export default function UserDetailsModal({
         body: JSON.stringify({
           name,
           mobile,
+          email,
           passTitle,
           amount: totalAmount,
         }),
@@ -90,6 +92,14 @@ export default function UserDetailsModal({
           className="w-full border rounded px-3 py-2"
           value={name}
           onChange={(e) => setName(e.target.value)}
+        />
+
+        <input
+          placeholder="Email Address"
+          type="email"
+          className="w-full border rounded px-3 py-2"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
 
         <input

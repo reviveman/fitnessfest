@@ -19,7 +19,7 @@ export async function POST(req: Request) {
       heardFrom,
     } = data;
 
-    // ✅ Save registration
+    // ✅ SAVE REGISTRATION
     await prisma.fiveKRunRegistration.create({
       data: {
         fullName,
@@ -35,9 +35,19 @@ export async function POST(req: Request) {
       },
     });
 
-    // ✅ Emails
-    await sendThankYouEmail(email, fullName);
-    await sendThankYouEmail(process.env.EMAIL_USER!, `5K Run: ${fullName}`);
+    // ✅ USER THANK YOU EMAIL
+    await sendThankYouEmail({
+      to: email,
+      name: fullName,
+      event: "5K Run Registration",
+    });
+
+    // ✅ ADMIN NOTIFICATION EMAIL
+    await sendThankYouEmail({
+      to: process.env.EMAIL_USER!, // admin email
+      name: fullName,
+      event: "New 5K Run Registration",
+    });
 
     return NextResponse.json({ success: true });
   } catch (err) {

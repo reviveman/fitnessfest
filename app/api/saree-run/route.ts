@@ -17,18 +17,17 @@ export async function POST(req: Request) {
       participatedBefore,
       heardFrom,
       heardFromOther,
-      waiver
+      waiver,
     } = data;
 
-    // ⭐ FIX -> Always convert heardFrom into an array
-    const heardFromArray =
-      Array.isArray(heardFrom)
-        ? heardFrom
-        : heardFrom
-        ? [heardFrom]
-        : [];
+    // ⭐ Always convert heardFrom into array
+    const heardFromArray = Array.isArray(heardFrom)
+      ? heardFrom
+      : heardFrom
+      ? [heardFrom]
+      : [];
 
-    const saved = await prisma.sareeRunRegistration.create({
+    await prisma.sareeRunRegistration.create({
       data: {
         fullName,
         age: Number(age),
@@ -38,19 +37,36 @@ export async function POST(req: Request) {
         city,
         emergencyContact,
         participatedBefore,
-        heardFrom: heardFromArray,   // ⭐ FIX APPLIED HERE
+        heardFrom: heardFromArray,
         heardFromOther: heardFromOther || "",
-        waiver: Boolean(waiver)
+        waiver: Boolean(waiver),
       },
     });
 
-    // Email Notification
-    await sendThankYouEmail(email, fullName);
-    await sendThankYouEmail(process.env.EMAIL_USER!, `Saree Run: ${fullName}`);
+    /**
+     * 📧 USER THANK YOU EMAIL
+     */
+    await sendThankYouEmail({
+      to: email,
+      name: fullName,
+      event: "Saree Run",
+    });
+
+    /**
+     * 📧 ADMIN NOTIFICATION EMAIL
+     */
+    await sendThankYouEmail({
+      to: process.env.EMAIL_USER!,
+      name: fullName,
+      event: "New Saree Run Registration",
+    });
 
     return NextResponse.json({ success: true });
   } catch (err) {
     console.error("❌ Saree Run Registration Error:", err);
-    return NextResponse.json({ success: false, error: err }, { status: 500 });
+    return NextResponse.json(
+      { success: false, error: "Internal server error" },
+      { status: 500 }
+    );
   }
 }
