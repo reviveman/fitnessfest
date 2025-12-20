@@ -1,4 +1,5 @@
 import { Resend } from "resend";
+import { ThankYouEmailHandler } from "@/components/emailHandlers/thankYouEmail";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -15,17 +16,14 @@ export async function sendThankYouMail({
     throw new Error("RESEND_API_KEY missing");
   }
 
+  if (!process.env.MAIL_FROM) {
+    throw new Error("MAIL_FROM missing");
+  }
+
   await resend.emails.send({
     from: `Fitness Fest <${process.env.MAIL_FROM}>`,
     to,
-    subject: "Registration Confirmed – Fitness Fest 💪",
-    html: `
-      <h2>Hi ${name},</h2>
-      <p>Your registration for <strong>${event}</strong> is confirmed.</p>
-      <p><b>Payment successful.</b></p>
-      <p>We look forward to seeing you at Fitness Fest 💪</p>
-      <br/>
-      <p>— Fitness Fest Team</p>
-    `,
+    subject: `Registration Confirmed – ${event} | Fitness Fest 💪`,
+    html: ThankYouEmailHandler({ name }),
   });
 }
