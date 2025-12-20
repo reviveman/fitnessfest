@@ -251,11 +251,18 @@ export default function EventRegistrationForm({
                       }),
                     });
 
-                    const payData = await payRes.json();
-                    if (!payData?.redirectUrl)
-                      throw new Error("Payment initiation failed");
+                  const payData = await payRes.json();
+if (!payData?.redirectUrl)
+  throw new Error("Payment initiation failed");
 
-                    window.location.href = payData.redirectUrl;
+/* 🔐 SAVE ORDER ID BEFORE REDIRECT */
+localStorage.setItem(
+  "merchantOrderId",
+  saveData.merchantOrderId
+);
+
+window.location.href = payData.redirectUrl;
+
                   } catch (err) {
                     console.error(err);
                     alert("Something went wrong. Please try again.");
