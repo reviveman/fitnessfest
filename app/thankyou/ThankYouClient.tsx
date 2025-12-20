@@ -9,24 +9,30 @@ export default function ThankYouClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const merchantOrderId = searchParams.get("merchantOrderId");
-  const initialStatus = searchParams.get("status") as Status | null;
+  const [merchantOrderId, setMerchantOrderId] = useState<string | null>(null);
+  const [status, setStatus] = useState<Status>("processing");
 
-  const [status, setStatus] = useState<Status>(
-    initialStatus || "processing"
-  );
-
+  // ✅ GET ORDER ID ON FIRST RENDER
   useEffect(() => {
-    if (status !== "processing") return;
+    const fromUrl = searchParams.get("merchantOrderId");
+    const fromStorage = localStorage.getItem("merchantOrderId");
+
+    const finalId = fromUrl || fromStorage;
+
+    console.log("🆔 Using merchantOrderId:", finalId);
+    setMerchantOrderId(finalId);
+  }, [searchParams]);
+
+  // ✅ START POLLING
+  useEffect(() => {
     if (!merchantOrderId) return;
+    if (status !== "processing") return;
 
-    let interval: NodeJS.Timeout;
-
-    interval = setInterval(async () => {
+    const interval = setInterval(async () => {
       try {
         const res = await fetch(
           `/api/registrations/status?merchantOrderId=${merchantOrderId}`,
-          { cache: "no-store" } // 🚨 THIS FIXES THE ISSUE
+          { cache: "no-store" }
         );
 
         const data = await res.json();
@@ -35,6 +41,7 @@ export default function ThankYouClient() {
         if (data.status === "SUCCESS") {
           setStatus("success");
           clearInterval(interval);
+          localStorage.removeItem("merchantOrderId");
 
           setTimeout(() => router.push("/"), 8000);
         }
@@ -42,11 +49,12 @@ export default function ThankYouClient() {
         if (data.status === "FAILED") {
           setStatus("failed");
           clearInterval(interval);
+          localStorage.removeItem("merchantOrderId");
 
           setTimeout(() => router.push("/"), 8000);
         }
-      } catch (err) {
-        console.error("Status check failed", err);
+      } catch (e) {
+        console.error("❌ Poll error", e);
       }
     }, 2000);
 
@@ -61,9 +69,7 @@ export default function ThankYouClient() {
             <h1 className="text-2xl font-bold mb-2">
               Payment Processing ⏳
             </h1>
-            <p className="text-gray-600">
-              Please wait while we confirm your payment.
-            </p>
+            <p>Please wait while we confirm your payment.</p>
           </>
         )}
 
@@ -72,12 +78,7 @@ export default function ThankYouClient() {
             <h1 className="text-2xl font-bold text-green-600 mb-2">
               Thank You 🎉
             </h1>
-            <p className="text-gray-600">
-              Payment successful! Your registration is confirmed.
-            </p>
-            <p className="text-sm text-gray-500 mt-2">
-              A confirmation email has been sent.
-            </p>
+            <p>Your registration is confirmed.</p>
           </>
         )}
 
@@ -89,10 +90,6 @@ export default function ThankYouClient() {
             <p>Please contact support.</p>
           </>
         )}
-
-        <p className="mt-4 text-sm text-gray-400">
-          Redirecting to home…
-        </p>
       </div>
     </div>
   );
