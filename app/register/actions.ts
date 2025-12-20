@@ -1,18 +1,16 @@
 "use server"
 
 import prisma from "@/lib/prisma"
-import { sendThankYouEmail } from "@/lib/nodemailer"  // <-- import nodemailer helper
+import { sendThankYouEmail } from "@/lib/nodemailer"
 
 export async function submitContactForm(formData: FormData) {
   try {
-    // Extract basic form data
     const name = formData.get("name") as string
     const email = formData.get("email") as string
     const phone = (formData.get("phone") as string) || null
     const message = formData.get("message") as string
     const type = formData.get("type") as string
 
-    // ❗ subject removed from validation
     if (!name || !email || !message) {
       return {
         success: false,
@@ -20,7 +18,6 @@ export async function submitContactForm(formData: FormData) {
       }
     }
 
-    // Create base submission data
     const submissionData: any = {
       name,
       email,
@@ -36,23 +33,27 @@ export async function submitContactForm(formData: FormData) {
         (formData.get("competitionInterest") as string) || null
       submissionData.experience =
         (formData.get("experience") as string) || null
-    } 
-    
-    else if (type === "sponsor") {
+    } else if (type === "sponsor") {
       submissionData.company = (formData.get("company") as string) || null
       submissionData.website = (formData.get("website") as string) || null
       submissionData.sponsorshipLevel =
         (formData.get("sponsorshipLevel") as string) || null
     }
 
-    // Save to DB
+    // 💾 Save to DB
     const result = await prisma.contactSubmission.create({
       data: submissionData,
     })
 
-    // Send thank-you email
+    /**
+     * 📧 THANK YOU EMAIL TO USER
+     */
     try {
-      await sendThankYouEmail(email, name)
+      await sendThankYouEmail({
+        to: email,
+        name,
+        event: "Contact Form Submission",
+      })
     } catch (emailErr) {
       console.error("❌ Failed to send email:", emailErr)
       return {

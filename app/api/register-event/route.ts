@@ -32,7 +32,6 @@ export async function POST(req: Request) {
 
     /**
      * ✅ REQUIRED by Prisma schema
-     * Used for both paid & free registrations
      */
     const merchantOrderId = "MANUAL_" + Date.now();
 
@@ -54,7 +53,7 @@ export async function POST(req: Request) {
     };
 
     /**
-     * ☁️ Upload files (Base64 → Cloudinary)
+     * ☁️ Upload files
      */
     const idProofUrl = await uploadToCloudinary(
       idProof,
@@ -72,12 +71,11 @@ export async function POST(req: Request) {
     );
 
     /**
-     * 💾 Store Registration in DB
+     * 💾 Save registration
      */
-    const registrant = await prisma.eventRegistration.create({
+    await prisma.eventRegistration.create({
       data: {
-        merchantOrderId, // ✅ REQUIRED FIELD
-
+        merchantOrderId,
         fullName,
         mobile,
         email,
@@ -101,14 +99,22 @@ export async function POST(req: Request) {
     });
 
     /**
-     * 📧 Send Email Notifications
+     * 📧 USER THANK YOU EMAIL
      */
-    await sendThankYouEmail(email, fullName);
+    await sendThankYouEmail({
+      to: email,
+      name: fullName,
+      event: events.join(", "),
+    });
 
-    await sendThankYouEmail(
-      process.env.EMAIL_USER!,
-      `${fullName} (New Registration)`
-    );
+    /**
+     * 📧 ADMIN NOTIFICATION EMAIL
+     */
+    await sendThankYouEmail({
+      to: process.env.EMAIL_USER!,
+      name: fullName,
+      event: `New Competition Registration – ${events.join(", ")}`,
+    });
 
     return NextResponse.json({
       success: true,

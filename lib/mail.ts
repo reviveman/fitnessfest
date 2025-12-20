@@ -12,18 +12,10 @@ export async function sendThankYouMail({
   name: string;
   event: string;
 }) {
-  if (!process.env.RESEND_API_KEY) {
-    throw new Error("RESEND_API_KEY missing");
-  }
-
-  if (!process.env.MAIL_FROM) {
-    throw new Error("MAIL_FROM missing");
-  }
-
   await resend.emails.send({
     from: `Fitness Fest <${process.env.MAIL_FROM}>`,
     to,
     subject: `Registration Confirmed – ${event} | Fitness Fest 💪`,
-    html: ThankYouEmailHandler({ name }),
+    html: ThankYouEmailHandler({ name, event }),
   });
 }

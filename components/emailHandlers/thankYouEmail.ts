@@ -4,14 +4,20 @@ const EVENT_WEBSITE =
   process.env.EVENT_WEBSITE || "https://www.fitnessfest.in/";
 const EVENT_EMAIL = process.env.EVENT_EMAIL || "info@fitnessfest.in";
 
-export const ThankYouEmailHandler = ({ name }: { name: string }) => {
+export const ThankYouEmailHandler = ({
+  name,
+  event,
+}: {
+  name: string;
+  event: string;
+}) => {
   return `
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thank You - ${EVENT_NAME}</title>
+  <title>Registration Confirmed - ${EVENT_NAME}</title>
 </head>
 
 <body style="margin:0;padding:0;background-color:#f5f5f5;font-family:'Segoe UI',Tahoma,Verdana,sans-serif;">
@@ -35,18 +41,22 @@ export const ThankYouEmailHandler = ({ name }: { name: string }) => {
           <!-- Content -->
           <tr>
             <td style="padding:40px 30px;text-align:center;color:#1e1e1e;">
-              <p><strong>Hey ${name?.split(" ")[0] || "there"},</strong></p>
+              <p><strong>Hey ${name.split(" ")[0]},</strong></p>
 
               <p>
-                Thank you for registering for
-                <strong style="color:#55BCC1;">${EVENT_NAME}</strong>
-                happening on
-                <strong style="color:#fdb714;">${EVENT_DATE}</strong>.
+                Your registration for  
+                <strong style="color:#EA4A3E;">${event}</strong>  
+                at <strong>${EVENT_NAME}</strong> is confirmed 🎉
               </p>
 
               <p>
-                Your payment was successful 🎉  
-                We’re excited to have you join us!
+                Event Date:  
+                <strong style="color:#fdb714;">${EVENT_DATE}</strong>
+              </p>
+
+              <p>
+                Payment was successful.  
+                We look forward to seeing you 💪
               </p>
 
               <div style="margin:30px 0;padding:20px;background:#fff6e0;border-left:4px solid #fdb714;border-radius:8px;">
@@ -54,7 +64,7 @@ export const ThankYouEmailHandler = ({ name }: { name: string }) => {
                 <a href="${EVENT_WEBSITE}" style="color:#00214d;font-weight:600;text-decoration:none;">
                   website
                 </a>
-                for updates and schedules.
+                for schedule & updates.
               </div>
             </td>
           </tr>
@@ -70,7 +80,7 @@ export const ThankYouEmailHandler = ({ name }: { name: string }) => {
               </p>
 
               <p style="font-size:14px;color:#666;">
-                Questions?
+                Queries:
                 <a href="mailto:${EVENT_EMAIL}" style="color:#EA4A3E;">
                   ${EVENT_EMAIL}
                 </a>

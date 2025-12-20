@@ -1,6 +1,9 @@
-import nodemailer from "nodemailer"
-import { ThankYouEmailHandler } from "@/components/emailHandlers/thankYouEmail"
+import nodemailer from "nodemailer";
+import { ThankYouEmailHandler } from "@/components/emailHandlers/thankYouEmail";
 
+/**
+ * 📮 SMTP TRANSPORT
+ */
 export const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 465,
@@ -9,33 +12,53 @@ export const transporter = nodemailer.createTransport({
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
-})
+});
 
-transporter.verify((error, success) => {
-  if (error) {
-    console.error("❌ SMTP Verification Failed:", error)
-  } else {
-    // console.log("✅ SMTP Server Ready")
+/**
+ * 🔍 Verify SMTP only in development
+ */
+if (process.env.NODE_ENV === "development") {
+  transporter.verify((error) => {
+    if (error) {
+      console.error("❌ SMTP Verification Failed:", error);
+    } else {
+      console.log("✅ SMTP Server Ready");
+    }
+  });
+}
+
+/**
+ * ✅ SEND THANK YOU EMAIL
+ */
+export async function sendThankYouEmail({
+  to,
+  name,
+  event,
+}: {
+  to: string;
+  name: string;
+  event: string;
+}) {
+  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    throw new Error("EMAIL credentials are missing in environment variables");
   }
-})
 
-export async function sendThankYouEmail(to: string, name: string) {
   try {
-    // console.log("📨 Sending email to:", to)
-
-    const htmlContent = ThankYouEmailHandler({ name })
+    const htmlContent = ThankYouEmailHandler({
+      name,
+      event,
+    });
 
     const info = await transporter.sendMail({
       from: `"Bengaluru Fitness Festival" <${process.env.EMAIL_USER}>`,
       to,
-      subject: "🎉 Thank You for Contacting Bengaluru Fitness Festival",
+      subject: `🎉 Registration Confirmed – ${event}`,
       html: htmlContent,
-    })
+    });
 
-    // console.log("✅ Email sent successfully:", info.messageId)
-    return info
+    return info;
   } catch (err) {
-    // console.error("❌ Error while sending email:", err)
-    throw err
+    console.error("❌ Error while sending email:", err);
+    throw err;
   }
 }
