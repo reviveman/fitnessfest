@@ -18,17 +18,19 @@ export default function ThankYouClient() {
 
   useEffect(() => {
     if (status !== "processing") return;
+    if (!merchantOrderId) return;
 
     let interval: NodeJS.Timeout;
 
     interval = setInterval(async () => {
-      if (!merchantOrderId) return;
-
       try {
         const res = await fetch(
-          `/api/registrations/status?merchantOrderId=${merchantOrderId}`
+          `/api/registrations/status?merchantOrderId=${merchantOrderId}`,
+          { cache: "no-store" } // 🚨 THIS FIXES THE ISSUE
         );
+
         const data = await res.json();
+        console.log("🔍 Payment status response:", data);
 
         if (data.status === "SUCCESS") {
           setStatus("success");
