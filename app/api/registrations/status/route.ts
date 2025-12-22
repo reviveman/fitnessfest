@@ -1,30 +1,66 @@
+// import { NextRequest, NextResponse } from "next/server";
+// import { prisma } from "@/lib/prisma";
+
+// export const dynamic = "force-dynamic"; // 🚨 IMPORTANT
+
+// export async function GET(req: NextRequest) {
+//   const merchantOrderId = req.nextUrl.searchParams.get("merchantOrderId");
+
+//   if (!merchantOrderId) {
+//     return NextResponse.json(
+//       { status: "PENDING" },
+//       { headers: { "Cache-Control": "no-store" } }
+//     );
+//   }
+
+//   const registration = await prisma.eventRegistration.findUnique({
+//     where: { merchantOrderId },
+//   });
+
+//   const paymentInfo = registration?.paymentInfo as any;
+
+//   return NextResponse.json(
+//     { status: paymentInfo?.status || "PENDING" },
+//     {
+//       headers: {
+//         "Cache-Control": "no-store, no-cache, must-revalidate",
+//       },
+//     }
+//   );
+// }
+
+
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-export const dynamic = "force-dynamic"; // 🚨 IMPORTANT
+export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest) {
   const merchantOrderId = req.nextUrl.searchParams.get("merchantOrderId");
 
   if (!merchantOrderId) {
-    return NextResponse.json(
-      { status: "PENDING" },
-      { headers: { "Cache-Control": "no-store" } }
-    );
+    return NextResponse.json({ status: "PENDING" });
   }
 
-  const registration = await prisma.eventRegistration.findUnique({
+  // 🎟️ CHECK TICKETS
+  const ticket = await prisma.ticketRegistration.findUnique({
     where: { merchantOrderId },
   });
 
-  const paymentInfo = registration?.paymentInfo as any;
+  if (ticket) {
+    return NextResponse.json({
+      status: ticket.paymentStatus || "PENDING",
+    });
+  }
 
-  return NextResponse.json(
-    { status: paymentInfo?.status || "PENDING" },
-    {
-      headers: {
-        "Cache-Control": "no-store, no-cache, must-revalidate",
-      },
-    }
-  );
+  // 🏆 CHECK EVENTS
+  const event = await prisma.eventRegistration.findUnique({
+    where: { merchantOrderId },
+  });
+
+  const paymentInfo = event?.paymentInfo as any;
+
+  return NextResponse.json({
+    status: paymentInfo?.status || "PENDING",
+  });
 }
