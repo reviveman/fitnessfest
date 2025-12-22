@@ -44,7 +44,7 @@ export default function FiveKRunForm({ open, setOpen }: any) {
   const handleSubmit = async (values: FormValues, { setSubmitting }: any) => {
     try {
       // 1️⃣ Save registration
-      const saveRes = await fetch("/api/5k-run/initiate", {
+      const saveRes = await fetch("/api/fivek-run/initiate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
