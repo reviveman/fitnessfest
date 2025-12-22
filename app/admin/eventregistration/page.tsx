@@ -34,7 +34,7 @@ export default async function EventRegistrationsPage() {
         {/* HEADER */}
         <div className="mb-6">
           <h1 className="text-2xl font-bold">
-            Competition Registrations
+            Competition Registrations 
           </h1>
           <p className="text-sm text-gray-500">
             Total registrations: {registrations.length}
