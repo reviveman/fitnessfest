@@ -40,7 +40,7 @@ export default function AwardsPage() {
               </button>
             </Link>
 
-            <Link href="/awards/vote">
+            <Link href="/awards">
               <button className="px-8 py-3 rounded-full border-2 border-white text-white hover:bg-white hover:text-black font-semibold transition-all shadow-xl">
                 Vote Now
               </button>
