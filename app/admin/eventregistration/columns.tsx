@@ -13,8 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 /**
- * ✅ Match Prisma return shape exactly
- * paymentInfo can be Json | null
+ * ✅ Row type used everywhere (columns + table + page)
  */
 export type EventRegistration = {
   id: string
@@ -27,7 +26,7 @@ export type EventRegistration = {
   createdAt: Date
 }
 
-export const columns: ColumnDef<EventRegistration>[] = [
+export const columns: ColumnDef<EventRegistration, unknown>[] = [
   {
     accessorKey: "fullName",
     header: "Name",
@@ -53,9 +52,7 @@ export const columns: ColumnDef<EventRegistration>[] = [
     header: "Payment",
     cell: ({ row }) => {
       const payment = row.original.paymentInfo as
-        | {
-            status?: string
-          }
+        | { status?: string }
         | null
 
       const status = payment?.status ?? "PENDING"
@@ -79,9 +76,7 @@ export const columns: ColumnDef<EventRegistration>[] = [
     header: "Amount (₹)",
     cell: ({ row }) => {
       const payment = row.original.paymentInfo as
-        | {
-            paidAmount?: number
-          }
+        | { paidAmount?: number }
         | null
 
       return payment?.paidAmount ?? "—"

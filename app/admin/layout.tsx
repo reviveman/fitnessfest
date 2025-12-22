@@ -32,38 +32,15 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                 Nominations
               </Link>
             </li>
-            <li>
-              <Link
-                href="/admin/users"
-                className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-800"
-              >
-                Users
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/admin/settings"
-                className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-800"
-              >
-                Settings
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/admin/contacts"
-                className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-800"
-              >
-                Contacts
-              </Link>
-            </li>
-            <li>
+   
+            {/* <li>
               <Link
                 href="/admin/registrations"
                 className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-800"
               >
                 Registrations
               </Link>
-            </li>
+            </li> */}
 
               <li>
               <Link
@@ -94,10 +71,10 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
                 <li>
               <Link
-                href="/admin/registrations"
+                href="/admin/newsletter"
                 className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-800"
               >
-                 Subscribe
+                 Subscribe 
               </Link>
             </li>
          
@@ -107,6 +84,33 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                 className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-800"
               >
                 Votes
+              </Link>
+            </li>
+
+                     <li>
+              <Link
+                href="/admin/users"
+                className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-800"
+              >
+                Users
+              </Link>
+            </li>
+        
+            <li>
+              <Link
+                href="/admin/contacts"
+                className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-800"
+              >
+                Contacts
+              </Link>
+            </li>
+
+                <li>
+              <Link
+                href="/admin/settings"
+                className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-800"
+              >
+                Settings
               </Link>
             </li>
           </ul>

@@ -35,13 +35,13 @@ export default async function UsersPage() {
     return (
       <div className="space-y-6">
         <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-bold">Users</h1>
-          <Button>Add User</Button>
+          <h1 className="text-3xl font-bold">Judges</h1>
+          <Button>Add Judge</Button>
         </div>
 
         <Card>
           <CardHeader>
-            <CardTitle>All Users</CardTitle>
+            <CardTitle>All Judges</CardTitle>
             <CardDescription>Showing {users.length} users in the system</CardDescription>
           </CardHeader>
           <CardContent>
