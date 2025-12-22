@@ -48,19 +48,46 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                 Contacts
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 href="/admin/registrations"
                 className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-800"
               >
-                Registrations
+                 Registrations
+              </Link>
+            </li>
+
+                <li>
+              <Link
+                href="/admin/registrations"
+                className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-800"
+              >
+                 Tickets
+              </Link>
+            </li>
+
+                <li>
+              <Link
+                href="/admin/registrations"
+                className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-800"
+              >
+                 5K Registrations
+              </Link>
+            </li>
+
+                <li>
+              <Link
+                href="/admin/registrations"
+                className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-800"
+              >
+                 Subscribe
               </Link>
             </li>
             <li>
               <Link href="/admin/votes" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-800">
                 Votes
               </Link>
-            </li>
+            </li> */}
           </ul>
         </nav>
       </div>
