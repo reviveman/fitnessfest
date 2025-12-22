@@ -19,9 +19,14 @@ export async function POST(req: Request) {
       heardFrom,
     } = data;
 
+    // ✅ REQUIRED: Generate merchantOrderId
+    const merchantOrderId = `RUN5K_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
+
     // ✅ SAVE REGISTRATION
     await prisma.fiveKRunRegistration.create({
       data: {
+        merchantOrderId, // 🔥 REQUIRED FIELD
+
         fullName,
         age: Number(age),
         gender,
@@ -32,6 +37,8 @@ export async function POST(req: Request) {
         tshirt,
         participatedBefore,
         heardFrom,
+
+        paymentStatus: "PENDING",
       },
     });
 
@@ -39,17 +46,22 @@ export async function POST(req: Request) {
     await sendThankYouEmail({
       to: email,
       name: fullName,
-      event: "5K Run Registration",
+      event: "5K Run – Timed Race",
     });
 
     // ✅ ADMIN NOTIFICATION EMAIL
     await sendThankYouEmail({
-      to: process.env.EMAIL_USER!, // admin email
+      to: process.env.EMAIL_USER!,
       name: fullName,
       event: "New 5K Run Registration",
     });
 
-    return NextResponse.json({ success: true });
+    // ✅ IMPORTANT: return merchantOrderId
+    return NextResponse.json({
+      success: true,
+      merchantOrderId,
+    });
+
   } catch (err) {
     console.error("❌ 5K Run Registration Error:", err);
     return NextResponse.json({ success: false }, { status: 500 });
