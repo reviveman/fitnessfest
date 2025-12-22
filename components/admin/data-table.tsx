@@ -127,52 +127,59 @@ export function DataTable<TData, TValue>({
 
 
   // Function to export data to Excel
-  const exportToExcel = () => {
-    try {
-      // Get the current filtered and sorted data
-      const exportData = table.getRowModel().rows.map((row) => {
-        const rowData: Record<string, any> = {}
+const exportToExcel = () => {
+  try {
+    // ✅ Always export from filteredData
+    const exportData = filteredData.map((row: any) => {
+      const rowData: Record<string, any> = {}
 
-        // Extract values from each cell
-        columns.forEach((column) => {
-          // Skip columns without an ID or with ID 'actions'
-          const columnId = String(column.id || "")
-          if (!columnId || columnId === "actions") {
-            return
-          }
+      columns.forEach((column) => {
+        // 🔐 Safely resolve column key
+        const columnId =
+          typeof column.id === "string"
+            ? column.id
+            : "accessorKey" in column
+            ? String(column.accessorKey)
+            : ""
 
-          try {
-            // Safely get the value for this cell
-            const value = row.getValue(columnId)
+        // Skip invalid or action columns
+        if (!columnId || columnId === "actions") return
 
-            // Format dates if needed
-            if (columnId === "createdAt" || columnId === "updatedAt") {
-              rowData[columnId] = value ? format(new Date(value as string), "PPP") : ""
-            } else {
-              rowData[columnId] = value
-            }
-          } catch (error) {
-            // If there's an error getting the value, use an empty string
-            rowData[columnId] = ""
-          }
-        })
+        const value = row[columnId]
 
-        return rowData
+        // 📅 Format dates
+        if (columnId === "createdAt" || columnId === "updatedAt") {
+          rowData[columnId] = value
+            ? format(new Date(value), "PPP")
+            : ""
+        }
+        // 🔁 Join arrays (events, heardFrom, etc.)
+        else if (Array.isArray(value)) {
+          rowData[columnId] = value.join(", ")
+        }
+        // 🧾 Normal values
+        else {
+          rowData[columnId] = value ?? ""
+        }
       })
 
-      // Create worksheet
-      const worksheet = XLSX.utils.json_to_sheet(exportData)
+      return rowData
+    })
 
-      // Create workbook
-      const workbook = XLSX.utils.book_new()
-      XLSX.utils.book_append_sheet(workbook, worksheet, "Data")
+    // Create worksheet
+    const worksheet = XLSX.utils.json_to_sheet(exportData)
 
-      // Generate Excel file and trigger download
-      XLSX.writeFile(workbook, `${exportFileName}.xlsx`)
-    } catch (error) {
-      console.error("Error exporting data:", error)
-    }
+    // Create workbook
+    const workbook = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Data")
+
+    // Download Excel file
+    XLSX.writeFile(workbook, `${exportFileName}.xlsx`)
+  } catch (error) {
+    console.error("Error exporting data:", error)
   }
+}
+
 
   return (
     <div>
