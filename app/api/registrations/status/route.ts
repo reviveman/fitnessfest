@@ -1,35 +1,3 @@
-// import { NextRequest, NextResponse } from "next/server";
-// import { prisma } from "@/lib/prisma";
-
-// export const dynamic = "force-dynamic"; // 🚨 IMPORTANT
-
-// export async function GET(req: NextRequest) {
-//   const merchantOrderId = req.nextUrl.searchParams.get("merchantOrderId");
-
-//   if (!merchantOrderId) {
-//     return NextResponse.json(
-//       { status: "PENDING" },
-//       { headers: { "Cache-Control": "no-store" } }
-//     );
-//   }
-
-//   const registration = await prisma.eventRegistration.findUnique({
-//     where: { merchantOrderId },
-//   });
-
-//   const paymentInfo = registration?.paymentInfo as any;
-
-//   return NextResponse.json(
-//     { status: paymentInfo?.status || "PENDING" },
-//     {
-//       headers: {
-//         "Cache-Control": "no-store, no-cache, must-revalidate",
-//       },
-//     }
-//   );
-// }
-
-
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
@@ -42,7 +10,22 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ status: "PENDING" });
   }
 
-  // 🎟️ CHECK TICKETS
+  /* =====================================================
+     🏃‍♂️ CHECK 5K RUN FIRST
+  ===================================================== */
+  const fivek = await prisma.fiveKRunRegistration.findUnique({
+    where: { merchantOrderId },
+  });
+
+  if (fivek) {
+    return NextResponse.json({
+      status: fivek.paymentStatus || "PENDING",
+    });
+  }
+
+  /* =====================================================
+     🎟️ CHECK TICKETS
+  ===================================================== */
   const ticket = await prisma.ticketRegistration.findUnique({
     where: { merchantOrderId },
   });
@@ -53,7 +36,9 @@ export async function GET(req: NextRequest) {
     });
   }
 
-  // 🏆 CHECK EVENTS
+  /* =====================================================
+     🏆 CHECK EVENTS
+  ===================================================== */
   const event = await prisma.eventRegistration.findUnique({
     where: { merchantOrderId },
   });
