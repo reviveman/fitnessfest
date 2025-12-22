@@ -65,7 +65,16 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                 href="/admin/fivekregistration"
                 className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-800"
               >
-                 5K Registrations
+                 5K Run
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                href="/admin/sareeru"
+                className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-800"
+              >
+                 Saree Run
               </Link>
             </li>
 
