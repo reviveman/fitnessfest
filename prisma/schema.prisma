@@ -226,3 +226,11 @@ model TicketRegistration {
 
   @@map("ticket_registrations")
 }
+
+model NewsLetter {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String   @unique
+  createdAt DateTime @default(now())
+}
+
+

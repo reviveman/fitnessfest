@@ -88,28 +88,43 @@ export function DataTable<TData, TValue>({
   })
 
   // Apply custom filters (type and date)
-  useEffect(() => {
-    let result = [...data]
+ useEffect(() => {
+  let result = [...data]
 
-    // Apply type/category filter
-    if (typeFilter !== "all" && filterConfig) {
-      result = result.filter((item: any) => item[filterConfig.key] === typeFilter)
-    }
+  // Apply type/category filter (ARRAY + STRING SAFE)
+  if (typeFilter !== "all" && filterConfig) {
+    result = result.filter((item: any) => {
+      const value = item[filterConfig.key]
 
-    // Apply date filter
-    if (dateFilter) {
-      const filterDate = new Date(dateFilter)
-      filterDate.setHours(0, 0, 0, 0)
+      // ✅ If value is an array (events)
+      if (Array.isArray(value)) {
+        return value.includes(typeFilter)
+      }
 
-      result = result.filter((item: any) => {
-        const itemDate = new Date(item.createdAt)
-        itemDate.setHours(0, 0, 0, 0)
-        return itemDate.getTime() === filterDate.getTime()
-      })
-    }
+      // ✅ If value is a string
+      if (typeof value === "string") {
+        return value === typeFilter
+      }
 
-    setFilteredData(result)
-  }, [data, typeFilter, dateFilter, filterConfig])
+      return false
+    })
+  }
+
+  // Apply date filter
+  if (dateFilter) {
+    const filterDate = new Date(dateFilter)
+    filterDate.setHours(0, 0, 0, 0)
+
+    result = result.filter((item: any) => {
+      const itemDate = new Date(item.createdAt)
+      itemDate.setHours(0, 0, 0, 0)
+      return itemDate.getTime() === filterDate.getTime()
+    })
+  }
+
+  setFilteredData(result)
+}, [data, typeFilter, dateFilter, filterConfig])
+
 
   // Function to export data to Excel
   const exportToExcel = () => {
