@@ -27,60 +27,64 @@ export default function UserDetailsModal({
   const gstAmount = Math.round(baseAmount * GST_RATE);
   const totalAmount = baseAmount + gstAmount;
 
-  const handlePay = async () => {
-    if (!name || mobile.length !== 10 || !email) {
-      alert("Enter valid name, email, and 10-digit mobile number");
-      return;
+const handlePay = async () => {
+  if (!name || mobile.length !== 10 || !email) {
+    alert("Enter valid name, email, and 10-digit mobile number");
+    return;
+  }
+
+  setLoading(true);
+
+  try {
+    /**
+     * 1️⃣ SAVE TICKET REGISTRATION
+     */
+    const saveRes = await fetch("/api/tickets/initiate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name,
+        mobile,
+        email,
+        passTitle,
+        amount: totalAmount,
+      }),
+    });
+
+    const saveData = await saveRes.json();
+    if (!saveData?.merchantOrderId) {
+      throw new Error("Failed to create ticket order");
     }
 
-    setLoading(true);
+    // ✅ 🔥 THIS IS THE FIX
+    localStorage.setItem("merchantOrderId", saveData.merchantOrderId);
 
-    try {
-      /**
-       * 1️⃣ SAVE TICKET REGISTRATION
-       */
-      const saveRes = await fetch("/api/tickets/initiate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          mobile,
-          email,
-          passTitle,
-          amount: totalAmount,
-        }),
-      });
+    /**
+     * 2️⃣ START PHONEPE PAYMENT
+     */
+    const payRes = await fetch("/api/phonepe/pay", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        amount: totalAmount,
+        merchantOrderId: saveData.merchantOrderId,
+      }),
+    });
 
-      const saveData = await saveRes.json();
-      if (!saveData?.merchantOrderId) {
-        throw new Error("Failed to create ticket order");
-      }
+    const payData = await payRes.json();
 
-      /**
-       * 2️⃣ START PHONEPE PAYMENT
-       */
-      const payRes = await fetch("/api/phonepe/pay", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          amount: totalAmount,
-          merchantOrderId: saveData.merchantOrderId,
-        }),
-      });
-
-      const payData = await payRes.json();
-
-      if (payData?.redirectUrl) {
-        window.location.href = payData.redirectUrl;
-      } else {
-        throw new Error("Payment initiation failed");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Something went wrong. Please try again.");
-      setLoading(false);
+    if (payData?.redirectUrl) {
+      window.location.href = payData.redirectUrl;
+    } else {
+      throw new Error("Payment initiation failed");
     }
-  };
+  } catch (err) {
+    console.error(err);
+    alert("Something went wrong. Please try again.");
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
