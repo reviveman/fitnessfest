@@ -64,6 +64,43 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                 Registrations
               </Link>
             </li>
+
+              <li>
+              <Link
+                href="/admin/eventregistration"
+                className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-800"
+              >
+                Competition Registrations
+              </Link>
+            </li>
+
+                <li>
+              <Link
+                href="/admin/ticketregistration"
+                className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-800"
+              >
+                 Tickets
+              </Link>
+            </li>
+
+                <li>
+              <Link
+                href="/admin/fivekregistration"
+                className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-800"
+              >
+                 5K Registrations
+              </Link>
+            </li>
+
+                <li>
+              <Link
+                href="/admin/registrations"
+                className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-800"
+              >
+                 Subscribe
+              </Link>
+            </li>
+         
             <li>
               <Link
                 href="/admin/votes"
