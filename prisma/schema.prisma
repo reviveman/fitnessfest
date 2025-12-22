@@ -156,24 +156,32 @@ model EventRegistration {
 
 
 model FiveKRunRegistration {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
 
-  fullName  String
-  age       Int
-  gender    String
-  phone     String
-  email     String
-  city      String?
-  emergency String
-  tshirt    String
+  merchantOrderId String   @unique   // ✅ REQUIRED FOR PAYMENTS
+
+  fullName        String
+  age             Int
+  gender          String
+  phone           String
+  email           String
+  city            String?
+  emergency       String
+  tshirt          String
   participatedBefore String
-  heardFrom String[]
+  heardFrom       String[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  paymentStatus   String   @default("PENDING")
+  paidAmount      Int?
+  paidAt          DateTime?
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
   @@map("fivek_run_registrations")
 }
+
+
 
 
 model SareeRunRegistration {
