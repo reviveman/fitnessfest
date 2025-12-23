@@ -71,7 +71,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
             <li>
               <Link
-                href="/admin/sareeru"
+                href="/admin/sareerun"
                 className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-800"
               >
                  Saree Run
