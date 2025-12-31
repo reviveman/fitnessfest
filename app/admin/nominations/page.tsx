@@ -76,4 +76,4 @@ export default async function NominationsPage() {
       </div>
     )
   }
-}
+} 
