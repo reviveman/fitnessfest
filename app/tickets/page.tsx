@@ -199,20 +199,4 @@ export default function TicketsPage() {
 }
 
 
-// "use client";
 
-// import Pricing from "@/components/pricing";
-
-// export default function TicketsPage() {
-//   return (
-//     <div className="min-h-screen bg-gray-50">
-//       {/* hero + event details */}
-
-//       <section className="py-20 bg-gradient-to-br from-red-50 via-white to-red-50">
-//         <div className="container mx-auto px-4">
-//           <Pricing />
-//         </div>
-//       </section>
-//     </div>
-//   );
-// }
