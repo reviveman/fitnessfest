@@ -1,171 +1,186 @@
-type EmailPayload = {
+const EVENT_NAME = process.env.EVENT_NAME || "Bengaluru Fitness Festival";
+const EVENT_DATE = process.env.EVENT_DATE || "March 28–29, 2026";
+const EVENT_VENUE =
+  process.env.EVENT_VENUE ||
+  "KTPO, Whitefield, Bengaluru, Karnataka 560066";
+const EVENT_WEBSITE =
+  process.env.EVENT_WEBSITE || "https://www.fitnessfest.in/";
+const EVENT_EMAIL = process.env.EVENT_EMAIL || "info@fitnessfest.in";
+
+type TemplateProps = {
   name: string;
-  registrationId: string;
+  registrationId?: string;
   tshirtSize?: string;
-  category?: string;
 };
 
 export function getEventEmailTemplate(
-  eventTitle: string,
-  data: EmailPayload
+  event: string,
+  props: TemplateProps
 ) {
-  const title = eventTitle.toLowerCase();
+  const firstName = props.name.split(" ")[0];
 
-  if (title.includes("5k")) return fiveKRunEmail(data);
-  if (title.includes("saree")) return sareeRunEmail(data);
-  if (title.includes("strength endurance")) return strengthEnduranceEmail(data);
-  if (title.includes("functional fitness")) return functionalFitnessEmail(data);
-  if (title.includes("deadlift")) return deadliftEmail(data);
-  if (title.includes("push-up") || title.includes("plank"))
-    return pushupPlankEmail(data);
-  if (title.includes("calisthenics")) return calisthenicsEmail(data);
-  if (title.includes("powerlifting")) return powerliftingEmail(data);
-  if (title.includes("battle of gyms")) return battleOfGymsEmail(data);
+  const content = getEventSpecificContent(event, props);
 
-  return genericEventEmail(data);
-}
-
-/* ================= EMAIL TEMPLATES ================= */
-
-function fiveKRunEmail({ name, registrationId, tshirtSize }: EmailPayload) {
   return `
-Dear ${name},
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>${event} Confirmation</title>
+</head>
 
-Thank you for registering for the Bengaluru Fitness Festival – 5K Run! 🏃‍♂️🏃‍♀️
+<body style="margin:0;padding:0;background:#f5f5f5;font-family:Segoe UI,Tahoma,Verdana,sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0" style="padding:30px 0;">
+<tr>
+<td align="center">
 
-🧾 Registration ID: ${registrationId}
-🎽 T-Shirt Size: ${tshirtSize || "NA"}
+<table width="600" cellpadding="0" cellspacing="0"
+style="background:#ffffff;border-radius:14px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,0.1);">
 
-Date: 28–29 March 2026
-Venue: KTPO, Whitefield, Bengaluru
+<!-- Banner -->
+<tr>
+<td>
+<img src="https://res.cloudinary.com/dlkuk7rok/image/upload/v1758083354/fitness_banner_gax5tv.jpg"
+alt="Bengaluru Fitness Festival"
+style="width:100%;display:block;" />
+</td>
+</tr>
 
-We look forward to seeing you at the starting line!
+<!-- Body -->
+<tr>
+<td style="padding:40px 32px;color:#1e1e1e;">
+<p style="font-size:16px;"><strong>Dear ${firstName},</strong></p>
 
-Team Bengaluru Fitness Festival
-This is an auto-generated email.
+${content}
+
+<div style="margin-top:30px;padding:18px;background:#fff6e0;border-left:5px solid #fdb714;border-radius:8px;">
+Visit our <a href="${EVENT_WEBSITE}" style="font-weight:600;color:#00214d;text-decoration:none;">
+official website</a> for schedules, updates & announcements.
+</div>
+</td>
+</tr>
+
+<!-- Footer -->
+<tr>
+<td style="background:#f7f7f7;padding:28px;text-align:center;">
+<p style="font-weight:700;color:#EA4A3E;">${EVENT_NAME}</p>
+<p>
+<a href="${EVENT_WEBSITE}" style="color:#fdb714;text-decoration:none;">
+${EVENT_WEBSITE}
+</a>
+</p>
+<p style="font-size:14px;color:#666;">
+Support:
+<a href="mailto:${EVENT_EMAIL}" style="color:#EA4A3E;">
+${EVENT_EMAIL}
+</a>
+</p>
+</td>
+</tr>
+
+<tr>
+<td style="background:#EA4A3E;color:#fff;padding:18px;text-align:center;font-size:12px;">
+© 2026 ${EVENT_NAME}. All rights reserved.
+</td>
+</tr>
+
+</table>
+
+</td>
+</tr>
+</table>
+</body>
+</html>
 `;
 }
 
-function sareeRunEmail({ name, registrationId }: EmailPayload) {
-  return `
-Dear ${name},
+/* ======================================================
+   EVENT-WISE CONTENT BLOCKS
+====================================================== */
 
-🎉 Your registration for the Saree Run is confirmed!
+function getEventSpecificContent(event: string, props: TemplateProps) {
+  if (event.toLowerCase().includes("5k")) {
+    return `
+<p>
+Thank you for registering for the <strong>Bengaluru Fitness Festival – 5K Run</strong> 🏃‍♂️🏃‍♀️  
+Your registration has been successfully completed.
+</p>
 
-Registration ID: ${registrationId}
+<h3>🏁 Event Details</h3>
+<p>
+<strong>Date:</strong> ${EVENT_DATE}<br/>
+<strong>Venue:</strong> ${EVENT_VENUE}
+</p>
 
-Celebrate fitness with grace and confidence 🌸
+<h3>🧾 Registration Summary</h3>
+<p>
+<strong>Registration ID:</strong> ${props.registrationId}<br/>
+<strong>T-Shirt Size:</strong> ${props.tshirtSize || "—"}
+</p>
 
-Team Bengaluru Fitness Festival
+<h3>🎽 What You Will Receive</h3>
+<ul>
+<li>Official 5K Run T-Shirt</li>
+<li>Bib Number & Timing Chip</li>
+<li>Participation Medal</li>
+<li>Refreshments</li>
+<li>E-Certificate (post-event)</li>
+</ul>
+
+<p>
+Please reach the venue at least <strong>60 minutes before</strong> the start time.
+</p>
 `;
-}
+  }
 
-function strengthEnduranceEmail({ name, registrationId }: EmailPayload) {
-  return `
-Dear ${name},
+  if (event.toLowerCase().includes("push")) {
+    return `
+<p>
+🎉 Your registration for <strong>${event}</strong> is confirmed!
+</p>
 
-Your registration for Strength Endurance Circuit – Qualifiers is confirmed 💪
+<h3>💪 Event Details</h3>
+<p>
+<strong>Date:</strong> ${EVENT_DATE}<br/>
+<strong>Venue:</strong> ${EVENT_VENUE}
+</p>
 
-Registration ID: ${registrationId}
+<h3>🧾 Registration ID</h3>
+<p>${props.registrationId}</p>
 
-Prepare to test your strength and stamina.
+<h3>🔥 What to Expect</h3>
+<ul>
+<li>Strict judging standards</li>
+<li>Endurance & strength testing</li>
+<li>Bib / Athlete ID</li>
+<li>Refreshments</li>
+<li>E-Certificate</li>
+</ul>
 
-Team Bengaluru Fitness Festival
+<p>
+Arrive at least <strong>60 minutes early</strong> and carry a valid photo ID.
+</p>
 `;
-}
+  }
 
-function functionalFitnessEmail({ name, registrationId }: EmailPayload) {
+  /* DEFAULT */
   return `
-Dear ${name},
+<p>
+🎉 Your registration for <strong>${event}</strong> is confirmed!
+</p>
 
-You are confirmed for Functional Fitness Challenge – Eliminations 🔥
+<p>
+<strong>Date:</strong> ${EVENT_DATE}<br/>
+<strong>Venue:</strong> ${EVENT_VENUE}
+</p>
 
-Registration ID: ${registrationId}
+<p>
+<strong>Registration ID:</strong> ${props.registrationId}
+</p>
 
-Only the strongest advance.
-
-Team Bengaluru Fitness Festival
-`;
-}
-
-function deadliftEmail({ name, registrationId }: EmailPayload) {
-  return `
-Dear ${name},
-
-Deadlift Championship – Heats registration confirmed 🏋️
-
-Registration ID: ${registrationId}
-
-Lift strong. Lift fair.
-
-Team Bengaluru Fitness Festival
-`;
-}
-
-function pushupPlankEmail({ name, registrationId }: EmailPayload) {
-  return `
-Dear ${name},
-
-Push-Up & Plank Endurance Battle – Qualifiers confirmed 💥
-
-Registration ID: ${registrationId}
-
-Push beyond limits.
-
-Team Bengaluru Fitness Festival
-`;
-}
-
-function calisthenicsEmail({ name, registrationId }: EmailPayload) {
-  return `
-Dear ${name},
-
-Calisthenics Amateur Battles – Qualifiers confirmed 🤸
-
-Registration ID: ${registrationId}
-
-Showcase strength & control.
-
-Team Bengaluru Fitness Festival
-`;
-}
-
-function powerliftingEmail({ name, registrationId }: EmailPayload) {
-  return `
-Dear ${name},
-
-Powerlifting King / Queen – Heats confirmed 👑
-
-Registration ID: ${registrationId}
-
-Lift heavy. Lift proud.
-
-Team Bengaluru Fitness Festival
-`;
-}
-
-function battleOfGymsEmail({ name, registrationId }: EmailPayload) {
-  return `
-Dear ${name},
-
-Your team is confirmed for Battle of Gyms – Team Round 🏆
-
-Registration ID: ${registrationId}
-
-Represent your gym with pride.
-
-Team Bengaluru Fitness Festival
-`;
-}
-
-function genericEventEmail({ name, registrationId }: EmailPayload) {
-  return `
-Dear ${name},
-
-Your registration is confirmed.
-
-Registration ID: ${registrationId}
-
-Team Bengaluru Fitness Festival
+<p>
+We look forward to seeing you perform your best 💪🔥
+</p>
 `;
 }
