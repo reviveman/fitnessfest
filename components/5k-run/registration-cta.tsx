@@ -10,7 +10,8 @@ export default function RegistrationCTA() {
 
   const raceDetails = {
     title: "5K RUN – Timed Race",
-    entryFee: "₹1,298",
+    // entryFee: "₹1,298",
+    entryFee: "₹1",
    
     prizes: {
       first: "₹25,000",
