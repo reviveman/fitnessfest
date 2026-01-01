@@ -10,8 +10,8 @@ export default function RaceDetailsSection() {
   const raceDetails = {
     title: "5K RUN – Timed Race",
     date: "March 28, 2026",
-    // entryFee: "₹1,298",
-    entryFee: "₹1",
+    entryFee: "₹1,298",
+    // entryFee: "₹1",
     categories: ["Male", "Female"],
     rewards: {
       first: {
