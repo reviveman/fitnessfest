@@ -1,11 +1,21 @@
-const EVENT_NAME = process.env.EVENT_NAME || "Bengaluru Fitness Festival";
-const EVENT_DATE = process.env.EVENT_DATE || "March 28–29, 2026";
+const EVENT_NAME =
+  process.env.EVENT_NAME || "Bengaluru Fitness Festival";
+
+const EVENT_DATE =
+  process.env.EVENT_DATE || "March 28–29, 2026";
+
 const EVENT_VENUE =
   process.env.EVENT_VENUE ||
   "KTPO, Whitefield, Bengaluru, Karnataka 560066";
+
 const EVENT_WEBSITE =
   process.env.EVENT_WEBSITE || "https://www.fitnessfest.in/";
-const EVENT_EMAIL = process.env.EVENT_EMAIL || "info@fitnessfest.in";
+
+const EVENT_EMAIL =
+  process.env.EVENT_EMAIL || "info@fitnessfest.in";
+
+const EVENT_MOBILE =
+  process.env.EVENT_MOBILE || "+91 91483 19993";
 
 type TemplateProps = {
   name: string;
@@ -41,22 +51,29 @@ style="background:#ffffff;border-radius:14px;overflow:hidden;box-shadow:0 10px 4
 <!-- Banner -->
 <tr>
 <td>
-<img src="https://res.cloudinary.com/dlkuk7rok/image/upload/v1758083354/fitness_banner_gax5tv.jpg"
-alt="Bengaluru Fitness Festival"
-style="width:100%;display:block;" />
+<img
+  src="https://res.cloudinary.com/dlkuk7rok/image/upload/v1758083354/fitness_banner_gax5tv.jpg"
+  alt="Bengaluru Fitness Festival"
+  style="width:100%;display:block;"
+/>
 </td>
 </tr>
 
 <!-- Body -->
 <tr>
 <td style="padding:40px 32px;color:#1e1e1e;">
-<p style="font-size:16px;"><strong>Dear ${firstName},</strong></p>
+<p style="font-size:16px;">
+<strong>Dear ${firstName},</strong>
+</p>
 
 ${content}
 
 <div style="margin-top:30px;padding:18px;background:#fff6e0;border-left:5px solid #fdb714;border-radius:8px;">
-Visit our <a href="${EVENT_WEBSITE}" style="font-weight:600;color:#00214d;text-decoration:none;">
-official website</a> for schedules, updates & announcements.
+Visit our
+<a href="${EVENT_WEBSITE}" style="font-weight:600;color:#00214d;text-decoration:none;">
+official website
+</a>
+for schedules, updates & announcements.
 </div>
 </td>
 </tr>
@@ -65,15 +82,22 @@ official website</a> for schedules, updates & announcements.
 <tr>
 <td style="background:#f7f7f7;padding:28px;text-align:center;">
 <p style="font-weight:700;color:#EA4A3E;">${EVENT_NAME}</p>
+
 <p>
 <a href="${EVENT_WEBSITE}" style="color:#fdb714;text-decoration:none;">
 ${EVENT_WEBSITE}
 </a>
 </p>
+
 <p style="font-size:14px;color:#666;">
 Support:
-<a href="mailto:${EVENT_EMAIL}" style="color:#EA4A3E;">
+<br />
+<a href="mailto:${EVENT_EMAIL}" style="color:#EA4A3E;text-decoration:none;">
 ${EVENT_EMAIL}
+</a>
+<br />
+<a href="tel:+919148319993" style="color:#EA4A3E;text-decoration:none;">
+${EVENT_MOBILE}
 </a>
 </p>
 </td>
@@ -103,7 +127,8 @@ function getEventSpecificContent(event: string, props: TemplateProps) {
   if (event.toLowerCase().includes("5k")) {
     return `
 <p>
-Thank you for registering for the <strong>Bengaluru Fitness Festival – 5K Run</strong> 🏃‍♂️🏃‍♀️  
+Thank you for registering for the
+<strong>Bengaluru Fitness Festival – 5K Run</strong> 🏃‍♂️🏃‍♀️  
 Your registration has been successfully completed.
 </p>
 
@@ -129,7 +154,8 @@ Your registration has been successfully completed.
 </ul>
 
 <p>
-Please reach the venue at least <strong>60 minutes before</strong> the start time.
+Please reach the venue at least
+<strong>60 minutes before</strong> the start time.
 </p>
 `;
   }
