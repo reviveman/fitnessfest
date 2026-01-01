@@ -23,7 +23,7 @@ export async function submitVote(
     }
 
     // Call the public vote API endpoint
-   const response = await fetch(`${process.env.NEXTAUTH_URL || "https://fitnessfest.vercel.app"}/api/public/vote`, {
+   const response = await fetch(`${process.env.NEXTAUTH_URL || "https://www.fitnessfest.in/"}/api/public/vote`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
