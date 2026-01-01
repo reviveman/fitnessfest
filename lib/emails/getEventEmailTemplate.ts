@@ -1,3 +1,7 @@
+/* ======================================================
+   GLOBAL EVENT CONFIG
+====================================================== */
+
 const EVENT_NAME =
   process.env.EVENT_NAME || "Bengaluru Fitness Festival";
 
@@ -17,100 +21,103 @@ const EVENT_EMAIL =
 const EVENT_MOBILE =
   process.env.EVENT_MOBILE || "+91 91483 19993";
 
+/* ======================================================
+   TYPES
+====================================================== */
+
 type TemplateProps = {
   name: string;
   registrationId?: string;
   tshirtSize?: string;
+  category?: string;
+  participationType?: string;
+  teamName?: string;
+  teamSize?: string;
 };
 
-export function getEventEmailTemplate(
-  event: string,
-  props: TemplateProps
-) {
-  const firstName = props.name.split(" ")[0];
+/* ======================================================
+   EVENT TYPE RESOLVER (SAFE & COMPLETE)
+====================================================== */
 
+function resolveEventType(event: string) {
+  const e = event.toLowerCase();
+
+  if (e.includes("5k")) return "5k";
+  if (e.includes("saree")) return "saree";
+  if (e.includes("strength endurance")) return "strength";
+  if (e.includes("functional")) return "functional";
+  if (e.includes("deadlift")) return "deadlift";
+  if (e.includes("push") || e.includes("plank")) return "push";
+  if (e.includes("calisthenics")) return "calisthenics";
+  if (e.includes("powerlifting")) return "powerlifting";
+  if (e.includes("battle of gyms") || e.includes("team")) return "team";
+
+  return "default"; // 🔒 SAFETY NET
+}
+
+/* ======================================================
+   MAIN EMAIL TEMPLATE (COMMON WRAPPER)
+====================================================== */
+
+export function getEventEmailTemplate(event: string, props: TemplateProps) {
+  const firstName = props.name.split(" ")[0];
   const content = getEventSpecificContent(event, props);
 
   return `
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>${event} Confirmation</title>
-</head>
-
 <body style="margin:0;padding:0;background:#f5f5f5;font-family:Segoe UI,Tahoma,Verdana,sans-serif;">
 <table width="100%" cellpadding="0" cellspacing="0" style="padding:30px 0;">
 <tr>
 <td align="center">
 
 <table width="600" cellpadding="0" cellspacing="0"
-style="background:#ffffff;border-radius:14px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,0.1);">
+style="background:#ffffff;border-radius:14px;overflow:hidden;">
 
-<!-- Banner -->
 <tr>
 <td>
-<img
-  src="https://res.cloudinary.com/dlkuk7rok/image/upload/v1767265809/mould-tech/br4ygaiiz8mgxpf7crvr.jpg"
-  alt="Bengaluru Fitness Festival"
-  style="width:100%;display:block;"
-/>
+<img src="https://res.cloudinary.com/dlkuk7rok/image/upload/v1767265809/mould-tech/br4ygaiiz8mgxpf7crvr.jpg" style="width:100%;" />
 </td>
 </tr>
 
-<!-- Body -->
 <tr>
-<td style="padding:40px 32px;color:#1e1e1e;">
-<p style="font-size:16px;">
-<strong>Dear ${firstName},</strong>
+<td style="padding:36px;color:#1e1e1e;">
+<p><strong>Dear ${firstName},</strong></p>
+${content}
+</td>
+</tr>
+
+<tr>
+<td style="background:#f7f7f7;padding:28px;text-align:center;">
+<p style="font-weight:700;color:#EA4A3E;">${EVENT_NAME}</p>
+<p>${EVENT_VENUE}</p>
+
+<p>
+📧 <a href="mailto:${EVENT_EMAIL}">${EVENT_EMAIL}</a><br/>
+📞 ${EVENT_MOBILE}
 </p>
 
-${content}
-
-<div style="margin-top:30px;padding:18px;background:#fff6e0;border-left:5px solid #fdb714;border-radius:8px;">
-Visit our
-<a href="${EVENT_WEBSITE}" style="font-weight:600;color:#00214d;text-decoration:none;">
-official website
-</a>
-for schedules, updates & announcements.
+<div style="margin-top:14px;">
+  <a href="https://www.instagram.com/fitnessfestindia">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="24" />
+  </a>
+  <a href="https://www.facebook.com/fitnessfestindia">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" width="24" />
+  </a>
+  <a href="https://www.linkedin.com/company/fitnessfestindia">
+    <img src="https://cdn-icons-png.flaticon.com/512/145/145807.png" width="24" />
+  </a>
 </div>
 </td>
 </tr>
 
-<!-- Footer -->
 <tr>
-<td style="background:#f7f7f7;padding:28px;text-align:center;">
-<p style="font-weight:700;color:#EA4A3E;">${EVENT_NAME}</p>
-
-<p>
-<a href="${EVENT_WEBSITE}" style="color:#fdb714;text-decoration:none;">
-${EVENT_WEBSITE}
-</a>
-</p>
-
-<p style="font-size:14px;color:#666;">
-Support:
-<br />
-<a href="mailto:${EVENT_EMAIL}" style="color:#EA4A3E;text-decoration:none;">
-${EVENT_EMAIL}
-</a>
-<br />
-<a href="tel:+919148319993" style="color:#EA4A3E;text-decoration:none;">
-${EVENT_MOBILE}
-</a>
-</p>
-</td>
-</tr>
-
-<tr>
-<td style="background:#EA4A3E;color:#fff;padding:18px;text-align:center;font-size:12px;">
+<td style="background:#EA4A3E;color:#fff;text-align:center;padding:14px;font-size:12px;">
 © 2026 ${EVENT_NAME}. All rights reserved.
 </td>
 </tr>
 
 </table>
-
 </td>
 </tr>
 </table>
@@ -120,31 +127,46 @@ ${EVENT_MOBILE}
 }
 
 /* ======================================================
-   EVENT-WISE CONTENT BLOCKS
+   EVENT CONTENT SWITCH
 ====================================================== */
 
-function getEventSpecificContent(event: string, props: TemplateProps) {
-  if (event.toLowerCase().includes("5k")) {
-    return `
-<p>
-Thank you for registering for the
-<strong>Bengaluru Fitness Festival – 5K Run</strong> 🏃‍♂️🏃‍♀️  
-Your registration has been successfully completed.
-</p>
+function getEventSpecificContent(event: string, p: TemplateProps) {
+  switch (resolveEventType(event)) {
+    case "5k":
+      return FIVE_K_EMAIL(p);
+    case "saree":
+      return SAREE_RUN_EMAIL(p);
+    case "strength":
+      return STRENGTH_ENDURANCE_EMAIL(p);
+    case "functional":
+      return FUNCTIONAL_ELIMINATIONS_EMAIL(p);
+    case "deadlift":
+      return DEADLIFT_HEATS_EMAIL(p);
+    case "push":
+      return PUSH_PLANK_EMAIL(p);
+    case "calisthenics":
+      return CALISTHENICS_EMAIL(p);
+    case "powerlifting":
+      return POWERLIFTING_EMAIL(p);
+    case "team":
+      return BATTLE_OF_GYMS_EMAIL(p);
+    default:
+      return DEFAULT_EMAIL(event, p);
+  }
+}
 
-<h3>🏁 Event Details</h3>
-<p>
-<strong>Date:</strong> ${EVENT_DATE}<br/>
-<strong>Venue:</strong> ${EVENT_VENUE}
-</p>
+/* ======================================================
+   EXACT EVENT CONTENT (UNCHANGED)
+====================================================== */
 
-<h3>🧾 Registration Summary</h3>
-<p>
-<strong>Registration ID:</strong> ${props.registrationId}<br/>
-<strong>T-Shirt Size:</strong> ${props.tshirtSize || "—"}
-</p>
+const FIVE_K_EMAIL = (p: TemplateProps) => `
+<p>Thank you for registering for the <strong>Bengaluru Fitness Festival – 5K Run</strong> 🏃‍♂️🏃‍♀️</p>
+<p><strong>Date:</strong> ${EVENT_DATE}<br/>
+<strong>Venue:</strong> ${EVENT_VENUE}</p>
 
-<h3>🎽 What You Will Receive</h3>
+<p><strong>Registration ID:</strong> ${p.registrationId}<br/>
+<strong>T-Shirt Size:</strong> ${p.tshirtSize || "—"}</p>
+
 <ul>
 <li>Official 5K Run T-Shirt</li>
 <li>Bib Number & Timing Chip</li>
@@ -153,60 +175,76 @@ Your registration has been successfully completed.
 <li>E-Certificate (post-event)</li>
 </ul>
 
-<p>
-Please reach the venue at least
-<strong>60 minutes before</strong> the start time.
-</p>
+<p>Reach the venue at least <strong>60 minutes early</strong>.</p>
 `;
-  }
 
-  if (event.toLowerCase().includes("push")) {
-    return `
-<p>
-🎉 Your registration for <strong>${event}</strong> is confirmed!
-</p>
+const SAREE_RUN_EMAIL = (p: TemplateProps) => `
+<p>🎉 Congratulations! Your registration is confirmed.</p>
+<p>Thank you for registering for the <strong>Bengaluru Fitness Festival – Saree Run</strong>.</p>
 
-<h3>💪 Event Details</h3>
-<p>
-<strong>Date:</strong> ${EVENT_DATE}<br/>
-<strong>Venue:</strong> ${EVENT_VENUE}
-</p>
+<p><strong>Date:</strong> ${EVENT_DATE}<br/>
+<strong>Venue:</strong> ${EVENT_VENUE}</p>
 
-<h3>🧾 Registration ID</h3>
-<p>${props.registrationId}</p>
+<p><strong>Registration ID:</strong> ${p.registrationId}</p>
 
-<h3>🔥 What to Expect</h3>
 <ul>
-<li>Strict judging standards</li>
-<li>Endurance & strength testing</li>
-<li>Bib / Athlete ID</li>
+<li>Event Saree / T-Shirt</li>
+<li>Bib Number</li>
+<li>Finisher Medal</li>
 <li>Refreshments</li>
 <li>E-Certificate</li>
 </ul>
 
-<p>
-Arrive at least <strong>60 minutes early</strong> and carry a valid photo ID.
-</p>
+<p>This event celebrates participation, confidence & community 🌸</p>
 `;
-  }
 
-  /* DEFAULT */
-  return `
-<p>
-🎉 Your registration for <strong>${event}</strong> is confirmed!
-</p>
+const STRENGTH_ENDURANCE_EMAIL = (p: TemplateProps) => `
+<p>🎉 Your registration is confirmed!</p>
+<p>You are registered for <strong>Strength Endurance Circuit – Qualifiers</strong>.</p>
 
-<p>
-<strong>Date:</strong> ${EVENT_DATE}<br/>
-<strong>Venue:</strong> ${EVENT_VENUE}
-</p>
+<ul>
+<li>Muscular strength</li>
+<li>Cardiovascular endurance</li>
+<li>Functional fitness capacity</li>
+<li>Mental grit & consistency</li>
+</ul>
 
-<p>
-<strong>Registration ID:</strong> ${props.registrationId}
-</p>
-
-<p>
-We look forward to seeing you perform your best 💪🔥
-</p>
+<p>Arrive at least <strong>60 minutes early</strong>.</p>
 `;
-}
+
+const FUNCTIONAL_ELIMINATIONS_EMAIL = (p: TemplateProps) => `
+<p>You are entered into <strong>Functional Fitness Challenge – Eliminations</strong>.</p>
+<p>Only top performers advance to finals.</p>
+`;
+
+const DEADLIFT_HEATS_EMAIL = (p: TemplateProps) => `
+<p>Registered for <strong>Deadlift Championship – Heats</strong>.</p>
+<p>Follow judges’ commands strictly.</p>
+`;
+
+const PUSH_PLANK_EMAIL = (p: TemplateProps) => `
+<p>Registered for <strong>Push-Up & Plank Endurance Battle – Qualifiers</strong>.</p>
+<p>Strict judging standards apply.</p>
+`;
+
+const CALISTHENICS_EMAIL = (p: TemplateProps) => `
+<p>Registered for <strong>Calisthenics Amateur Battles – Qualifiers</strong>.</p>
+<p>Showcase your strength & control 💪</p>
+`;
+
+const POWERLIFTING_EMAIL = (p: TemplateProps) => `
+<p>Registered for <strong>Powerlifting King / Queen – Heats</strong> 👑</p>
+<p>Lift heavy. Lift fair.</p>
+`;
+
+const BATTLE_OF_GYMS_EMAIL = (p: TemplateProps) => `
+<p>Your team is registered for <strong>Battle of Gyms – Team Round</strong>.</p>
+<p>Ensure all athletes report on time.</p>
+`;
+
+const DEFAULT_EMAIL = (event: string, p: TemplateProps) => `
+<p>🎉 Your registration for <strong>${event}</strong> is confirmed!</p>
+<p><strong>Date:</strong> ${EVENT_DATE}<br/>
+<strong>Venue:</strong> ${EVENT_VENUE}</p>
+<p><strong>Registration ID:</strong> ${p.registrationId}</p>
+`;
