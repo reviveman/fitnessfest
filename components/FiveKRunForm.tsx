@@ -49,7 +49,8 @@ export default function FiveKRunForm({ open, setOpen }: any) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...values,
-          amount: 1298,
+          // amount: 1298,
+          amount: 1,
         }),
       });
 
@@ -63,8 +64,8 @@ export default function FiveKRunForm({ open, setOpen }: any) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          amount: 1298,
-          //  amount: 1,
+          // amount: 1298,
+           amount: 1,
           merchantOrderId: saveData.merchantOrderId,
         }),
       });
