@@ -52,7 +52,7 @@ style="background:#ffffff;border-radius:14px;overflow:hidden;box-shadow:0 10px 4
 <tr>
 <td>
 <img
-  src="https://res.cloudinary.com/dlkuk7rok/image/upload/v1758083354/fitness_banner_gax5tv.jpg"
+  src="https://res.cloudinary.com/dlkuk7rok/image/upload/v1767265809/mould-tech/br4ygaiiz8mgxpf7crvr.jpg"
   alt="Bengaluru Fitness Festival"
   style="width:100%;display:block;"
 />

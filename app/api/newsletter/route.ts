@@ -65,7 +65,7 @@ export async function POST(req: Request) {
           
           <tr>
             <td align="center">
-              <img src="https://res.cloudinary.com/dlkuk7rok/image/upload/v1758083354/fitness_banner_gax5tv.jpg" alt="Banner" style="width:100%;" />
+              <img src="https://res.cloudinary.com/dlkuk7rok/image/upload/v1767265809/mould-tech/br4ygaiiz8mgxpf7crvr.jpg" alt="Banner" style="width:100%;" />
             </td>
           </tr>
 

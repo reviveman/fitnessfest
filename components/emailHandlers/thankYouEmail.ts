@@ -31,7 +31,7 @@ export const ThankYouEmailHandler = ({
           <tr>
             <td>
               <img
-                src="https://res.cloudinary.com/dlkuk7rok/image/upload/v1758083354/fitness_banner_gax5tv.jpg"
+                src="https://res.cloudinary.com/dlkuk7rok/image/upload/v1767265809/mould-tech/br4ygaiiz8mgxpf7crvr.jpg"
                 alt="Fitness Fest"
                 style="width:100%;display:block;"
               />
