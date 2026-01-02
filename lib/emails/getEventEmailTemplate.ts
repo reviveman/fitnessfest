@@ -160,43 +160,112 @@ function getEventSpecificContent(event: string, p: TemplateProps) {
 ====================================================== */
 
 const FIVE_K_EMAIL = (p: TemplateProps) => `
-<p>Thank you for registering for the <strong>Bengaluru Fitness Festival – 5K Run</strong> 🏃‍♂️🏃‍♀️</p>
-<p><strong>Date:</strong> ${EVENT_DATE}<br/>
-<strong>Venue:</strong> ${EVENT_VENUE}</p>
+<p>
+Thank you for registering for the
+<strong>Bengaluru Fitness Festival – 5K Run</strong> 🏃‍♂️🏃‍♀️<br/>
+We are excited to confirm that your registration has been successfully completed.
+</p>
 
-<p><strong>Registration ID:</strong> ${p.registrationId}<br/>
-<strong>T-Shirt Size:</strong> ${p.tshirtSize || "—"}</p>
+<hr style="margin:18px 0;" />
 
+<p><strong>🏁 Event Details</strong></p>
+<p>
+<strong>Event:</strong> 5K Run – Bengaluru Fitness Festival<br/>
+<strong>Date:</strong> ${EVENT_DATE}<br/>
+<strong>Reporting Time:</strong> To be announced<br/>
+<strong>Venue:</strong> ${EVENT_VENUE}
+</p>
+
+<hr style="margin:18px 0;" />
+
+<p><strong>🧾 Registration Summary</strong></p>
+<p>
+<strong>Registration ID:</strong> ${p.registrationId || "—"}<br/>
+<strong>T-Shirt Size:</strong> ${p.tshirtSize || "—"}
+</p>
+
+<p>Please keep this email safely for future reference.</p>
+
+<hr style="margin:18px 0;" />
+
+<p><strong>🎽 What You Will Receive</strong></p>
 <ul>
-<li>Official 5K Run T-Shirt</li>
-<li>Bib Number & Timing Chip</li>
-<li>Participation Medal</li>
-<li>Refreshments</li>
-<li>E-Certificate (post-event)</li>
+  <li>Official 5K Run T-Shirt</li>
+  <li>Bib Number & Timing Chip</li>
+  <li>Participation Medal</li>
+  <li>Refreshments</li>
+  <li>E-Certificate (post-event)</li>
 </ul>
 
-<p>Reach the venue at least <strong>60 minutes early</strong>.</p>
+<hr style="margin:18px 0;" />
+
+<p><strong>📍 Next Steps</strong></p>
+<ul>
+  <li>Bib & T-shirt collection details will be shared via Email & WhatsApp closer to the event</li>
+  <li>Please carry a valid photo ID on race day</li>
+  <li>Reach the venue at least <strong>60 minutes before</strong> the start time</li>
+</ul>
+
+<hr style="margin:18px 0;" />
+
+<p>
+We look forward to seeing you at the starting line!<br/>
+<strong>Let’s run for fitness, fun, and a healthier Bengaluru 💪</strong>
+</p>
+
+<p style="font-size:12px;color:#666;">
+This is an auto-generated email. Please do not reply.
+</p>
 `;
+
 
 const SAREE_RUN_EMAIL = (p: TemplateProps) => `
-<p>🎉 Congratulations! Your registration is confirmed.</p>
-<p>Thank you for registering for the <strong>Bengaluru Fitness Festival – Saree Run</strong>.</p>
+<p>🎉 <strong>Congratulations! Your registration is confirmed.</strong></p>
 
-<p><strong>Date:</strong> ${EVENT_DATE}<br/>
-<strong>Venue:</strong> ${EVENT_VENUE}</p>
+<p>
+Thank you for registering for the
+<strong>Bengaluru Fitness Festival – Saree Run</strong>.
+We’re delighted to have you be part of this unique celebration of
+<strong>fitness, womanhood, and tradition</strong>.
+</p>
 
-<p><strong>Registration ID:</strong> ${p.registrationId}</p>
+<p>
+<strong>Date:</strong> ${EVENT_DATE}<br/>
+<strong>Venue:</strong> ${EVENT_VENUE}<br/>
 
+</p>
+
+<hr style="margin:18px 0;" />
+
+<p><strong>🎁 What You Will Receive</strong></p>
 <ul>
-<li>Event Saree / T-Shirt</li>
-<li>Bib Number</li>
-<li>Finisher Medal</li>
-<li>Refreshments</li>
-<li>E-Certificate</li>
+  <li>Bib Number</li>
+  <li>Finisher Medal</li>
+  <li>Refreshments</li>
+  <li>E-Certificate (post event)</li>
 </ul>
 
-<p>This event celebrates participation, confidence & community 🌸</p>
+<hr style="margin:18px 0;" />
+
+<p><strong>⚠️ Important Instructions</strong></p>
+<ul>
+  <li>Saree must be worn in a comfortable and safe manner for walking or running</li>
+  <li>Bib & kit collection details will be shared via Email & WhatsApp</li>
+  <li>Please carry a valid photo ID on event day</li>
+  <li>Arrive at least <strong>60 minutes early</strong> for smooth check-in</li>
+</ul>
+
+<hr style="margin:18px 0;" />
+
+<p><strong>💃 Celebrate Fitness with Grace</strong></p>
+<p>
+This Saree Run is <strong>not about speed</strong> — it’s about participation,
+confidence, and community.<br/>
+Come dressed in your finest saree and be part of a powerful movement that
+celebrates strength with elegance.
+</p>
 `;
+
 
 const STRENGTH_ENDURANCE_EMAIL = (p: TemplateProps) => `
 <p>🎉 Your registration is confirmed!</p>

@@ -122,7 +122,8 @@ export default function EventDetailPage({ params }: Props) {
     
     if (title.includes("calisthenics")) {
       return {
-        entryFee: "₹999",
+        // entryFee: "₹999",
+        entryFee: "₹1",
         prizes: [
           { position: "1st", amount: "₹30,000", items: "Trophy" },
           { position: "2nd", amount: "₹20,000", items: "" },
