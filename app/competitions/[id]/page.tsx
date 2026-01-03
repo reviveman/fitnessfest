@@ -506,9 +506,9 @@ export default function EventDetailPage({ params }: Props) {
                   <div className="bg-gradient-to-br from-yellow-50 to-amber-50 border border-yellow-200 rounded-xl shadow-md p-6">
                     <div className="text-center mb-6">
                       <div className="text-2xl font-bold text-yellow-700 mb-2">
-                        🏆 Finals Event
+                        🏆  FINALS
                       </div>
-                      <p className="text-gray-600">Entry by Qualification Only</p>
+                      <p className="text-gray-600">Qualified From Day 1</p>
                     </div>
 
                     <div className="text-center mb-6">
