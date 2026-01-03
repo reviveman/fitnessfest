@@ -31,6 +31,12 @@ function parseEntryFee(fee: string): number {
   return Number(fee.replace(/[₹,]/g, ""));
 }
 
+/* ✅ helper to check if event is a final (March 29, 2026 events) */
+function isFinalEvent(eventDate: string): boolean {
+  const finalsDates = ["March 29, 2026"];
+  return finalsDates.includes(eventDate);
+}
+
 export default function EventDetailPage({ params }: Props) {
   const resolvedParams = use(params);
   const event = getEventById(resolvedParams.id);
@@ -65,6 +71,9 @@ export default function EventDetailPage({ params }: Props) {
       </div>
     );
   }
+
+  // Check if this is a final event (March 29, 2026)
+  const isFinalEventDay = isFinalEvent(event.date);
 
   // PREMIUM REWARD STRUCTURE based on event type
   const getEventRewards = (eventTitle: string) => {
@@ -122,8 +131,7 @@ export default function EventDetailPage({ params }: Props) {
     
     if (title.includes("calisthenics")) {
       return {
-        // entryFee: "₹999",
-        entryFee: "₹1",
+        entryFee: "₹999",
         prizes: [
           { position: "1st", amount: "₹30,000", items: "Trophy" },
           { position: "2nd", amount: "₹20,000", items: "" },
@@ -150,7 +158,6 @@ export default function EventDetailPage({ params }: Props) {
     if (title.includes("push-up") || title.includes("plank")) {
       return {
         entryFee: "₹699",
-        // entryFee: "₹1",
         prizes: [
           { position: "1st", amount: "₹15,000", items: "" },
           { position: "2nd", amount: "₹10,000", items: "" },
@@ -187,8 +194,6 @@ export default function EventDetailPage({ params }: Props) {
     };
   };
 
-  
-
   const eventRewards = getEventRewards(event.title);
 
   // Calculate total prize pool
@@ -222,7 +227,9 @@ export default function EventDetailPage({ params }: Props) {
     {
       id: 4,
       title: "Registration",
-      content: `Entry fee: ${eventRewards.entryFee}. Limited slots available. Professional judging and safety measures ensured.`,
+      content: isFinalEventDay 
+        ? "Entry by qualification only. Only top performers from preliminary rounds can participate in finals." 
+        : `Entry fee: ${eventRewards.entryFee}. Limited slots available. Professional judging and safety measures ensured.`,
       icon: <Target className="w-6 h-6 text-[#EA4A3E]" />,
     },
   ];
@@ -241,7 +248,7 @@ export default function EventDetailPage({ params }: Props) {
     return section.replace(/<[^>]*>/g, '').substring(0, 150) + '...';
   }
 
-    /* ✅ numeric fee */
+  /* ✅ numeric fee */
   const entryFeeAmount = parseEntryFee(eventRewards.entryFee);
 
   return (
@@ -255,7 +262,7 @@ export default function EventDetailPage({ params }: Props) {
 
         <div className="mt-50 relative z-10 max-w-6xl mx-auto px-4">
           <Badge className="bg-white text-[#EA4A3E] border-none px-6 py-2 mb-4 text-base font-medium">
-            Bengaluru Fitness Fest 2026
+            {isFinalEventDay ? "🏆 Finals Day" : "Bengaluru Fitness Fest 2026"}
           </Badge>
           
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
@@ -263,12 +270,12 @@ export default function EventDetailPage({ params }: Props) {
           </h1>
           
           <p className="text-lg text-white/90 max-w-2xl mx-auto">
-            Professional fitness competition with premium rewards and certified judging
+            {isFinalEventDay 
+              ? "Championship finals featuring top-qualified athletes battling for ultimate victory"
+              : "Professional fitness competition with premium rewards and certified judging"}
           </p>
         </div>
       </section>
-
-
 
       {/* Main Content */}
       <section className="py-12">
@@ -291,30 +298,58 @@ export default function EventDetailPage({ params }: Props) {
                     Competition Fees & Rewards
                   </h2>
                   <p className="text-gray-600 mt-1">
-                    Premium structure for Bengaluru Fitness Fest 2026
+                    {isFinalEventDay 
+                      ? "Championship prize structure for Bengaluru Fitness Fest 2026 Finals"
+                      : "Premium structure for Bengaluru Fitness Fest 2026"}
                   </p>
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Entry Fee */}
+                  {/* Entry Fee / Finals Info */}
                   <div className="border rounded-lg p-5">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Entry Fee</h3>
-                    <div className="text-3xl font-bold text-[#EA4A3E] mb-2">
-                      {eventRewards.entryFee}
-                    </div>
-                    <p className="text-gray-600 text-sm mb-4">{eventRewards.notes}</p>
-                    
-                    <div className="space-y-2">
-                      <h4 className="font-medium text-gray-900">All Participants Receive:</h4>
-                      <ul className="text-gray-600 text-sm space-y-1">
-                        {eventRewards.goodies.split('+').map((item, index) => (
-                          <li key={index} className="flex items-start gap-2">
-                            <div className="w-1 h-1 bg-[#EA4A3E] rounded-full mt-2"></div>
-                            {item.trim()}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                      {isFinalEventDay ? "Finals Information" : "Entry Fee"}
+                    </h3>
+                    {isFinalEventDay ? (
+                      <>
+                        <div className="text-2xl font-bold text-yellow-600 mb-2">
+                          🏆 Championship Round
+                        </div>
+                        <p className="text-gray-600 text-sm mb-4">
+                          Entry by qualification only. Only top performers from preliminary rounds can participate.
+                        </p>
+                        <div className="space-y-2">
+                          <h4 className="font-medium text-gray-900">Finalists Receive:</h4>
+                          <ul className="text-gray-600 text-sm space-y-1">
+                            {eventRewards.goodies.split('+').map((item, index) => (
+                              <li key={index} className="flex items-start gap-2">
+                                <div className="w-1 h-1 bg-yellow-500 rounded-full mt-2"></div>
+                                {item.trim()}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="text-3xl font-bold text-[#EA4A3E] mb-2">
+                          {eventRewards.entryFee}
+                        </div>
+                        <p className="text-gray-600 text-sm mb-4">{eventRewards.notes}</p>
+                        
+                        <div className="space-y-2">
+                          <h4 className="font-medium text-gray-900">All Participants Receive:</h4>
+                          <ul className="text-gray-600 text-sm space-y-1">
+                            {eventRewards.goodies.split('+').map((item, index) => (
+                              <li key={index} className="flex items-start gap-2">
+                                <div className="w-1 h-1 bg-[#EA4A3E] rounded-full mt-2"></div>
+                                {item.trim()}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </>
+                    )}
                   </div>
 
                   {/* Prize Structure */}
@@ -403,70 +438,126 @@ export default function EventDetailPage({ params }: Props) {
             {/* Right Sidebar */}
             <div className="lg:col-span-1">
               <div className="sticky top-6 space-y-6">
-                {/* Registration Card */}
-                <div className="bg-white border rounded-xl shadow-md p-6">
-                  <div className="text-center mb-6">
-                    <div className="text-4xl font-bold text-[#EA4A3E] mb-2">
-                      {eventRewards.entryFee}
+                {/* Registration Card or Finals Info Card */}
+                {!isFinalEventDay ? (
+                  <div className="bg-white border rounded-xl shadow-md p-6">
+                    <div className="text-center mb-6">
+                      <div className="text-4xl font-bold text-[#EA4A3E] mb-2">
+                        {eventRewards.entryFee}
+                      </div>
+                      <p className="text-gray-600">Entry Fee</p>
                     </div>
-                    <p className="text-gray-600">Entry Fee</p>
-                  </div>
 
-                  <Button
-                    onClick={() => setOpen(true)}
-                    className="w-full bg-[#EA4A3E] hover:bg-[#D03F34] text-white py-4 text-base font-medium mb-4"
-                  >
-                    Register Now
-                  </Button>
+                    <Button
+                      onClick={() => setOpen(true)}
+                      className="w-full bg-[#EA4A3E] hover:bg-[#D03F34] text-white py-4 text-base font-medium mb-4"
+                    >
+                      Register Now
+                    </Button>
 
-                  <div className="text-center mb-6">
-                    <p className="text-sm text-gray-500">
-                      Limited slots available
-                    </p>
-                  </div>
-    {/* ✅ PASS FEE + EVENT TITLE */}
-          <Dialog open={open} onOpenChange={setOpen}>
-            <DialogContent className="max-w-[95vw] p-0 bg-transparent border-0">
-              <EventRegistrationForm
-                closeForm={() => setOpen(false)}
-                eventTitle={event.title}
-                entryFee={entryFeeAmount}
-              />
-            </DialogContent>
-          </Dialog>
+                    <div className="text-center mb-6">
+                      <p className="text-sm text-gray-500">
+                        Limited slots available
+                      </p>
+                    </div>
 
-                  <div className="space-y-4 mt-6 pt-6 border-t">
-                    <h3 className="font-medium text-gray-900">Event Information</h3>
+                    {/* ✅ PASS FEE + EVENT TITLE */}
+                    <Dialog open={open} onOpenChange={setOpen}>
+                      <DialogContent className="max-w-[95vw] p-0 bg-transparent border-0">
+                        <EventRegistrationForm
+                          closeForm={() => setOpen(false)}
+                          eventTitle={event.title}
+                          entryFee={entryFeeAmount}
+                        />
+                      </DialogContent>
+                    </Dialog>
 
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-3 p-3 bg-gray-50 rounded">
-                        <Calendar className="w-4 h-4 text-[#EA4A3E]" />
-                        <div>
-                          <span className="text-sm font-medium text-gray-900">Date</span>
-                          <p className="text-xs text-gray-600">{event.date}</p>
+                    <div className="space-y-4 mt-6 pt-6 border-t">
+                      <h3 className="font-medium text-gray-900">Event Information</h3>
+
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-3 p-3 bg-gray-50 rounded">
+                          <Calendar className="w-4 h-4 text-[#EA4A3E]" />
+                          <div>
+                            <span className="text-sm font-medium text-gray-900">Date</span>
+                            <p className="text-xs text-gray-600">{event.date}</p>
+                          </div>
                         </div>
-                      </div>
 
-                      <div className="flex items-center gap-3 p-3 bg-gray-50 rounded">
-                        <Clock className="w-4 h-4 text-[#EA4A3E]" />
-                        <div>
-                          <span className="text-sm font-medium text-gray-900">Time</span>
-                          <p className="text-xs text-gray-600">{event.timeRange}</p>
+                        <div className="flex items-center gap-3 p-3 bg-gray-50 rounded">
+                          <Clock className="w-4 h-4 text-[#EA4A3E]" />
+                          <div>
+                            <span className="text-sm font-medium text-gray-900">Time</span>
+                            <p className="text-xs text-gray-600">{event.timeRange}</p>
+                          </div>
                         </div>
-                      </div>
 
-                      <div className="flex items-center gap-3 p-3 bg-gray-50 rounded">
-                        <MapPin className="w-4 h-4 text-[#EA4A3E]" />
-                        <div>
-                          <span className="text-sm font-medium text-gray-900">Venue</span>
-                          <p className="text-xs text-gray-600">{event.location}</p>
+                        <div className="flex items-center gap-3 p-3 bg-gray-50 rounded">
+                          <MapPin className="w-4 h-4 text-[#EA4A3E]" />
+                          <div>
+                            <span className="text-sm font-medium text-gray-900">Venue</span>
+                            <p className="text-xs text-gray-600">{event.location}</p>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="bg-gradient-to-br from-yellow-50 to-amber-50 border border-yellow-200 rounded-xl shadow-md p-6">
+                    <div className="text-center mb-6">
+                      <div className="text-2xl font-bold text-yellow-700 mb-2">
+                        🏆 Finals Event
+                      </div>
+                      <p className="text-gray-600">Entry by Qualification Only</p>
+                    </div>
 
-             
+                    <div className="text-center mb-6">
+                      <p className="text-sm text-gray-700 mb-4">
+                        This is the championship final round. Only athletes who qualified from the preliminary rounds can participate.
+                      </p>
+                      
+                      <div className="flex items-center justify-center gap-2 text-sm text-gray-600 mb-4">
+                        <Trophy className="w-4 h-4 text-yellow-500" />
+                        <span>Qualified Athletes Only</span>
+                      </div>
+                      
+                      <div className="flex items-center justify-center gap-2 text-sm text-gray-600">
+                        <Users className="w-4 h-4 text-yellow-500" />
+                        <span>Top Performers from Day 1</span>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4 mt-6 pt-6 border-t border-yellow-200">
+                      <h3 className="font-medium text-gray-900">Finals Information</h3>
+
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-3 p-3 bg-white/50 rounded">
+                          <Calendar className="w-4 h-4 text-yellow-600" />
+                          <div>
+                            <span className="text-sm font-medium text-gray-900">Date</span>
+                            <p className="text-xs text-gray-600">{event.date}</p>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-3 p-3 bg-white/50 rounded">
+                          <Clock className="w-4 h-4 text-yellow-600" />
+                          <div>
+                            <span className="text-sm font-medium text-gray-900">Time</span>
+                            <p className="text-xs text-gray-600">{event.timeRange}</p>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-3 p-3 bg-white/50 rounded">
+                          <MapPin className="w-4 h-4 text-yellow-600" />
+                          <div>
+                            <span className="text-sm font-medium text-gray-900">Venue</span>
+                            <p className="text-xs text-gray-600">{event.location}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 {/* Event Benefits */}
                 <div className="bg-white border rounded-xl shadow-md p-6">
@@ -505,36 +596,67 @@ export default function EventDetailPage({ params }: Props) {
       <section className="bg-gray-900 py-12">
         <div className="container mx-auto px-4 max-w-4xl text-center">
           <h2 className="text-3xl font-bold text-white mb-4">
-            Ready to Compete?
+            {isFinalEventDay ? "🏆 Championship Finals" : "Ready to Compete?"}
           </h2>
           
           <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
-            Join Bengaluru's premier fitness competition. Register now to secure your spot.
+            {isFinalEventDay 
+              ? "Witness the ultimate showdown as top athletes battle for the championship title."
+              : "Join Bengaluru's premier fitness competition. Register now to secure your spot."}
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              onClick={() => setOpen(true)}
-              className="bg-[#EA4A3E] hover:bg-[#D03F34] text-white font-medium px-8 py-4"
-              size="lg"
-            >
-              Register Now - {eventRewards.entryFee}
-            </Button>
-            
-            <Button
-              variant="outline"
-              className="border-white text-white hover:bg-white/10 font-medium px-8 py-4"
-              size="lg"
-              onClick={() => {
-                const element = document.getElementById('full-description');
-                if (element) {
-                  element.scrollIntoView({ behavior: 'smooth' });
-                }
-              }}
-            >
-              View Full Details
-            </Button>
-          </div>
+          {!isFinalEventDay ? (
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button
+                onClick={() => setOpen(true)}
+                className="bg-[#EA4A3E] hover:bg-[#D03F34] text-white font-medium px-8 py-4"
+                size="lg"
+              >
+                Register Now - {eventRewards.entryFee}
+              </Button>
+              
+              <Button
+                variant="outline"
+                className="border-white text-white hover:bg-white/10 font-medium px-8 py-4"
+                size="lg"
+                onClick={() => {
+                  const element = document.getElementById('full-description');
+                  if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+              >
+                View Full Details
+              </Button>
+            </div>
+          ) : (
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button
+                variant="outline"
+                className="border-white text-white hover:bg-white/10 font-medium px-8 py-4"
+                size="lg"
+                asChild
+              >
+                <Link href="/events">
+                  View All Events
+                </Link>
+              </Button>
+              
+              <Button
+                variant="outline"
+                className="border-white text-white hover:bg-white/10 font-medium px-8 py-4"
+                size="lg"
+                onClick={() => {
+                  const element = document.getElementById('full-description');
+                  if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+              >
+                View Competition Rules
+              </Button>
+            </div>
+          )}
           
           <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-2xl mx-auto">
             <div className="bg-white/10 rounded p-4">
