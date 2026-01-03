@@ -55,6 +55,7 @@ export default function Schedule() {
               >
                 SATURDAY
               </span>
+              <p>Elimination</p>
             </div>
 
             {/* Day 2 */}
@@ -83,6 +84,7 @@ export default function Schedule() {
               >
                 SUNDAY
               </span>
+              <p>Finals</p>
             </div>
           </div>
         </div>
