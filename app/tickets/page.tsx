@@ -1,195 +1,185 @@
 "use client"
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Calendar, Clock, MapPin, Check,  } from "lucide-react"
 import Link from "next/link"
-
-import Pricing from "@/components/pricing"   // ← YOUR PRICING COMPONENT
+import { Button } from "@/components/ui/button"
+import { Calendar, Clock, MapPin, Check } from "lucide-react"
+import Pricing from "@/components/pricing"
 
 export default function TicketsPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <main className="flex-1">
+    <div className="min-h-screen bg-[#fafafa]">
+      <main>
 
-        {/* Hero Section */}
-<section
-  className="min-h-[60vh] bg-cover bg-center py-20 pt-52 flex items-center relative"
-  style={{ backgroundImage: "url('/images/eventum-img1.jpg')" }}
->
-  <div className="absolute inset-0 bg-black opacity-80"></div>
+        {/* ================= HERO ================= */}
+        <section
+          className="relative min-h-[80vh] flex items-center justify-center bg-cover bg-center"
+          style={{ backgroundImage: "url('/images/eventum-img1.jpg')" }}
+        >
+          <div className="absolute inset-0 bg-black/85 backdrop-blur-sm" />
 
-  <div className="container mx-auto px-4 relative z-10">
-    <div className="max-w-3xl mx-auto text-center">
-      <h1 className="text-4xl md:text-5xl font-extrabold mb-6 text-white">
-        Get Your Tickets
-      </h1>
-    </div>
-  </div>
-</section>
+          <div className="relative z-10 max-w-4xl text-center px-6 pt-32">
+            <span className="inline-block mt-25  rounded-full border border-red-400/40 bg-red-600/20 px-6 py-2 text-sm font-semibold text-red-300 tracking-wide">
+              FITNESS FEST 2026
+            </span>
 
+            <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-6 leading-tight">
+              Get Your Tickets
+            </h1>
 
-
-       {/* Event Details */}
-<section className="py-16 bg-white">
-  <div className="container mx-auto px-4">
-    <div className="max-w-6xl mx-auto">
-      <div className="bg-gradient-to-br from-red-50 to-white p-8 rounded-2xl shadow-lg border border-red-100">
-        <div className="grid md:grid-cols-2 gap-8">
-
-          {/* LEFT – EVENT DETAILS */}
-          <div>
-            <h2 className="text-3xl font-bold mb-6 text-gray-800">
-              Event Details
-            </h2>
-
-            <ul className="space-y-4">
-
-              {/* DATE */}
-              <li className="flex items-start">
-                <div className="w-10 h-10 bg-red-200 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
-                  <Calendar className="w-5 h-5 text-[#EA4A3E]" />
-                </div>
-                <div>
-                  <span className="font-semibold block text-gray-800">
-                    WHEN IS THE EVENT :
-                  </span>
-                  <span className="text-gray-600">(Saturday & Sunday)</span><br />
-                  <span className="text-gray-600">28 & 29 March 2026</span>
-                </div>
-              </li>
-
-              {/* TIME */}
-              <li className="flex items-start">
-                <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
-                  <Clock className="w-5 h-5 text-[#EA4A3E]" />
-                </div>
-                <div>
-                  <span className="font-semibold block text-gray-800">
-                    TIME
-                  </span>
-                  <span className="text-gray-600">11:00 AM – 9:00 PM</span>
-                </div>
-              </li>
-
-              {/* LOCATION */}
-              <li className="flex items-start">
-                <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
-                  <MapPin className="w-5 h-5 text-[#EA4A3E]" />
-                </div>
-
-                <div>
-                  <span className="font-semibold block text-gray-800">
-                    WHERE IS THE EVENT :
-                  </span>
-                  <span className="text-gray-600">
-                    KARNATAKA TRADE PROMOTION ORGANISATION (KTPO)
-                  </span>
-                  <span className="text-gray-600 block">
-                    Whitefield, Bengaluru, Karnataka 560066
-                  </span>
-                </div>
-              </li>
-
-            </ul>
-          </div>
-
-          {/* RIGHT – WHAT TO EXPECT */}
-          <div>
-            <h2 className="text-3xl font-bold mb-6 text-gray-800">
-              What to Expect
-            </h2>
-
-            <ul className="space-y-3">
-
-              <li className="flex items-center">
-                <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-3">
-                  <Check className="w-4 h-4 text-green-600" />
-                </div>
-                <span className="text-gray-700">Full-day Expo Access</span>
-              </li>
-
-              <li className="flex items-center">
-                <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-3">
-                  <Check className="w-4 h-4 text-green-600" />
-                </div>
-                <span className="text-gray-700">Zumba • HIIT • Yoga • CrossFit Demos</span>
-              </li>
-
-              <li className="flex items-center">
-                <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-3">
-                  <Check className="w-4 h-4 text-green-600" />
-                </div>
-                <span className="text-gray-700">Fitness Challenges & Live Workouts</span>
-              </li>
-
-              <li className="flex items-center">
-                <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-3">
-                  <Check className="w-4 h-4 text-green-600" />
-                </div>
-                <span className="text-gray-700">Healthy Food & Nutrition Zone</span>
-              </li>
-
-              <li className="flex items-center">
-                <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-3">
-                  <Check className="w-4 h-4 text-green-600" />
-                </div>
-                <span className="text-gray-700">Workshops (Diet • Injury Prevention • Running • Women’s Fitness)</span>
-              </li>
-
-              <li className="flex items-center">
-                <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-3">
-                  <Check className="w-4 h-4 text-green-600" />
-                </div>
-                <span className="text-gray-700">Fitness Goodie Bag & Wristband</span>
-              </li>
-
-              <li className="flex items-center">
-                <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-3">
-                  <Check className="w-4 h-4 text-green-600" />
-                </div>
-                <span className="text-gray-700">Digital Participation Certificate</span>
-              </li>
-
-            </ul>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-        {/* Pricing Section Replaced */}
-        <section className="py-20 bg-gradient-to-br from-red-50 via-white to-red-50">
-          <div className="container mx-auto px-4">
-            <Pricing /> {/* ✔ PRICING INCLUDED HERE */}
+            <p className="text-gray-300 text-lg md:text-xl max-w-3xl mx-auto">
+              India’s biggest fitness & wellness expo featuring workouts,
+              competitions, experts, nutrition & live challenges.
+            </p>
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="py-6 bg-gradient-to-r from-[#EA4A3E] to-red-700 text-white">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold mb-4">Ready to Join Fitness Fest 2026?</h2>
-            <p className="text-lg opacity-90 mb-6 max-w-2xl mx-auto">
-              Don't miss out on the biggest fitness event of the year. Limited seats available!
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-            <Link href="/competitions">
-              <Button className="bg-white text-[#EA4A3E] hover:bg-gray-100 px-6 py-2 font-semibold rounded-full">
-                View Schedule
-              </Button>
-            
-            </Link>
-         <Link href="/register">
-                   <Button className="border-2 border-white bg-transparent text-white hover:bg-white hover:text-[#EA4A3E] px-6 py-2 font-semibold rounded-full cursor-pointer">
-                Contact Us
-              </Button>
-              </Link>
+        {/* ================= PRICING ================= */}
+        <section className="relative py-28 bg-gradient-to-br from-red-50 via-white to-red-50">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-20">
+              <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-5">
+                Ticket Plans
+              </h2>
+              <p className="text-gray-600 max-w-2xl mx-auto text-lg">
+                Flexible passes designed for visitors, athletes & fitness
+                enthusiasts.
+              </p>
             </div>
 
+            {/* Pricing Cards */}
+            <div className="relative z-10">
+              <Pricing />
+            </div>
+          </div>
+        </section>
+
+        {/* ================= EVENT DETAILS ================= */}
+        <section className="py-28 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="max-w-7xl mx-auto rounded-[32px] bg-white/70 backdrop-blur-xl shadow-2xl border border-red-100 p-10 md:p-16">
+              <div className="grid lg:grid-cols-2 gap-16">
+
+                {/* LEFT */}
+                <div>
+                  <h3 className="text-4xl font-extrabold text-gray-900 mb-10">
+                    Event Details
+                  </h3>
+
+                  <div className="space-y-8">
+
+                    <div className="flex items-start gap-6">
+                      <div className="w-14 h-14 rounded-2xl bg-red-100 flex items-center justify-center">
+                        <Calendar className="w-7 h-7 text-[#EA4A3E]" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-gray-900 text-lg">
+                          Date
+                        </p>
+                        <p className="text-gray-600">
+                          Saturday & Sunday <br />
+                          <span className="font-medium">
+                            28 & 29 March 2026
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-6">
+                      <div className="w-14 h-14 rounded-2xl bg-red-100 flex items-center justify-center">
+                        <Clock className="w-7 h-7 text-[#EA4A3E]" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-gray-900 text-lg">
+                          Time
+                        </p>
+                        <p className="text-gray-600">
+                          11:00 AM – 9:00 PM
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-6">
+                      <div className="w-14 h-14 rounded-2xl bg-red-100 flex items-center justify-center">
+                        <MapPin className="w-7 h-7 text-[#EA4A3E]" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-gray-900 text-lg">
+                          Venue
+                        </p>
+                        <p className="text-gray-600">
+                          Karnataka Trade Promotion Organisation (KTPO)
+                        </p>
+                        <p className="text-gray-600">
+                          Whitefield, Bengaluru – 560066
+                        </p>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                {/* RIGHT */}
+                <div>
+                  <h3 className="text-4xl font-extrabold text-gray-900 mb-10">
+                    What You’ll Experience
+                  </h3>
+
+                  <div className="grid sm:grid-cols-2 gap-6">
+                    {[
+                      "Full-day Expo Access",
+                      "Zumba • HIIT • Yoga",
+                      "CrossFit Demonstrations",
+                      "Live Fitness Challenges",
+                      "Nutrition & Healthy Food Zone",
+                      "Expert-led Workshops",
+                      "Fitness Goodie Bag",
+                      "Digital Certificate",
+                    ].map((item, i) => (
+                      <div
+                        key={i}
+                        className="flex items-start gap-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm hover:shadow-md transition"
+                      >
+                        <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center mt-1">
+                          <Check className="w-4 h-4 text-green-600" />
+                        </div>
+                        <p className="text-gray-700 font-medium">
+                          {item}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ================= CTA ================= */}
+        <section className="py-24 bg-gradient-to-r from-[#EA4A3E] to-red-700 text-white">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-6">
+              Ready to Join Fitness Fest 2026?
+            </h2>
+
+            <p className="text-lg opacity-90 max-w-3xl mx-auto mb-12">
+              Be part of India’s most energetic fitness gathering.
+              Limited passes available — book now.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-5 justify-center">
+              <Link href="/competitions">
+                <Button className="bg-white text-[#EA4A3E] hover:bg-gray-100 px-10 py-4 rounded-full font-semibold text-lg">
+                  View Schedule
+                </Button>
+              </Link>
+
+              <Link href="/register">
+                <Button className="border-2 border-white bg-transparent hover:bg-white hover:text-[#EA4A3E] px-10 py-4 rounded-full font-semibold text-lg">
+                  Contact Us
+                </Button>
+              </Link>
+            </div>
           </div>
         </section>
 
@@ -197,6 +187,3 @@ export default function TicketsPage() {
     </div>
   )
 }
-
-
-
