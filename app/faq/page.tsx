@@ -35,7 +35,7 @@ const faqs: FAQ[] = [
     questions: [
       {
         q: "Where is the Bengaluru Fitness Festival happening?",
-        a: "The festival will be held at [ KTPO Convention Centre, Whitefield, Bengaluru].",
+        a: "The festival will be held at [ Bhoruka Tech Park Ground, Whitefield, Bengaluru].",
       },
       {
         q: "What are the event dates and timings?",

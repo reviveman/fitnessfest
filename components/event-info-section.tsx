@@ -87,7 +87,7 @@ export default function EventInfoSection() {
         <div>
           <h3 className="font-bold text-gray-800 text-lg mb-2">WHERE IS THE EVENT :</h3>
           <p className="text-gray-600 text-sm font-semibold">
-            KARNATAKA TRADE PROMOTION ORGANISATION
+           Bhoruka Tech Park Ground
         
             <br />
            Whitefield, Bengaluru, Karnataka 560066 
