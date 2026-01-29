@@ -39,7 +39,7 @@ export default function SareeHeroSection() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
           <BadgeItem emoji="📅" text="29 March 2026" />
           <BadgeItem emoji="🕐" text="6:30 AM IST" />
-          <BadgeItem emoji="📍" text="KTPO Whitefield" />
+          <BadgeItem emoji="📍" text="Bhoruka Tech Park Ground" />
           <BadgeItem emoji="🎉" text="FREE Entry" />
         </div>
 
