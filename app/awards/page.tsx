@@ -34,8 +34,8 @@ export default function AwardsPage() {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
-            <Link href="/register">
-              <button className="px-8 py-3 rounded-full bg-[#EA4A3E] hover:bg-red-600 text-white font-semibold transition-all shadow-xl hover:shadow-[#EA4A3E]/40">
+            <Link href="#award-categories" scroll={true}>
+              <button className="px-8 py-3 rounded-full bg-[#EA4A3E] hover:bg-red-600 text-white font-semibold transition-all shadow-xl hover:shadow-[#EA4A3E]/40 cursor-pointer">
                 Nominate Now
               </button>
             </Link>
@@ -68,7 +68,9 @@ export default function AwardsPage() {
 
           {/* Title Hover Underline */}
           <div className="text-center group">
-            <h3 className="text-3xl font-bold text-[#EA4A3E] mb-3">
+            <h3
+            id="award-categories" 
+            className="text-3xl font-bold text-[#EA4A3E] mb-3">
               Award Categories
             </h3>
 
