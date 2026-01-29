@@ -10,7 +10,7 @@ const EVENT_DATE =
 
 const EVENT_VENUE =
   process.env.EVENT_VENUE ||
-  "KTPO, Whitefield, Bengaluru, Karnataka 560066";
+  "Bhoruka Tech Park Ground, Whitefield, Bengaluru, Karnataka 560066";
 
 const EVENT_WEBSITE =
   process.env.EVENT_WEBSITE || "https://www.fitnessfest.in/";

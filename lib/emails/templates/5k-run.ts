@@ -12,7 +12,7 @@ Your registration has been successfully completed.
 🏁 Event Details  
 Event: 5K Run – Bengaluru Fitness Festival  
 Date: 28–29 March 2026  
-Venue: KTPO, Whitefield, Bengaluru
+Venue: Bhoruka Tech Park Ground, Whitefield, Bengaluru
 
 🧾 Registration Summary  
 • Registration ID: ${registrationId}  
