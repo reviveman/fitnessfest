@@ -47,7 +47,7 @@ export default function KnowMoreSection() {
               health, fitness, and holistic well-being. The Bengaluru Fitness
               Festival 2026, happening on{" "}
               <strong>28–29 March</strong> at{" "}
-              <strong>KTPO Convention Centre</strong>, brings together fitness
+              <strong>Bhoruka Tech Park Ground</strong>, brings together fitness
               enthusiasts, industry experts, and wellness brands for an
               electrifying two-day event.
             </p>

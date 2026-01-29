@@ -107,7 +107,7 @@ export default function TicketsPage() {
                           Venue
                         </p>
                         <p className="text-gray-600">
-                          Karnataka Trade Promotion Organisation (KTPO)
+                          Bhoruka Tech Park Ground
                         </p>
                         <p className="text-gray-600">
                           Whitefield, Bengaluru – 560066

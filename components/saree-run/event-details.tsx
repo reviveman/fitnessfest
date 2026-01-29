@@ -19,7 +19,7 @@ export default function SareeEventDetails() {
     {
       icon: MapPin,
       title: "Venue",
-      value: "KTPO Convention Centre, Whitefield",
+      value: "Bhoruka Tech Park Ground, Whitefield",
       image: "/placeholder.svg?key=event-venue-whitefield",
     },
     {
