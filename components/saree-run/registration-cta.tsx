@@ -74,8 +74,8 @@ export default function SareeRegistrationCTA() {
 
         {/* Footer Info */}
         <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-8 text-center">
-          <p className="text-gray-300 mb-2">Date: 29 March 2026 | Reporting: 6:00 AM | Flag-off: 6:30 AM</p>
-          <p className="text-gray-400 text-sm">Bhoruka Tech Park Ground Grounds, Whitefield, Bengaluru</p>
+          <p className="text-gray-300 mb-2">Date: 26 April 2026 | Reporting: 6:00 AM | Flag-off: 6:30 AM</p>
+          <p className="text-gray-400 text-sm">Jayamahal Palace Grounds, Whitefield, Bengaluru</p>
           <p className="text-[#EA4A3E] font-bold mt-4">This is more than a run. This is a celebration of YOU.</p>
         </div>
       </div>

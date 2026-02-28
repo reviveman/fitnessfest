@@ -53,12 +53,12 @@ export default function RegistrationForm() {
   })
 
   const competitions = [
-    { id: "powerlifting", name: "Ultimate Powerlifting Challenge", date: "March 28, 2026" },
-    { id: "crossfit", name: "CrossFit Championship", date: "March 28-29, 2026" },
-    { id: "marathon", name: "Fitness Fest Marathon", date: "March 28, 2026" },
-    { id: "obstacle", name: "Extreme Obstacle Course", date: "March 29, 2026" },
-    { id: "yoga", name: "Yoga & Flexibility Masters", date: "March 29, 2026" },
-    { id: "team", name: "Team Fitness Challenge", date: "March 28, 2026" },
+    { id: "powerlifting", name: "Ultimate Powerlifting Challenge", date: "April 25, 2026" },
+    { id: "crossfit", name: "CrossFit Championship", date: "April 25-29, 2026" },
+    { id: "marathon", name: "Fitness Fest Marathon", date: "April 25, 2026" },
+    { id: "obstacle", name: "Extreme Obstacle Course", date: "April 26, 2026" },
+    { id: "yoga", name: "Yoga & Flexibility Masters", date: "April 26, 2026" },
+    { id: "team", name: "Team Fitness Challenge", date: "April 25, 2026" },
   ]
 
   async function onSubmit(data: z.infer<typeof formSchema>) {

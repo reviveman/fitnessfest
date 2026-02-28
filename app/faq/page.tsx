@@ -35,11 +35,11 @@ const faqs: FAQ[] = [
     questions: [
       {
         q: "Where is the Bengaluru Fitness Festival happening?",
-        a: "The festival will be held at [ Bhoruka Tech Park Ground, Whitefield, Bengaluru].",
+        a: "The festival will be held at [ Jayamahal Palace, Bengaluru].",
       },
       {
         q: "What are the event dates and timings?",
-        a: "The Bengaluru Fitness Festival 2026 is scheduled for 28–29 March 2026, from 10:00 AM – 7:00 PM on both days.",
+        a: "The Bengaluru Fitness Festival 2026 is scheduled for 25–26 April 2026, from 10:00 AM – 7:00 PM on both days.",
       },
       {
         q: "Is parking available at the venue?",

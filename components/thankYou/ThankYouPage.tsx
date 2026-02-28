@@ -28,33 +28,33 @@ const messages: Record<
     bold: "You are now part of the Bengaluru Fitness Festival 2026 community",
     description:
       "We look forward to welcoming you to explore fitness, health, and wellness experiences.",
-    date: "28 - 29 March 2026 · Bhoruka Tech Park Ground, Bengaluru",
+    date: "28 - 26 April 2026 · Jayamahal Palace, Bengaluru",
   },
   exhibitor: {
     title: "Thank You For Registering as an Exhibitor!",
     bold: "You are now part of the Bengaluru Fitness Festival 2026 community",
     description: "Our team will contact you soon with exhibition details.",
-    date: "28 - 29 March 2026 · Bhoruka Tech Park Ground, Bengaluru",
+    date: "28 - 26 April 2026 · Jayamahal Palace, Bengaluru",
   },
   sponsor: {
     title: "Thank You For Registering as a Sponsor!",
     bold: "You are now part of the Bengaluru Fitness Festival 2026 community",
     description: "Our team will contact you soon with sponsorship details.",
-    date: "28 - 29 March 2026 · Bhoruka Tech Park Ground, Bengaluru",
+    date: "28 - 26 April 2026 · Jayamahal Palace, Bengaluru",
   },
   nomination: {
     title: "Thank You for Submitting Your Nomination!",
     bold: "Your nomination has been successfully recorded.",
     description:
       "Our jury panel will review all submissions and contact shortlisted nominees.",
-    date: "Award Ceremony: 28 - 29 March 2026 · Bhoruka Tech Park Ground, Bengaluru",
+    date: "Award Ceremony: 28 - 26 April 2026 · Jayamahal Palace, Bengaluru",
   },
   competition: {
     title: "Thank You for Registering for the Competition!",
     bold: "Your spot in the Bengaluru Fitness Festival Competition is confirmed.",
     description:
       "Our team will review your details and send event-day instructions shortly.",
-    date: "28 - 29 March 2026 · Bhoruka Tech Park Ground, Bengaluru",
+    date: "28 - 26 April 2026 · Jayamahal Palace, Bengaluru",
   },
 };
 

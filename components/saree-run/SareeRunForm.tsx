@@ -99,8 +99,8 @@ export default function SareeRunForm({ open, setOpen }: Props) {
 
         <div className="p-6">
           <p className="text-sm text-gray-300 mb-4">
-            Bengaluru Fitness Festival 2026 — Run Date: 29 March 2026 • Reporting: 6:00 AM • Start: 6:30 AM • Venue: Bhoruka Tech Park Ground,
-            Whitefield
+            Bengaluru Fitness Festival 2026 — Run Date: 26 April 2026 • Reporting: 6:00 AM • Start: 6:30 AM • Venue: Jayamahal Palace,
+            
           </p>
 
           <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>

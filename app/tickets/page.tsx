@@ -78,7 +78,7 @@ export default function TicketsPage() {
                         <p className="text-gray-600">
                           Saturday & Sunday <br />
                           <span className="font-medium">
-                            28 & 29 March 2026
+                            25 & 26 April 2026
                           </span>
                         </p>
                       </div>
@@ -106,11 +106,11 @@ export default function TicketsPage() {
                         <p className="font-semibold text-gray-900 text-lg">
                           Venue
                         </p>
+                        {/* <p className="text-gray-600">
+                          Jayamahal Palace
+                        </p> */}
                         <p className="text-gray-600">
-                          Bhoruka Tech Park Ground
-                        </p>
-                        <p className="text-gray-600">
-                          Whitefield, Bengaluru – 560066
+                          Jayamahal Palace, Bengaluru – 560066
                         </p>
                       </div>
                     </div>

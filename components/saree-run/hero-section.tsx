@@ -37,9 +37,9 @@ export default function SareeHeroSection() {
 
         {/* Info Badges */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-          <BadgeItem emoji="📅" text="29 March 2026" />
+          <BadgeItem emoji="📅" text="26 April 2026" />
           <BadgeItem emoji="🕐" text="6:30 AM IST" />
-          <BadgeItem emoji="📍" text="Bhoruka Tech Park Ground" />
+          <BadgeItem emoji="📍" text="Jayamahal Palace" />
           <BadgeItem emoji="🎉" text="FREE Entry" />
         </div>
 
