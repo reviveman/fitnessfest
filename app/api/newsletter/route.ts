@@ -34,7 +34,7 @@ export async function POST(req: Request) {
     // ================================
 
     const EVENT_NAME = "Bengaluru Fitness Fest"
-    const EVENT_DATE = "March 28–29, 2026"
+    const EVENT_DATE = "April 25–29, 2026"
     const EVENT_WEBSITE = "https://bengalurufitnessfest.com"
     const EVENT_EMAIL = "info@bengalurufitnessfest.com"
 

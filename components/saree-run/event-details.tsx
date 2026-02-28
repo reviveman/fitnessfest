@@ -7,7 +7,7 @@ export default function SareeEventDetails() {
     {
       icon: Calendar,
       title: "Date",
-      value: "29 March 2026",
+      value: "26 April 2026",
       image: "/placeholder.svg?key=event-date-calendar",
     },
     {
@@ -19,7 +19,7 @@ export default function SareeEventDetails() {
     {
       icon: MapPin,
       title: "Venue",
-      value: "Bhoruka Tech Park Ground, Whitefield",
+      value: "Jayamahal Palace",
       image: "/placeholder.svg?key=event-venue-whitefield",
     },
     {

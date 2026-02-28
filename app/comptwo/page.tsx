@@ -20,7 +20,7 @@ interface Session {
 }
 
 export default function CompetitionsPage() {
-  const [activeDay, setActiveDay] = useState<"28" | "29">("28")
+  const [activeDay, setActiveDay] = useState<"25" | "26">("25")
 
   const getCategoryColor = (category: EventCategory): { bg: string; text: string; badge: string } => {
     const colors: Record<EventCategory, { bg: string; text: string; badge: string }> = {
@@ -35,8 +35,8 @@ export default function CompetitionsPage() {
     return colors[category]
   }
 
-  const scheduleData: Record<"28" | "29", Session[]> = {
-    "28": [
+  const scheduleData: Record<"25" | "26", Session[]> = {
+    "25": [
       {
         sessionTitle: "Morning Energize",
         timeRange: "7:30 AM - 9:15 AM",
@@ -129,7 +129,7 @@ export default function CompetitionsPage() {
         ],
       },
     ],
-    "29": [
+    "26": [
       {
         sessionTitle: "Sunday Sunrise Sessions",
         timeRange: "7:30 AM - 9:15 AM",
@@ -215,17 +215,17 @@ export default function CompetitionsPage() {
       <section className="py-8 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="flex gap-4 justify-center mb-12">
-            {["28", "29"].map((day) => (
+            {["25", "26"].map((day) => (
               <button
                 key={day}
-                onClick={() => setActiveDay(day as "28" | "29")}
+                onClick={() => setActiveDay(day as "25" | "26")}
                 className={`px-6 py-3 font-bold text-lg rounded-lg transition-all duration-300 ${
                   activeDay === day
                     ? "bg-[#EA4A3E] text-white shadow-lg shadow-[#EA4A3E]/50 scale-105"
                     : "bg-gray-800 text-gray-300 hover:bg-gray-700 border border-gray-600"
                 }`}
               >
-                {day === "28" ? "📅 Day One (28 March)" : "📅 Day Two (29 March)"}
+                {day === "25" ? "📅 Day One (25 April)" : "📅 Day Two (26 April)"}
               </button>
             ))}
           </div>

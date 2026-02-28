@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 export default function Schedule() {
-  const [selectedDate, setSelectedDate] = useState("March 28, 2026");
+  const [selectedDate, setSelectedDate] = useState("April 25, 2026");
   const filteredEvents = events.filter((e) => e.date === selectedDate);
   const router = useRouter();
 
@@ -34,21 +34,21 @@ export default function Schedule() {
           <div className="relative flex md:inline-block">
             {/* Day 1 */}
             <div
-              onClick={() => setSelectedDate("March 28, 2026")}
+              onClick={() => setSelectedDate("April 25, 2026")}
               className={clsx(
                 "cursor-pointer w-24 h-24 sm:w-28 sm:h-28 md:w-40 md:h-40 rounded-full flex flex-col items-center justify-center z-10 transition-all duration-300 group",
-                selectedDate === "March 28, 2026"
+                selectedDate === "April 25, 2026"
                   ? "bg-[#EA4A3E] text-white shadow-xl scale-105"
                   : "bg-gray-200 text-gray-800 hover:bg-[#FFC91F] hover:text-white hover:shadow-lg hover:scale-105"
               )}
             >
               <span className="text-sm sm:text-base md:text-lg font-bold">
-                28 March
+                25 April
               </span>
               <span
                 className={clsx(
                   "text-xs sm:text-sm font-semibold",
-                  selectedDate === "March 28, 2026"
+                  selectedDate === "April 25, 2026"
                     ? "text-white"
                     : "text-[#EA4A3E] group-hover:text-white"
                 )}
@@ -60,24 +60,24 @@ export default function Schedule() {
 
             {/* Day 2 */}
             <div
-              onClick={() => setSelectedDate("March 29, 2026")}
+              onClick={() => setSelectedDate("April 26, 2026")}
               className={clsx(
                 `cursor-pointer w-24 h-24 sm:w-28 sm:h-28 md:w-44 md:h-44
                  rounded-full flex flex-col items-center justify-center shadow-lg z-20
                  -ml-1 sm:-ml-1 md:ml-0 md:absolute md:left-[80%] md:top-0 
                  transition-all duration-300 group`,
-                selectedDate === "March 29, 2026"
+                selectedDate === "April 26, 2026"
                   ? "bg-[#EA4A3E] text-white shadow-xl scale-105"
                   : "bg-gray-200 text-gray-800 hover:bg-yellow-500 hover:text-white hover:shadow-lg hover:scale-105"
               )}
             >
               <span className="text-sm sm:text-base md:text-lg font-bold">
-                29 March
+                26 April
               </span>
               <span
                 className={clsx(
                   "text-xs sm:text-sm font-semibold",
-                  selectedDate === "March 29, 2026"
+                  selectedDate === "April 26, 2026"
                     ? "text-white"
                     : "text-[#EA4A3E] group-hover:text-white"
                 )}

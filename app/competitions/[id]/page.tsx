@@ -31,9 +31,9 @@ function parseEntryFee(fee: string): number {
   return Number(fee.replace(/[₹,]/g, ""));
 }
 
-/* ✅ helper to check if event is a final (March 29, 2026 events) */
+/* ✅ helper to check if event is a final (April 26, 2026 events) */
 function isFinalEvent(eventDate: string): boolean {
-  const finalsDates = ["March 29, 2026"];
+  const finalsDates = ["April 26, 2026"];
   return finalsDates.includes(eventDate);
 }
 
@@ -72,7 +72,7 @@ export default function EventDetailPage({ params }: Props) {
     );
   }
 
-  // Check if this is a final event (March 29, 2026)
+  // Check if this is a final event (April 26, 2026)
   const isFinalEventDay = isFinalEvent(event.date);
 
   // PREMIUM REWARD STRUCTURE based on event type

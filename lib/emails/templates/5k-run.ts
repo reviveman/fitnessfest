@@ -11,8 +11,8 @@ Your registration has been successfully completed.
 
 🏁 Event Details  
 Event: 5K Run – Bengaluru Fitness Festival  
-Date: 28–29 March 2026  
-Venue: Bhoruka Tech Park Ground, Whitefield, Bengaluru
+Date: 25–26 April 2026  
+Venue: Jayamahal Palace, Bengaluru
 
 🧾 Registration Summary  
 • Registration ID: ${registrationId}  

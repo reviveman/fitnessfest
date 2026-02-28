@@ -46,8 +46,8 @@ export default function KnowMoreSection() {
               Get ready to experience Bengaluru’s most dynamic celebration of
               health, fitness, and holistic well-being. The Bengaluru Fitness
               Festival 2026, happening on{" "}
-              <strong>28–29 March</strong> at{" "}
-              <strong>Bhoruka Tech Park Ground</strong>, brings together fitness
+              <strong>25–26 April</strong> at{" "}
+              <strong>Jayamahal Palace</strong>, brings together fitness
               enthusiasts, industry experts, and wellness brands for an
               electrifying two-day event.
             </p>

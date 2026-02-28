@@ -6,11 +6,11 @@ const EVENT_NAME =
   process.env.EVENT_NAME || "Bengaluru Fitness Festival";
 
 const EVENT_DATE =
-  process.env.EVENT_DATE || "March 28–29, 2026";
+  process.env.EVENT_DATE || "April 25–29, 2026";
 
 const EVENT_VENUE =
   process.env.EVENT_VENUE ||
-  "Bhoruka Tech Park Ground, Whitefield, Bengaluru, Karnataka 560066";
+  "Jayamahal Palace, Bengaluru, Karnataka 560066";
 
 const EVENT_WEBSITE =
   process.env.EVENT_WEBSITE || "https://www.fitnessfest.in/";
